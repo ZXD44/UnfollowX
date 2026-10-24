@@ -2,7 +2,7 @@
 
 > **เครื่องมือตรวจสอบและเลิกติดตามผู้ที่ไม่ติดตามกลับบน Instagram อัตโนมัติ ปลอดภัย 100% ด้วย Python Engine + Playwright + PyWebView**
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](source_code/LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Version](https://img.shields.io/badge/Version-0.0.1-purple.svg)](source_code/python_engine/version.py)
 [![Architecture](https://img.shields.io/badge/Arch-PyWebView%20%2B%20Playwright-indigo.svg)](.agent/ARCHITECTURE.md)
 [![Platform](https://img.shields.io/badge/Platform-Windows%2010%20%7C%2011-emerald.svg)](HOW_TO_USE.txt)
@@ -64,6 +64,7 @@ python set_version.py 0.0.2 --build
 
 ```
 ZirconX-IG-Cleaner-Pro-v3.0/
+├── LICENSE                            # 📜 MIT License
 ├── README.md                          # 📖 เอกสารแนะนำโปรเจกต์หลัก (หน้านี้)
 ├── HOW_TO_USE.txt                     # 📖 คู่มือการใช้งานสำหรับผู้ใช้ทั่วไป
 ├── set_version.py                     # ⚡ เครื่องมือจัดการเวอร์ชันอัตโนมัติ
@@ -74,7 +75,6 @@ ZirconX-IG-Cleaner-Pro-v3.0/
 │   ├── ARCHITECTURE.md                # แผนผังสถาปัตยกรรมระบบ, Workflows, Schemas
 │   └── GUIDE.md                       # คู่มือการทดสอบ, การดีบั๊ก, และการแก้ปัญหา
 └── source_code/                       # 💻 ซอร์สโค้ดของระบบทั้งหมด
-    ├── LICENSE                        # MIT License
     ├── README.md                      # เอกสารซอร์สโค้ด
     └── python_engine/
         ├── gui_app.py                 # Core Controller (Playwright + PyWebView)
@@ -96,4 +96,4 @@ ZirconX-IG-Cleaner-Pro-v3.0/
 
 ## 📄 ใบอนุญาต (License)
 
-โปรเจกต์นี้เผยแพร่ภายใต้ใบอนุญาต [MIT License](source_code/LICENSE)
+โปรเจกต์นี้เผยแพร่ภายใต้ใบอนุญาต [MIT License](LICENSE)
