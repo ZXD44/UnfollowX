@@ -1,0 +1,2021 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UnfollowX PRO v0.0.1 — By ZirconX</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* -------------------------------------------------------------
+       IMPECCABLE ULTRA-COMPACT TOKENS
+       High contrast, GPU-accelerated, micro-ergonomics
+       ------------------------------------------------------------- */
+    :root {
+      --bg-base: #080a0f;
+      --bg-surface: #0f121a;
+      --bg-elevated: #151924;
+      --bg-hover: #1b202e;
+      --bg-active: #21283a;
+
+      --border-subtle: rgba(255, 255, 255, 0.05);
+      --border-muted: rgba(255, 255, 255, 0.09);
+      --border-strong: rgba(255, 255, 255, 0.16);
+
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --text-dim: #475569;
+
+      /* Semantic Accents */
+      --emerald: #10b981;
+      --emerald-hover: #059669;
+      --emerald-subtle: rgba(16, 185, 129, 0.12);
+      --emerald-border: rgba(16, 185, 129, 0.28);
+
+      --rose: #f43f5e;
+      --rose-hover: #e11d48;
+      --rose-subtle: rgba(244, 63, 94, 0.12);
+      --rose-border: rgba(244, 63, 94, 0.28);
+
+      --indigo: #6366f1;
+      --indigo-subtle: rgba(99, 102, 241, 0.12);
+      --indigo-border: rgba(99, 102, 241, 0.28);
+
+      --amber: #f59e0b;
+      --amber-subtle: rgba(245, 158, 11, 0.12);
+      --amber-border: rgba(245, 158, 11, 0.28);
+
+      --radius-sm: 5px;
+      --radius-md: 7px;
+      --radius-pill: 9999px;
+
+      --fast-ease: 120ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', 'Noto Sans Thai', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      user-select: none;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-primary);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    /* Hardware accelerated slim scrollbar */
+    ::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: var(--radius-pill);
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    /* -------------------------------------------------------------
+       MINI HEADER (Height: 38px)
+       ------------------------------------------------------------- */
+    header {
+      height: 38px;
+      padding: 0 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border-subtle);
+      flex-shrink: 0;
+      z-index: 50;
+    }
+
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .brand-icon {
+      width: 20px;
+      height: 20px;
+      border-radius: 5px;
+      background: linear-gradient(135deg, #f43f5e, #8b5cf6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 1px 6px rgba(244, 63, 94, 0.3);
+      flex-shrink: 0;
+    }
+
+    .brand-icon svg {
+      width: 12px;
+      height: 12px;
+      fill: #ffffff;
+    }
+
+    .brand-title {
+      font-size: 0.80rem;
+      font-weight: 700;
+      letter-spacing: -0.2px;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .brand-title .accent-x {
+      color: #f43f5e;
+    }
+
+    .brand-badge {
+      font-size: 0.60rem;
+      font-weight: 700;
+      background: var(--indigo-subtle);
+      color: #a5b4fc;
+      border: 1px solid var(--indigo-border);
+      padding: 0 5px;
+      border-radius: var(--radius-pill);
+      letter-spacing: 0.2px;
+      line-height: 14px;
+    }
+
+    .header-center {
+      display: flex;
+      align-items: center;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: var(--emerald-subtle);
+      border: 1px solid var(--emerald-border);
+      color: #34d399;
+      padding: 2px 8px;
+      border-radius: var(--radius-pill);
+      font-size: 0.68rem;
+      font-weight: 600;
+      max-width: 220px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .status-pill.connecting {
+      background: var(--amber-subtle);
+      border-color: var(--amber-border);
+      color: #fbbf24;
+    }
+
+    .status-pill.error {
+      background: var(--rose-subtle);
+      border-color: var(--rose-border);
+      color: #fb7185;
+    }
+
+    .status-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 5px #10b981;
+      flex-shrink: 0;
+      animation: pulse 2s infinite ease-in-out;
+    }
+
+    .status-pill.connecting .status-dot {
+      background: #f59e0b;
+      box-shadow: 0 0 5px #f59e0b;
+    }
+
+    .status-pill.error .status-dot {
+      background: #f43f5e;
+      box-shadow: 0 0 5px #f43f5e;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.45; transform: scale(0.9); }
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* -------------------------------------------------------------
+       MINI BUTTONS
+       ------------------------------------------------------------- */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      padding: 0 8px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      border-radius: var(--radius-md);
+      border: 1px solid transparent;
+      cursor: pointer;
+      outline: none;
+      transition: background-color var(--fast-ease), border-color var(--fast-ease), transform var(--fast-ease);
+      white-space: nowrap;
+      height: 24px;
+    }
+
+    .btn:active:not(:disabled) {
+      transform: scale(0.96);
+    }
+
+    .btn:focus-visible {
+      box-shadow: 0 0 0 2px var(--bg-base), 0 0 0 3px var(--emerald);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-secondary);
+      border-color: var(--border-subtle);
+    }
+
+    .btn-ghost:hover:not(:disabled) {
+      background: var(--bg-hover);
+      color: var(--text-primary);
+      border-color: var(--border-muted);
+    }
+
+    .btn-ghost.pinned {
+      background: var(--indigo-subtle);
+      border-color: var(--indigo);
+      color: #a5b4fc;
+      box-shadow: 0 0 6px rgba(99, 102, 241, 0.3);
+    }
+
+    .btn-emerald {
+      background: var(--emerald);
+      color: #ffffff;
+      box-shadow: 0 1px 8px rgba(16, 185, 129, 0.3);
+    }
+
+    .btn-emerald:hover:not(:disabled) {
+      background: var(--emerald-hover);
+      box-shadow: 0 2px 10px rgba(16, 185, 129, 0.45);
+    }
+
+    .btn-rose {
+      background: var(--rose);
+      color: #ffffff;
+      box-shadow: 0 1px 8px rgba(244, 63, 94, 0.3);
+    }
+
+    .btn-rose:hover:not(:disabled) {
+      background: var(--rose-hover);
+      box-shadow: 0 2px 10px rgba(244, 63, 94, 0.45);
+    }
+
+    .btn-amber {
+      background: var(--amber);
+      color: #ffffff;
+    }
+
+    .btn-amber:hover:not(:disabled) {
+      background: #d97706;
+    }
+
+    .btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+
+    /* -------------------------------------------------------------
+       MINI METRICS RIBBON (Height: 30px)
+       ------------------------------------------------------------- */
+    .metrics-ribbon {
+      background: var(--bg-base);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 4px 10px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      overflow-x: auto;
+      flex-shrink: 0;
+    }
+
+    .metric-chip {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 2px 7px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+      transition: background-color var(--fast-ease), border-color var(--fast-ease);
+      flex-shrink: 0;
+      height: 22px;
+    }
+
+    .metric-chip:hover {
+      background: var(--bg-hover);
+      border-color: var(--border-muted);
+    }
+
+    .metric-chip.active {
+      border-color: var(--border-strong);
+      background: var(--bg-elevated);
+    }
+
+    .metric-chip.alert-chip {
+      background: var(--rose-subtle);
+      border-color: var(--rose-border);
+    }
+
+    .metric-chip.alert-chip .metric-value {
+      color: #fb7185;
+    }
+
+    .metric-chip.alert-chip.active {
+      border-color: var(--rose);
+      box-shadow: 0 0 8px rgba(244, 63, 94, 0.2);
+    }
+
+    .metric-chip.shield-chip {
+      background: var(--indigo-subtle);
+      border-color: var(--indigo-border);
+    }
+
+    .metric-chip.shield-chip .metric-value {
+      color: #a5b4fc;
+    }
+
+    .metric-label {
+      font-size: 0.65rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+
+    .metric-value {
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* -------------------------------------------------------------
+       MINI ACTION & FILTER TOOLBAR (Height: 36px)
+       ------------------------------------------------------------- */
+    .action-bar {
+      padding: 4px 10px;
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .search-wrap {
+      position: relative;
+      width: 150px;
+      flex-shrink: 0;
+    }
+
+    .search-input {
+      width: 100%;
+      height: 24px;
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 0 20px 0 24px;
+      font-size: 0.72rem;
+      color: var(--text-primary);
+      outline: none;
+      transition: border-color var(--fast-ease);
+    }
+
+    .search-input:focus {
+      border-color: var(--emerald);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 7px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      width: 11px;
+      height: 11px;
+      pointer-events: none;
+    }
+
+    .search-clear {
+      position: absolute;
+      right: 6px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 0.68rem;
+      display: none;
+      background: none;
+      border: none;
+    }
+
+    .filter-tabs {
+      display: inline-flex;
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 2px;
+      gap: 1px;
+    }
+
+    .filter-tab {
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-size: 0.68rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color var(--fast-ease), color var(--fast-ease);
+      white-space: nowrap;
+      height: 20px;
+    }
+
+    .filter-tab:hover {
+      color: var(--text-primary);
+    }
+
+    .filter-tab.active {
+      background: var(--bg-elevated);
+      color: var(--text-primary);
+    }
+
+    .speed-wrap {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 0 6px;
+      height: 24px;
+      font-size: 0.68rem;
+      color: var(--text-muted);
+    }
+
+    .speed-select {
+      background: transparent;
+      border: none;
+      color: var(--text-primary);
+      font-size: 0.68rem;
+      font-weight: 600;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .speed-select option {
+      background: var(--bg-surface);
+      color: var(--text-primary);
+    }
+
+    .main-ctas {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-left: auto;
+    }
+
+    /* -------------------------------------------------------------
+       SLIM PROGRESS DOCK
+       ------------------------------------------------------------- */
+    .progress-dock {
+      background: var(--bg-elevated);
+      border-bottom: 1px solid var(--emerald-border);
+      padding: 4px 10px;
+      display: none;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+      height: 24px;
+    }
+
+    .progress-info {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 140px;
+    }
+
+    .progress-title {
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 240px;
+    }
+
+    .progress-numbers {
+      font-size: 0.65rem;
+      color: var(--text-secondary);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .progress-track {
+      flex: 1;
+      height: 5px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-pill);
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #10b981, #06b6d4, #f43f5e);
+      border-radius: var(--radius-pill);
+      transition: width 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* -------------------------------------------------------------
+       HIGH PERFORMANCE USER TABLE
+       Virtual scroll, CSS containment, content-visibility
+       ------------------------------------------------------------- */
+    .table-dock {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      background: var(--bg-base);
+      position: relative;
+    }
+
+    .table-head {
+      display: grid;
+      grid-template-columns: 30px 1fr 110px 115px;
+      padding: 4px 10px;
+      background: rgba(0, 0, 0, 0.45);
+      border-bottom: 1px solid var(--border-subtle);
+      font-size: 0.64rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      align-items: center;
+      flex-shrink: 0;
+      height: 24px;
+    }
+
+    .user-viewport {
+      flex: 1;
+      overflow-y: auto;
+      min-height: 0;
+      contain: strict;
+      will-change: scroll-position;
+      transform: translateZ(0);
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .user-row {
+      display: grid;
+      grid-template-columns: 30px 1fr 110px 115px;
+      padding: 4px 10px;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.025);
+      contain: content;
+      content-visibility: auto;
+      contain-intrinsic-size: 34px;
+      height: 34px;
+    }
+
+    .user-row:hover {
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .user-row.unfollowed {
+      opacity: 0.3;
+      background: var(--emerald-subtle);
+      pointer-events: none;
+    }
+
+    .user-row.protected {
+      background: rgba(99, 102, 241, 0.04);
+    }
+
+    .checkbox {
+      width: 14px;
+      height: 14px;
+      accent-color: var(--emerald);
+      cursor: pointer;
+      border-radius: 3px;
+    }
+
+    .user-cell {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      min-width: 0;
+    }
+
+    .avatar {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--bg-hover);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      border: 1px solid var(--border-subtle);
+      flex-shrink: 0;
+      overflow: hidden;
+      object-fit: cover;
+    }
+
+    .user-meta {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    .user-handle {
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      text-decoration: none;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .user-handle:hover {
+      color: #38bdf8;
+      text-decoration: underline;
+    }
+
+    .user-fullname {
+      font-size: 0.66rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      font-size: 0.60rem;
+      font-weight: 600;
+      padding: 0 4px;
+      border-radius: 3px;
+      line-height: 14px;
+    }
+
+    .badge-verified {
+      background: rgba(56, 189, 248, 0.12);
+      color: #38bdf8;
+      border: 1px solid rgba(56, 189, 248, 0.25);
+    }
+
+    .badge-private {
+      background: var(--amber-subtle);
+      color: #fbbf24;
+      border: 1px solid var(--amber-border);
+    }
+
+    .badge-protected {
+      background: var(--indigo-subtle);
+      color: #a5b4fc;
+      border: 1px solid var(--indigo-border);
+    }
+
+    .row-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 4px;
+    }
+
+    .btn-shield {
+      width: 22px;
+      height: 22px;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 0.68rem;
+    }
+
+    .btn-shield:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-primary);
+    }
+
+    .btn-shield.active {
+      background: var(--indigo-subtle);
+      border-color: var(--indigo);
+      color: #a5b4fc;
+    }
+
+    .btn-unfollow-row {
+      height: 22px;
+      padding: 0 7px;
+      border-radius: 4px;
+      font-size: 0.66rem;
+      font-weight: 600;
+      background: var(--rose-subtle);
+      border: 1px solid var(--rose-border);
+      color: #fb7185;
+      cursor: pointer;
+      transition: background-color var(--fast-ease);
+    }
+
+    .btn-unfollow-row:hover {
+      background: var(--rose);
+      color: #ffffff;
+    }
+
+    /* Empty & Loading States */
+    .empty-state {
+      padding: 40px 14px;
+      text-align: center;
+      color: var(--text-muted);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .spinner {
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      border-top-color: var(--emerald);
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* -------------------------------------------------------------
+       MINI MODAL (340px)
+       ------------------------------------------------------------- */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(4, 6, 10, 0.8);
+      backdrop-filter: blur(6px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 12px;
+      contain: strict;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .modal-box {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-md);
+      width: 100%;
+      max-width: 340px;
+      padding: 14px 16px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .modal-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .modal-icon-badge {
+      width: 28px;
+      height: 28px;
+      border-radius: 7px;
+      background: var(--rose-subtle);
+      border: 1px solid var(--rose-border);
+      color: #fb7185;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .modal-icon-badge.success {
+      background: var(--emerald-subtle);
+      border-color: var(--emerald-border);
+      color: #34d399;
+    }
+
+    .modal-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.2;
+    }
+
+    .modal-subtitle {
+      font-size: 0.70rem;
+      color: var(--text-secondary);
+    }
+
+    .modal-content {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid var(--border-subtle);
+      padding: 8px 10px;
+      border-radius: var(--radius-sm);
+      line-height: 1.4;
+    }
+
+    .modal-foot {
+      display: flex;
+      justify-content: flex-end;
+      gap: 6px;
+    }
+
+    /* -------------------------------------------------------------
+       MINI TOASTS
+       ------------------------------------------------------------- */
+    .toast-deck {
+      position: fixed;
+      bottom: 10px;
+      right: 10px;
+      z-index: 1200;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      pointer-events: none;
+    }
+
+    .toast-pill {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-strong);
+      color: var(--text-primary);
+      padding: 5px 10px;
+      border-radius: var(--radius-sm);
+      font-size: 0.70rem;
+      font-weight: 500;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      pointer-events: auto;
+    }
+
+    .toast-pill.success {
+      border-color: var(--emerald-border);
+      color: #34d399;
+    }
+
+    .toast-pill.error {
+      border-color: var(--rose-border);
+      color: #fb7185;
+    }
+
+    /* -------------------------------------------------------------
+       MINI FOOTER (Height: 22px)
+       ------------------------------------------------------------- */
+    footer {
+      height: 22px;
+      padding: 0 10px;
+      background: var(--bg-surface);
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.62rem;
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+
+    /* Responsive Breakpoints */
+    @media (max-width: 720px) {
+      .table-head, .user-row {
+        grid-template-columns: 28px 1fr 80px 105px;
+      }
+      .search-wrap {
+        width: 120px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 1. COMPACT HEADER -->
+  <header>
+    <div class="brand-wrap">
+      <div class="brand-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+      </div>
+      <div class="brand-title">
+        <span>Unfollow<span class="accent-x">X</span></span>
+        <span class="brand-badge">PRO v0.0.1</span>
+      </div>
+    </div>
+
+    <div class="header-center">
+      <div class="status-pill" id="appStatus">
+        <div class="status-dot"></div>
+        <span id="statusText">กำลังเชื่อมต่อ Chrome...</span>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <!-- 📌 Always-On-Top Toggle -->
+      <button class="btn btn-ghost" id="btnPinWindow" onclick="togglePinWindow()" title="ปักหมุดให้หน้าต่างลอยอยู่บนสุดตลอดเวลา">
+        <span id="pinIcon">📌</span>
+      </button>
+
+      <!-- 🔊 Sound Toggle -->
+      <button class="btn btn-ghost" id="btnSoundToggle" onclick="toggleSound()" title="เปิด/ปิดเสียงแจ้งเตือน">
+        <span id="soundIcon">🔊</span>
+      </button>
+
+      <!-- 📜 Audit History Log -->
+      <button class="btn btn-ghost" id="btnHistory" onclick="openHistoryModal()" title="ดูประวัติการเลิกติดตามย้อนหลัง">
+        <span>📜 ประวัติ</span>
+      </button>
+
+      <button class="btn btn-ghost" onclick="openChromeBrowser()" title="เปิดเบราว์เซอร์ Chrome">
+        <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+        <span>Chrome</span>
+      </button>
+
+      <button class="btn btn-ghost" id="btnScan" onclick="triggerScan()" title="เริ่มสแกนบัญชีใหม่">
+        <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+        <span>สแกน</span>
+      </button>
+
+      <button class="btn btn-ghost" onclick="exportData('csv')" title="ส่งออก CSV">
+        <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+        <span>CSV</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- 2. MINI METRICS RIBBON -->
+  <div class="metrics-ribbon">
+    <div class="metric-chip" onclick="setFilter('all')">
+      <span class="metric-label">กำลังติดตาม:</span>
+      <span class="metric-value" id="statFollowing">0</span>
+    </div>
+
+    <div class="metric-chip" onclick="setFilter('all')">
+      <span class="metric-label">ผู้ติดตาม:</span>
+      <span class="metric-value" id="statFollowers">0</span>
+    </div>
+
+    <div class="metric-chip" onclick="setFilter('all')">
+      <span class="metric-label">ติดตามกัน:</span>
+      <span class="metric-value" id="statMutual">0</span>
+    </div>
+
+    <div class="metric-chip alert-chip active" id="cardNonFollowers" onclick="setFilter('non_followers')">
+      <span class="metric-label">ไม่ฟอลกลับ:</span>
+      <span class="metric-value" id="statNonFollowers">0</span>
+    </div>
+
+    <div class="metric-chip shield-chip" onclick="setFilter('protected')">
+      <span class="metric-label">🛡️ คุ้มครอง:</span>
+      <span class="metric-value" id="statProtected">0</span>
+    </div>
+  </div>
+
+  <!-- 3. MINI ACTION & FILTER BAR -->
+  <div class="action-bar">
+    <!-- Search Box -->
+    <div class="search-wrap">
+      <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+      <input type="text" id="searchInput" class="search-input" placeholder="ค้นหา username...">
+      <button id="searchClearBtn" class="search-clear" onclick="clearSearch()">✕</button>
+    </div>
+
+    <!-- Filter Pills -->
+    <div class="filter-tabs">
+      <button class="filter-tab active" data-filter="non_followers" onclick="setFilter('non_followers')">ไม่ฟอลกลับ</button>
+      <button class="filter-tab" data-filter="verified" onclick="setFilter('verified')">ติ๊กถูก</button>
+      <button class="filter-tab" data-filter="private" onclick="setFilter('private')">ส่วนตัว</button>
+      <button class="filter-tab" data-filter="protected" onclick="setFilter('protected')">คุ้มครอง</button>
+    </div>
+
+    <!-- Speed Mode Dropdown -->
+    <div class="speed-wrap">
+      <span>เร็ว:</span>
+      <select id="speedMode" class="speed-select">
+        <option value="turbo" selected>⚡ Turbo (0.8-1.2s)</option>
+        <option value="fast">⚡ Fast (1.2-1.8s)</option>
+        <option value="safe">🛡️ Safe (2.0-3.2s)</option>
+      </select>
+    </div>
+
+    <!-- Main Execution Actions -->
+    <div class="main-ctas">
+      <button class="btn btn-emerald" id="btnAutoClean" onclick="startOneClickAutoClean()">
+        <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+        <span>1-Click เคลียร์</span>
+      </button>
+
+      <button class="btn btn-rose" id="btnUnfollowSelected" onclick="unfollowSelected()" disabled>
+        <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+        <span>ลบ (<span id="selectedCount">0</span>)</span>
+      </button>
+
+      <button class="btn btn-amber" id="btnStop" onclick="stopUnfollow()" style="display: none;">
+        <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 10a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z"></path></svg>
+        <span>หยุด</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- 4. SLIM LIVE PROGRESS DOCK -->
+  <div class="progress-dock" id="progressSection">
+    <div class="progress-info">
+      <div class="progress-title" id="progressText">กำลังประมวลผล...</div>
+      <div class="progress-numbers" id="progressStats">0 / 0</div>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progressBarFill"></div>
+    </div>
+  </div>
+
+  <!-- 5. COMPACT USER TABLE -->
+  <div class="table-dock">
+    <div class="table-head">
+      <div><input type="checkbox" class="checkbox" id="selectAll" onchange="toggleSelectAll(this)" title="เลือกทั้งหมด"></div>
+      <div>ผู้ใช้ (Username & Full Name)</div>
+      <div>สถานะบัญชี</div>
+      <div style="text-align: right;">จัดการ</div>
+    </div>
+
+    <div class="user-viewport" id="userList">
+      <div class="empty-state">
+        <div class="spinner"></div>
+        <div style="font-weight: 600; color: #fff;">กำลังเชื่อมต่อระบบอัตโนมัติ...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. MINI CONFIRMATION MODAL DIALOG -->
+  <div class="modal-overlay" id="customModal">
+    <div class="modal-box" id="modalCard">
+      <div class="modal-head">
+        <div class="modal-icon-badge" id="modalIconWrap">
+          <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+        </div>
+        <div>
+          <div class="modal-title" id="modalTitle">ยืนยันการทำรายการ</div>
+          <div class="modal-subtitle" id="modalSub">โปรดตรวจสอบรายละเอียดก่อนยืนยัน</div>
+        </div>
+      </div>
+
+      <div class="modal-content" id="modalBody">
+        เนื้อหารายละเอียด...
+      </div>
+
+      <div class="modal-foot" id="modalActions">
+        <button class="btn btn-ghost" id="modalCancelBtn" onclick="closeModal(false)">ยกเลิก</button>
+        <button class="btn btn-rose" id="modalConfirmBtn" onclick="closeModal(true)">ยืนยัน</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. MINI AUDIT HISTORY MODAL DIALOG -->
+  <div class="modal-overlay" id="historyModal">
+    <div class="modal-box" style="max-width: 440px; max-height: 85vh; display: flex; flex-direction: column;">
+      <div class="modal-head" style="justify-content: space-between;">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <div class="modal-icon-badge success" style="width: 24px; height: 24px;">
+            📜
+          </div>
+          <div>
+            <div class="modal-title" style="font-size: 0.82rem;">ประวัติการเลิกติดตาม (Audit Log)</div>
+            <div class="modal-subtitle" style="font-size: 0.66rem;">รายการที่ระบบทำงานสำเร็จ (<span id="historyCount">0</span> รายการ)</div>
+          </div>
+        </div>
+        <button class="btn btn-ghost" onclick="closeHistoryModal()" style="height: 20px; padding: 0 5px;">✕</button>
+      </div>
+
+      <div style="display: flex; gap: 6px; align-items: center;">
+        <input type="text" id="historySearchInput" class="search-input" style="height: 24px; font-size: 0.70rem;" placeholder="ค้นหาประวัติ @username...">
+      </div>
+
+      <div class="user-viewport" id="historyListContainer" style="max-height: 300px; min-height: 160px; border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); background: rgba(0,0,0,0.3);">
+        <!-- History items render here -->
+      </div>
+
+      <div class="modal-foot" style="justify-content: space-between; align-items: center;">
+        <button class="btn btn-ghost" onclick="clearHistoryLog()" style="color: #fb7185; font-size: 0.68rem;" title="ล้างประวัติทั้งหมด">
+          ล้างประวัติ
+        </button>
+        <div style="display: flex; gap: 6px;">
+          <button class="btn btn-ghost" onclick="exportHistoryCSV()" style="font-size: 0.68rem;">
+            ส่งออก CSV
+          </button>
+          <button class="btn btn-emerald" onclick="closeHistoryModal()" style="font-size: 0.68rem;">
+            ปิด
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. TOAST NOTIFICATIONS -->
+  <div class="toast-deck" id="toastContainer"></div>
+
+  <!-- 9. MICRO FOOTER -->
+  <footer>
+    <div>⚡ <strong>UnfollowX</strong> Pro Engine by ZirconX</div>
+    <div>In-Session High-Speed Worker</div>
+  </footer>
+
+  <!-- SCRIPT LOGIC (OPTIMIZED WITH ALWAYS-ON-TOP, AUDIO CHIMES & AUDIT HISTORY) -->
+  <script>
+    let allNonFollowers = [];
+    let currentFilter = "non_followers";
+    let selectedSet = new Set();
+    let protectedSet = new Set(JSON.parse(localStorage.getItem("zx_protected_users") || "[]"));
+    let isBusy = false;
+    let modalResolver = null;
+    let autoScanTriggered = false;
+    let renderedLimit = 80;
+    let handledUsers = new Set();
+    let isPolling = false;
+    let scanDataLoaded = false;
+    let cachedHistory = [];
+    let isPinned = false;
+    let soundEnabled = localStorage.getItem("zx_sound_enabled") !== "false";
+    const domCache = {};
+
+    // Helper: update text content ONLY when changed (avoids expensive DOM reflows)
+    function setIfChanged(id, val) {
+      if (domCache[id] !== val) {
+        domCache[id] = val;
+        const el = document.getElementById(id);
+        if (el) el.innerText = val;
+      }
+    }
+
+    // -------------------------------------------------------------
+    // AUDIO SYNTHESIZER (Pure Web Audio API, Zero dependencies)
+    // -------------------------------------------------------------
+    function toggleSound() {
+      soundEnabled = !soundEnabled;
+      localStorage.setItem("zx_sound_enabled", soundEnabled);
+      document.getElementById("soundIcon").innerText = soundEnabled ? "🔊" : "🔇";
+      showToast(soundEnabled ? "เปิดเสียงแจ้งเตือนแล้ว" : "ปิดเสียงแจ้งเตือนแล้ว");
+      if (soundEnabled) playChime("click");
+    }
+
+    let audioCtx = null;
+    function playChime(type = "success") {
+      if (!soundEnabled) return;
+      setTimeout(() => {
+        try {
+          const AudioCtx = window.AudioContext || window.webkitAudioContext;
+          if (!AudioCtx) return;
+          if (!audioCtx) audioCtx = new AudioCtx();
+          if (audioCtx.state === "suspended") audioCtx.resume().catch(() => {});
+
+          const now = audioCtx.currentTime;
+          if (type === "scan_complete") {
+            // Double acoustic ping: 587Hz (D5) -> 880Hz (A5)
+            const osc1 = audioCtx.createOscillator();
+            const osc2 = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc1.connect(gain);
+            osc2.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            osc1.frequency.setValueAtTime(587.33, now);
+            osc2.frequency.setValueAtTime(880, now + 0.08);
+
+            gain.gain.setValueAtTime(0.08, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+
+            osc1.start(now);
+            osc1.stop(now + 0.15);
+            osc2.start(now + 0.08);
+            osc2.stop(now + 0.35);
+          } else if (type === "success") {
+            // Soft harmonic arpeggio: 523Hz -> 659Hz -> 783Hz
+            [523.25, 659.25, 783.99].forEach((freq, i) => {
+              const osc = audioCtx.createOscillator();
+              const g = audioCtx.createGain();
+              osc.connect(g);
+              g.connect(audioCtx.destination);
+              osc.frequency.setValueAtTime(freq, now + i * 0.07);
+              g.gain.setValueAtTime(0.06, now + i * 0.07);
+              g.gain.exponentialRampToValueAtTime(0.001, now + i * 0.07 + 0.25);
+              osc.start(now + i * 0.07);
+              osc.stop(now + i * 0.07 + 0.25);
+            });
+          } else if (type === "click") {
+            const osc = audioCtx.createOscillator();
+            const g = audioCtx.createGain();
+            osc.connect(g);
+            g.connect(audioCtx.destination);
+            osc.frequency.setValueAtTime(700, now);
+            g.gain.setValueAtTime(0.04, now);
+            g.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+            osc.start(now);
+            osc.stop(now + 0.08);
+          }
+        } catch (e) {}
+      }, 0);
+    }
+
+    // -------------------------------------------------------------
+    // ALWAYS-ON-TOP TOGGLE
+    // -------------------------------------------------------------
+    async function togglePinWindow() {
+      try {
+        const res = await window.pywebview.api.toggle_always_on_top();
+        isPinned = !!(res && res.on_top);
+        const pinBtn = document.getElementById("btnPinWindow");
+        if (isPinned) {
+          pinBtn.classList.add("pinned");
+          showToast("📌 ปักหมุดหน้าต่างอยู่บนสุดแล้ว", "success");
+        } else {
+          pinBtn.classList.remove("pinned");
+          showToast("ยกเลิกการปักหมุดแล้ว");
+        }
+        playChime("click");
+      } catch (e) {
+        showToast("ไม่สามารถเปลี่ยนสถานะปักหมุดได้", "error");
+      }
+    }
+
+    // -------------------------------------------------------------
+    // AUDIT HISTORY LOG DRAWER
+    // -------------------------------------------------------------
+    async function openHistoryModal() {
+      try {
+        cachedHistory = (await window.pywebview.api.get_history()) || [];
+      } catch (e) {
+        cachedHistory = [];
+      }
+      setIfChanged("historyCount", cachedHistory.length);
+      renderHistoryList();
+      document.getElementById("historyModal").classList.add("open");
+      playChime("click");
+    }
+
+    function closeHistoryModal() {
+      document.getElementById("historyModal").classList.remove("open");
+    }
+
+    function renderHistoryList() {
+      const q = (document.getElementById("historySearchInput").value || "").toLowerCase().trim();
+      const container = document.getElementById("historyListContainer");
+      const filtered = cachedHistory.filter(h => !q || (h.username && h.username.toLowerCase().includes(q)));
+
+      if (!filtered || filtered.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state" style="padding: 24px 10px;">
+            <div style="font-size: 0.72rem; color: var(--text-muted);">ไม่มีรายการประวัติ</div>
+          </div>`;
+        return;
+      }
+
+      container.innerHTML = filtered.map(h => `
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 10px; border-bottom: 1px solid rgba(255,255,255,0.03); font-size: 0.72rem;">
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <a href="https://www.instagram.com/${h.username}/" target="_blank" style="font-weight: 600; color: #fff; text-decoration: none;">@${h.username}</a>
+            <span class="badge-pill badge-verified" style="font-size: 0.58rem; background: var(--emerald-subtle); color: #34d399; border-color: var(--emerald-border);">เลิกติดตามแล้ว</span>
+          </div>
+          <div style="font-size: 0.65rem; color: var(--text-muted); font-variant-numeric: tabular-nums;">
+            ${h.timestamp || '-'}
+          </div>
+        </div>
+      `).join("");
+    }
+
+    document.getElementById("historySearchInput").addEventListener("input", () => {
+      renderHistoryList();
+    });
+
+    async function clearHistoryLog() {
+      const confirmed = await showModal({
+        title: "ล้างประวัติทั้งหมด",
+        subtitle: "การกระทำนี้ไม่สามารถย้อนกลับได้",
+        htmlContent: "คุณแน่ใจหรือไม่ว่าต้องการล้างประวัติการเลิกติดตามทั้งหมด?",
+        confirmText: "ล้างประวัติ",
+        confirmClass: "btn-rose"
+      });
+      if (!confirmed) return;
+
+      await window.pywebview.api.clear_history();
+      cachedHistory = [];
+      setIfChanged("historyCount", 0);
+      renderHistoryList();
+      showToast("ล้างประวัติเรียบร้อยแล้ว", "success");
+    }
+
+    async function exportHistoryCSV() {
+      if (!cachedHistory || cachedHistory.length === 0) {
+        showToast("ไม่มีประวัติให้ส่งออก", "info");
+        return;
+      }
+      const res = await window.pywebview.api.export_data(cachedHistory, "csv", "history");
+      if (res && res.success) {
+        showToast("ส่งออกประวัติเป็น CSV บน Desktop แล้ว", "success");
+        playChime("success");
+      } else {
+        showToast("ไม่สามารถส่งออกได้: " + (res?.error || ""), "error");
+      }
+    }
+
+    // -------------------------------------------------------------
+    // MODAL PROMISE (Minimal & Accessible)
+    // -------------------------------------------------------------
+    function showModal({ title, subtitle, htmlContent, confirmText = "ยืนยัน", confirmClass = "btn-rose", isAlert = false }) {
+      return new Promise((resolve) => {
+        modalResolver = resolve;
+        document.getElementById("modalTitle").innerText = title;
+        document.getElementById("modalSub").innerText = subtitle || "";
+        document.getElementById("modalBody").innerHTML = htmlContent;
+        
+        const confirmBtn = document.getElementById("modalConfirmBtn");
+        confirmBtn.className = `btn ${confirmClass}`;
+        confirmBtn.innerText = confirmText;
+
+        const cancelBtn = document.getElementById("modalCancelBtn");
+        cancelBtn.style.display = isAlert ? "none" : "inline-flex";
+
+        const iconWrap = document.getElementById("modalIconWrap");
+        if (confirmClass.includes("btn-emerald") || confirmClass.includes("btn-primary") || confirmClass.includes("btn-auto")) {
+          iconWrap.className = "modal-icon-badge success";
+          iconWrap.innerHTML = `<svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`;
+        } else {
+          iconWrap.className = "modal-icon-badge";
+          iconWrap.innerHTML = `<svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>`;
+        }
+
+        document.getElementById("customModal").classList.add("open");
+      });
+    }
+
+    function closeModal(result) {
+      document.getElementById("customModal").classList.remove("open");
+      if (modalResolver) {
+        modalResolver(result);
+        modalResolver = null;
+      }
+    }
+
+    // Keyboard support for Modals
+    window.addEventListener("keydown", (e) => {
+      const modal = document.getElementById("customModal");
+      const hModal = document.getElementById("historyModal");
+      if (modal.classList.contains("open")) {
+        if (e.key === "Escape") closeModal(false);
+        else if (e.key === "Enter") closeModal(true);
+      } else if (hModal.classList.contains("open")) {
+        if (e.key === "Escape") closeHistoryModal();
+      }
+    });
+
+    // Toast utility (optimized)
+    function showToast(msg, type = "info") {
+      const c = document.getElementById("toastContainer");
+      const t = document.createElement("div");
+      t.className = `toast-pill ${type}`;
+      t.innerText = msg;
+      c.appendChild(t);
+      setTimeout(() => {
+        t.style.opacity = "0";
+        t.style.transition = "opacity 0.15s ease";
+        setTimeout(() => t.remove(), 160);
+      }, 2800);
+    }
+
+    // Protection storage
+    function saveProtected() {
+      localStorage.setItem("zx_protected_users", JSON.stringify(Array.from(protectedSet)));
+      setIfChanged("statProtected", protectedSet.size);
+    }
+
+    function toggleProtect(uname) {
+      if (protectedSet.has(uname)) {
+        protectedSet.delete(uname);
+        showToast(`ยกเลิกคุ้มครอง @${uname}`);
+      } else {
+        protectedSet.add(uname);
+        selectedSet.delete(uname);
+        showToast(`คุ้มครอง @${uname} แล้ว`, "success");
+      }
+      saveProtected();
+      updateSelectedUI();
+      renderCurrentList();
+    }
+
+    // Filter Logic
+    function setFilter(filt) {
+      currentFilter = filt;
+      document.querySelectorAll(".filter-tab").forEach(tab => {
+        tab.classList.toggle("active", tab.dataset.filter === filt);
+      });
+      document.querySelectorAll(".metric-chip").forEach(chip => {
+        chip.classList.remove("active");
+      });
+      if (filt === "non_followers") {
+        document.getElementById("cardNonFollowers")?.classList.add("active");
+      }
+      renderCurrentList(true);
+    }
+
+    function getFilteredUsers() {
+      const q = (document.getElementById("searchInput").value || "").toLowerCase().trim();
+      return allNonFollowers.filter(u => {
+        const matchesQuery = !q || u.username.toLowerCase().includes(q) || (u.full_name && u.full_name.toLowerCase().includes(q));
+        if (!matchesQuery) return false;
+
+        if (currentFilter === "verified") return u.is_verified;
+        if (currentFilter === "private") return u.is_private;
+        if (currentFilter === "protected") return protectedSet.has(u.username);
+        return true;
+      });
+    }
+
+    function renderCurrentList(reset = false) {
+      if (reset) renderedLimit = 80;
+      const filtered = getFilteredUsers();
+      renderUsers(filtered);
+    }
+
+    function loadMoreUsers() {
+      renderedLimit += 80;
+      const filtered = getFilteredUsers();
+      renderUsers(filtered);
+    }
+
+    // Render Compact Table Rows with High-Speed String Batching
+    function renderUsers(list) {
+      const container = document.getElementById("userList");
+      if (!list || list.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <svg width="28" height="28" fill="none" stroke="#10b981" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            <div style="font-weight:600; color:#fff;">ไม่มีรายชื่อผู้ใช้ที่ตรงเงื่อนไข</div>
+            <div style="font-size:0.70rem;">บัญชีสะอาดเรียบร้อย หรือไม่พบคำค้นหา</div>
+          </div>`;
+        return;
+      }
+
+      const displayList = list.slice(0, renderedLimit);
+      const rowsHtml = displayList.map(u => {
+        const initial = (u.username || "U")[0].toUpperCase();
+        const isProtected = protectedSet.has(u.username);
+        const isChecked = selectedSet.has(u.username) ? "checked" : "";
+
+        let tags = [];
+        if (u.is_verified) tags.push(`<span class="badge-pill badge-verified">✓ Verified</span>`);
+        if (u.is_private) tags.push(`<span class="badge-pill badge-private">🔒 Private</span>`);
+        if (isProtected) tags.push(`<span class="badge-pill badge-protected">🛡️ Protected</span>`);
+
+        const avatarImg = u.profile_pic_url 
+          ? `<img class="avatar" src="${u.profile_pic_url}" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.outerHTML='<div class=\\'avatar\\'>${initial}</div>'">`
+          : `<div class="avatar">${initial}</div>`;
+
+        return `
+          <div class="user-row ${isProtected ? 'protected' : ''}" id="row-${u.username}">
+            <div>
+              <input type="checkbox" class="checkbox user-check" data-uname="${u.username}" value="${u.username}" ${isChecked} ${isProtected ? 'disabled' : ''} onchange="toggleSelect('${u.username}', this)">
+            </div>
+            <div class="user-cell">
+              ${avatarImg}
+              <div class="user-meta">
+                <a class="user-handle" href="https://www.instagram.com/${u.username}/" target="_blank" title="เปิด IG">@${u.username}</a>
+                <span class="user-fullname">${u.full_name || '-'}</span>
+              </div>
+            </div>
+            <div>${tags.join(" ") || '<span style="color:var(--text-dim);font-size:0.70rem;">-</span>'}</div>
+            <div class="row-actions">
+              <button class="btn-shield ${isProtected ? 'active' : ''}" title="${isProtected ? 'ยกเลิกคุ้มครอง' : 'คุ้มครอง'}" onclick="toggleProtect('${u.username}')">
+                🛡️
+              </button>
+              <button class="btn-unfollow-row" ${isProtected ? 'disabled' : ''} onclick="unfollowSingle('${u.id}', '${u.username}', '${u.full_name || ''}')">
+                เลิกติดตาม
+              </button>
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      let footerHtml = "";
+      if (list.length > renderedLimit) {
+        const remaining = list.length - renderedLimit;
+        footerHtml = `
+          <div style="text-align:center; padding:8px;">
+            <button class="btn btn-ghost" onclick="loadMoreUsers()" style="margin:0 auto; font-size:0.70rem;">
+              แสดงเพิ่มอีก ${Math.min(80, remaining)} คน (เหลืออีก ${remaining} คน)
+            </button>
+          </div>`;
+      }
+
+      container.innerHTML = rowsHtml + footerHtml;
+    }
+
+    // Instant toggle selection WITHOUT re-rendering the full DOM (0ms latency!)
+    function toggleSelect(uname, checkboxEl) {
+      if (protectedSet.has(uname)) return;
+      if (selectedSet.has(uname)) selectedSet.delete(uname);
+      else selectedSet.add(uname);
+      if (checkboxEl) checkboxEl.checked = selectedSet.has(uname);
+      updateSelectedUI();
+    }
+
+    // Instant Select All without re-rendering the whole page
+    function toggleSelectAll(master) {
+      const isChecked = master.checked;
+      const current = getFilteredUsers();
+      if (isChecked) {
+        current.forEach(u => {
+          if (!protectedSet.has(u.username)) selectedSet.add(u.username);
+        });
+      } else {
+        current.forEach(u => selectedSet.delete(u.username));
+      }
+      
+      const checkboxes = document.querySelectorAll(".user-check");
+      checkboxes.forEach(cb => {
+        if (!cb.disabled) cb.checked = isChecked;
+      });
+      updateSelectedUI();
+    }
+
+    function updateSelectedUI() {
+      const count = selectedSet.size;
+      setIfChanged("selectedCount", count);
+      const unfollowBtn = document.getElementById("btnUnfollowSelected");
+      if (unfollowBtn) unfollowBtn.disabled = count === 0 || isBusy;
+    }
+
+    // Backend Bridge Calls
+    async function triggerScan() {
+      if (isBusy) return;
+      scanDataLoaded = false;
+      setLoading(true, "กำลังสแกนบัญชี Instagram...", 0);
+      setIfChanged("statusText", "กำลังเริ่มต้นการสแกน (0%)...");
+      const progDock = document.getElementById("progressSection");
+      if (progDock) {
+        progDock.style.display = "flex";
+        document.getElementById("progressBarFill").style.width = "0%";
+        setIfChanged("progressText", "กำลังเริ่มต้นการสแกน... (0%)");
+        setIfChanged("progressStats", "0%");
+      }
+      
+      try {
+        await window.pywebview.api.request_scan(200);
+      } catch (err) {
+        setLoading(false);
+        if (progDock) progDock.style.display = "none";
+        showToast("ข้อผิดพลาดในการสแกน: " + err, "error");
+      }
+    }
+
+    function updateStats(data) {
+      setIfChanged("statFollowing", data.following_count || 0);
+      setIfChanged("statFollowers", data.followers_count || 0);
+      setIfChanged("statMutual", (data.mutual || []).length);
+      setIfChanged("statNonFollowers", (data.non_followers || []).length);
+      setIfChanged("statProtected", protectedSet.size);
+    }
+
+    async function openChromeBrowser() {
+      await window.pywebview.api.open_browser_window();
+      showToast("เปิดหน้าต่าง Chrome แล้ว");
+    }
+
+    // 1-Click Auto Clean Hero Function
+    async function startOneClickAutoClean() {
+      if (isBusy) return;
+      if (!allNonFollowers || allNonFollowers.length === 0) {
+        showToast("ยังไม่มีข้อมูลรายชื่อ กรุณารอสแกนสักครู่", "info");
+        return;
+      }
+
+      selectedSet.clear();
+      const targets = [];
+      for (const u of allNonFollowers) {
+        if (!protectedSet.has(u.username)) {
+          selectedSet.add(u.username);
+          targets.push({ id: u.id, username: u.username });
+        }
+      }
+
+      // Sync checkbox state in current view
+      document.querySelectorAll(".user-check").forEach(cb => {
+        const u = cb.dataset.uname;
+        if (u && !protectedSet.has(u)) cb.checked = true;
+      });
+      updateSelectedUI();
+
+      if (targets.length === 0) {
+        showToast("ไม่มีบัญชีที่ต้องเลิกติดตาม หรือทั้งหมดอยู่ในรายการคุ้มครอง", "success");
+        return;
+      }
+
+      const speed = document.getElementById("speedMode").value;
+      const speedLabels = {
+        turbo: "Turbo (~1s)",
+        fast: "Fast (~1.5s)",
+        safe: "Safe (~2.5s)"
+      };
+
+      const confirmed = await showModal({
+        title: `1-Click เคลียร์อัตโนมัติ (${targets.length} คน)`,
+        subtitle: `ความเร็ว: ${speedLabels[speed] || speed}`,
+        htmlContent: `
+          <div>ระบบจะทำการเลิกติดตามคนที่ไม่ฟอลกลับ <strong>${targets.length} คน</strong> ให้คุณอัตโนมัติ</div>
+          <div style="margin-top:6px; font-size:0.70rem; color:#a5b4fc;">
+            🛡️ บัญชีที่คุ้มครอง (${protectedSet.size} คน) จะปลอดภัย 100%
+          </div>
+        `,
+        confirmText: `เริ่มเคลียร์ทันที`,
+        confirmClass: "btn-emerald"
+      });
+
+      if (!confirmed) return;
+
+      handledUsers.clear();
+      setExecutingState(true);
+      document.getElementById("progressSection").style.display = "flex";
+      document.getElementById("progressBarFill").style.width = "0%";
+      setIfChanged("progressStats", `0 / ${targets.length}`);
+
+      await window.pywebview.api.request_unfollow_batch(targets, speed);
+    }
+
+    // Unfollow Operations with Custom Modal
+    async function unfollowSingle(userId, uname, fullName) {
+      if (isBusy) return;
+      if (protectedSet.has(uname)) {
+        showToast(`@${uname} อยู่ในรายการคุ้มครอง`, "error");
+        return;
+      }
+
+      const confirmed = await showModal({
+        title: "ยืนยันเลิกติดตาม",
+        subtitle: `@${uname}`,
+        htmlContent: `
+          <div>ต้องการเลิกติดตาม <strong>@${uname}</strong> (${fullName || '-'})?</div>
+        `,
+        confirmText: "เลิกติดตาม",
+        confirmClass: "btn-rose"
+      });
+
+      if (!confirmed) return;
+
+      const speed = document.getElementById("speedMode").value;
+      const targets = [{ id: userId, username: uname }];
+
+      handledUsers.clear();
+      setExecutingState(true);
+      document.getElementById("progressSection").style.display = "flex";
+      setIfChanged("progressText", `กำลังเลิกติดตาม @${uname}...`);
+
+      await window.pywebview.api.request_unfollow_batch(targets, speed);
+    }
+
+    async function unfollowSelected() {
+      if (isBusy || selectedSet.size === 0) return;
+      const selectedUsernames = Array.from(selectedSet);
+
+      const speed = document.getElementById("speedMode").value;
+      const speedLabels = {
+        turbo: "Turbo (~1s)",
+        fast: "Fast (~1.5s)",
+        safe: "Safe (~2.5s)"
+      };
+
+      const confirmed = await showModal({
+        title: `ยืนยันเลิกติดตาม (${selectedUsernames.length} คน)`,
+        subtitle: `ความเร็ว: ${speedLabels[speed] || speed}`,
+        htmlContent: `
+          <div>ระบบจะทำการเลิกติดตามทั้งหมด <strong>${selectedUsernames.length} คน</strong> ที่เลือกไว้</div>
+          <div style="margin-top:5px; font-size:0.70rem; color:#a5b4fc;">
+            🛡️ บัญชีที่คุ้มครองจะปลอดภัย 100%
+          </div>
+        `,
+        confirmText: `เริ่มเลิกติดตาม`,
+        confirmClass: "btn-rose"
+      });
+
+      if (!confirmed) return;
+
+      const targetList = [];
+      for (const uname of selectedUsernames) {
+        const found = allNonFollowers.find(u => u.username === uname);
+        if (found) targetList.push({ id: found.id, username: uname });
+      }
+
+      handledUsers.clear();
+      setExecutingState(true);
+      document.getElementById("progressSection").style.display = "flex";
+      document.getElementById("progressBarFill").style.width = "0%";
+      setIfChanged("progressStats", `0 / ${targetList.length}`);
+
+      await window.pywebview.api.request_unfollow_batch(targetList, speed);
+    }
+
+    async function stopUnfollow() {
+      await window.pywebview.api.stop_unfollow();
+      setIfChanged("progressText", "กำลังหยุดการทำงาน...");
+      showToast("ส่งคำสั่งหยุดแล้ว", "info");
+    }
+
+    function removeUserFromData(uname) {
+      allNonFollowers = allNonFollowers.filter(u => u.username !== uname);
+      selectedSet.delete(uname);
+      const row = document.getElementById(`row-${uname}`);
+      if (row) {
+        row.classList.add("unfollowed");
+        setTimeout(() => row.remove(), 250);
+      }
+      setIfChanged("statNonFollowers", allNonFollowers.length);
+      updateSelectedUI();
+    }
+
+    function setExecutingState(executing) {
+      isBusy = executing;
+      document.getElementById("btnAutoClean").disabled = executing;
+      document.getElementById("btnScan").disabled = executing;
+      document.getElementById("btnUnfollowSelected").style.display = executing ? "none" : "inline-flex";
+      document.getElementById("btnStop").style.display = executing ? "inline-flex" : "none";
+    }
+
+    function setLoading(isLoading, text, pct = 0) {
+      isBusy = isLoading;
+      const container = document.getElementById("userList");
+      if (isLoading) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <div class="spinner"></div>
+            <div style="font-weight:600; color:#fff; display:flex; align-items:center; gap:6px;">
+              <span>${text || 'กำลังดำเนินการ...'}</span>
+              <span id="scanPercentBadge" style="color:var(--emerald); font-variant-numeric: tabular-nums;">${pct}%</span>
+            </div>
+            <div id="scanSubText" style="font-size:0.70rem; color:var(--text-muted);">ระบบทำงานผ่าน In-Session Worker อัตโนมัติ</div>
+          </div>`;
+      }
+    }
+
+    async function exportData(fmt) {
+      const res = await window.pywebview.api.export_data(allNonFollowers, fmt, "non_followers");
+      if (res && res.success) {
+        await showModal({
+          title: "บันทึกข้อมูลเรียบร้อย",
+          subtitle: `ไฟล์ ${fmt.toUpperCase()} บันทึกแล้ว`,
+          htmlContent: `
+            <div>บันทึกไฟล์ไว้ที่:</div>
+            <div style="margin-top:5px; word-break:break-all; font-family:monospace; background:rgba(0,0,0,0.4); padding:5px 7px; border-radius:5px; font-size:0.68rem; color:#38bdf8;">
+              ${res.filepath}
+            </div>
+          `,
+          confirmText: "ตกลง",
+          confirmClass: "btn-ghost",
+          isAlert: true
+        });
+      } else {
+        showToast("ไม่สามารถส่งออกได้: " + (res?.error || ""), "error");
+      }
+    }
+
+    // Debounced Search Input (70ms buffer for buttery smooth typing)
+    const searchInput = document.getElementById("searchInput");
+    const clearBtn = document.getElementById("searchClearBtn");
+    let searchDebounceTimer = null;
+
+    searchInput.addEventListener("input", () => {
+      clearBtn.style.display = searchInput.value ? "block" : "none";
+      clearTimeout(searchDebounceTimer);
+      searchDebounceTimer = setTimeout(() => {
+        renderCurrentList(true);
+      }, 70);
+    });
+
+    function clearSearch() {
+      searchInput.value = "";
+      clearBtn.style.display = "none";
+      renderCurrentList(true);
+      searchInput.focus();
+    }
+
+    // Auto load on scroll
+    const userListScrollEl = document.getElementById("userList");
+    if (userListScrollEl) {
+      let isScrolling = false;
+      userListScrollEl.addEventListener("scroll", () => {
+        if (!isScrolling) {
+          window.requestAnimationFrame(() => {
+            if (userListScrollEl.scrollTop + userListScrollEl.clientHeight >= userListScrollEl.scrollHeight - 60) {
+              if (renderedLimit < getFilteredUsers().length) {
+                loadMoreUsers();
+              }
+            }
+            isScrolling = false;
+          });
+          isScrolling = true;
+        }
+      });
+    }
+
+    // Pure State Polling Loop (0% Deadlock, 100% Reliable)
+    async function pollState() {
+      if (isPolling) return;
+      isPolling = true;
+
+      try {
+        const st = await window.pywebview.api.get_app_state();
+        if (!st) return;
+
+        // 1. Connection / Login Status
+        const statusBadge = document.getElementById("appStatus");
+
+        if (st.logged_in) {
+          statusBadge.classList.remove("connecting", "error");
+          if (st.is_scanning) {
+            const pct = st.scan_percent || 0;
+            const progMsg = st.scan_progress || `กำลังสแกน... (${pct}%)`;
+            setIfChanged("statusText", progMsg);
+
+            // Live progress dock during scan
+            const progDock = document.getElementById("progressSection");
+            if (progDock) {
+              progDock.style.display = "flex";
+              document.getElementById("progressBarFill").style.width = `${pct}%`;
+              setIfChanged("progressText", progMsg);
+              const statsStr = st.scan_total > 0 ? `${st.scan_current}/${st.scan_total} (${pct}%)` : `${pct}%`;
+              setIfChanged("progressStats", statsStr);
+            }
+
+            // Live percent inside empty-state spinner if active
+            const badge = document.getElementById("scanPercentBadge");
+            if (badge) badge.innerText = `${pct}%`;
+            const sub = document.getElementById("scanSubText");
+            if (sub && st.scan_progress) sub.innerText = st.scan_progress;
+          } else if (st.is_unfollowing) {
+            setIfChanged("statusText", "กำลังเลิกติดตาม...");
+          } else {
+            setIfChanged("statusText", "พร้อมใช้งาน (เข้าสู่ระบบแล้ว)");
+          }
+
+          // Auto-trigger scan once logged in
+          if (!autoScanTriggered && !st.scan_has_data && !st.is_scanning) {
+            autoScanTriggered = true;
+            triggerScan();
+          }
+        } else {
+          statusBadge.classList.add("connecting");
+          setIfChanged("statusText", "รอเข้าสู่ระบบใน Chrome...");
+        }
+
+        // 2. Scan Results Retrieval via Bridge
+        if (st.scan_has_data && !scanDataLoaded && !st.is_scanning) {
+          scanDataLoaded = true;
+          setLoading(false);
+          const progDock = document.getElementById("progressSection");
+          if (progDock && !st.is_unfollowing) {
+            document.getElementById("progressBarFill").style.width = "100%";
+            setTimeout(() => {
+              if (!isBusy) progDock.style.display = "none";
+            }, 400);
+          }
+          const res = await window.pywebview.api.get_scan_results();
+          if (res && !res.error) {
+            updateStats(res);
+            allNonFollowers = res.non_followers || [];
+            selectedSet.clear();
+            renderCurrentList(true);
+            updateSelectedUI();
+            playChime("scan_complete");
+            showToast(`สแกนสำเร็จ: พบคนไม่ฟอลกลับ ${allNonFollowers.length} คน`, "success");
+          }
+        }
+
+        // 3. Scan Error Handling
+        if (st.scan_error) {
+          setLoading(false);
+          const progDock = document.getElementById("progressSection");
+          if (progDock && !st.is_unfollowing) progDock.style.display = "none";
+          showToast("เกิดข้อผิดพลาดในการสแกน: " + st.scan_error, "error");
+        }
+
+        // 4. Unfollowing Progress
+        if (st.is_unfollowing && st.unfollow_progress) {
+          const info = st.unfollow_progress;
+          const pct = Math.round((info.index / info.total) * 100);
+          document.getElementById("progressBarFill").style.width = `${pct}%`;
+          setIfChanged("progressStats", `${info.index} / ${info.total} (สำเร็จ: ${info.success_count} | ข้าม: ${info.failed_count})`);
+          setIfChanged("progressText", `(${info.index}/${info.total}) เลิกติดตาม @${info.username}...`);
+
+          if (info.success && !handledUsers.has(info.username)) {
+            handledUsers.add(info.username);
+            removeUserFromData(info.username);
+          }
+        }
+
+        // 5. Unfollow Finished Handling
+        if (st.unfollow_finished) {
+          const summary = st.unfollow_finished;
+          await window.pywebview.api.ack_unfollow_finished();
+          setExecutingState(false);
+          document.getElementById("progressSection").style.display = "none";
+          playChime("success");
+
+          const isAbort = summary.aborted;
+          await showModal({
+            title: isAbort ? "หยุดการทำงานแล้ว" : "เสร็จสิ้นเรียบร้อย!",
+            subtitle: isAbort ? "คุณสั่งหยุดการทำงานก่อนกำหนด" : "ทำรายการครบทุกบัญชีแล้ว",
+            htmlContent: `
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-top:2px;">
+                <div style="background:var(--emerald-subtle); border:1px solid var(--emerald-border); border-radius:6px; padding:6px; text-align:center;">
+                  <div style="color:var(--text-secondary); font-size:0.68rem;">สำเร็จ</div>
+                  <div style="color:#34d399; font-size:1.1rem; font-weight:700;">${summary.success}</div>
+                </div>
+                <div style="background:var(--rose-subtle); border:1px solid var(--rose-border); border-radius:6px; padding:6px; text-align:center;">
+                  <div style="color:var(--text-secondary); font-size:0.68rem;">ผิดพลาด / ข้าม</div>
+                  <div style="color:#fb7185; font-size:1.1rem; font-weight:700;">${summary.failed}</div>
+                </div>
+              </div>
+            `,
+            confirmText: "ตกลง",
+            confirmClass: "btn-ghost",
+            isAlert: true
+          });
+        }
+
+      } catch (e) {
+        // Suppress transient poll errors
+      } finally {
+        isPolling = false;
+      }
+    }
+
+    // Fully Automatic Initializer
+    window.addEventListener('pywebviewready', async () => {
+      saveProtected();
+      document.getElementById("soundIcon").innerText = soundEnabled ? "🔊" : "🔇";
+      try {
+        if (window.pywebview && window.pywebview.api && window.pywebview.api.get_version_info) {
+          const info = await window.pywebview.api.get_version_info();
+          if (info && info.version) {
+            document.title = info.title || `UnfollowX PRO v${info.version}`;
+            const badge = document.querySelector('.brand-badge');
+            if (badge) badge.textContent = `PRO v${info.version}`;
+          }
+        }
+      } catch (e) {
+        console.warn('Could not fetch version info', e);
+      }
+      setInterval(pollState, 350);
+    });
+  </script>
+</body>
+</html>
