@@ -22,13 +22,13 @@ try:
 except ImportError:
     VERSION = "0.0.1"
     APP_NAME = "UnfollowX PRO"
-    AUTHOR = "ZirconX"
+    AUTHOR = "ZXD44"
 
 APP_VERSION = VERSION
 APP_TITLE = f"{APP_NAME} v{APP_VERSION} — By {AUTHOR}"
 
 # 1. Base and Profile Paths
-APPDATA_DIR = os.path.join(os.environ.get("LOCALAPPDATA", os.path.expanduser("~")), "ZirconX-IG-Cleaner")
+APPDATA_DIR = os.path.join(os.environ.get("LOCALAPPDATA", os.path.expanduser("~")), "ZXD44-IG-Cleaner")
 PROFILE_DIR = os.path.join(APPDATA_DIR, "browser_profile")
 os.makedirs(PROFILE_DIR, exist_ok=True)
 
@@ -224,7 +224,7 @@ class API:
         return {
             "version": APP_VERSION,
             "title": APP_TITLE,
-            "author": AUTHOR if "AUTHOR" in globals() else "ZirconX"
+            "author": AUTHOR if "AUTHOR" in globals() else "ZXD44"
         }
 
     def get_app_state(self):

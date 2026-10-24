@@ -1,10 +1,10 @@
-# 🚀 UnfollowX PRO v0.0.1 — By ZirconX
+# 🚀 UnfollowX PRO v0.0.1 — By ZXD44
 
 > **เครื่องมือตรวจสอบและเลิกติดตามผู้ที่ไม่ติดตามกลับบน Instagram อัตโนมัติ ปลอดภัย 100% ด้วย Python Engine + Playwright + PyWebView**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](../LICENSE)
 [![Version](https://img.shields.io/badge/Version-0.0.1-purple.svg)](version.py)
-[![Author](https://img.shields.io/badge/Creator-ZirconX-f43f5e.svg)](https://github.com/ZXD44)
+[![Author](https://img.shields.io/badge/Creator-ZXD44-f43f5e.svg)](https://github.com/ZXD44)
 [![GitHub](https://img.shields.io/badge/GitHub-ZXD44%2FUnfollowX-indigo.svg)](https://github.com/ZXD44/UnfollowX)
 
 ---
@@ -12,7 +12,7 @@
 ## 📂 โครงสร้างแฟ้มไฟล์โปรเจกต์ (Project Structure)
 
 ```
-ZirconX-IG-Cleaner-Pro-v3.0/
+UnfollowX/
 ├── UnfollowX.exe                      # 🚀 โปรแกรมหลักพร้อมใช้งานทันที (Standalone Windows Executable)
 ├── HOW_TO_USE.txt                     # 📖 คู่มือวิธีใช้งานฉบับย่อสำหรับผู้ใช้ทั่วไป
 ├── set_version.py                     # ⚡ เครื่องมือจัดการเวอร์ชันและสั่ง Build อัตโนมัติใน 1 คำสั่ง

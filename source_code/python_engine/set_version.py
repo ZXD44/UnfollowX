@@ -70,11 +70,11 @@ VSVersionInfo(
         StringTable(
           '040904B0',
           [
-            StringStruct('CompanyName', 'ZirconX'),
+            StringStruct('CompanyName', 'ZXD44'),
             StringStruct('FileDescription', 'UnfollowX PRO — Automatic Instagram Cleaner'),
             StringStruct('FileVersion', '{file_ver_str}'),
             StringStruct('InternalName', 'UnfollowX'),
-            StringStruct('LegalCopyright', 'Copyright © 2026 ZirconX. All rights reserved.'),
+            StringStruct('LegalCopyright', 'Copyright © 2026 ZXD44. All rights reserved.'),
             StringStruct('OriginalFilename', 'UnfollowX.exe'),
             StringStruct('ProductName', 'UnfollowX PRO'),
             StringStruct('ProductVersion', '{ver_str}')

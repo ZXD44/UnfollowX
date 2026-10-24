@@ -230,4 +230,4 @@ python source_code/python_engine/gui_app.py
 
 Distributed under the [MIT License](LICENSE).
 
-Crafted and maintained with ❤️ by **[ZirconX](https://github.com/ZXD44)** — If you find this project helpful, please consider leaving a **⭐ Star**!
+Crafted and maintained with ❤️ by **[ZXD44](https://github.com/ZXD44)** — If you find this project helpful, please consider leaving a **⭐ Star**!
