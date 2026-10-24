@@ -84,24 +84,22 @@ If the window hangs or shows `(Not Responding)`:
 
 ---
 
-### SOP 4: Bumping Version & Rebuilding Executable
+### SOP 4: Bumping Version, Rebuilding & Publishing Release
 
-The project uses a single-command automation pipeline [set_version.py](file:///C:/Users/ZirconX/Desktop/Ads%20Dis/ZirconX-IG-Cleaner-Pro-v3.0/set_version.py):
+The project uses a complete 1-command automation pipeline [set_version.py](file:///C:/Users/ZirconX/Desktop/Ads%20Dis/ZirconX-IG-Cleaner-Pro-v3.0/set_version.py) that handles everything from bump to compilation, git push, and GitHub Release asset upload:
 
 ```powershell
-# Step 1: Bump version and compile executable automatically
-python set_version.py 0.0.2 --build
-
-# Step 2: Verify binary properties
-(Get-Item ".\UnfollowX.exe").VersionInfo | Format-List ProductVersion, FileVersion, CompanyName
+# Complete 1-Command Automated Pipeline (Bump + Build + Push + GitHub Release + Asset Upload):
+python set_version.py 0.0.2 --build --release
 ```
 
-**What `set_version.py` updates automatically:**
-- [version.py](file:///C:/Users/ZirconX/Desktop/Ads%20Dis/ZirconX-IG-Cleaner-Pro-v3.0/source_code/python_engine/version.py): Python version constant.
-- [version_info.txt](file:///C:/Users/ZirconX/Desktop/Ads%20Dis/ZirconX-IG-Cleaner-Pro-v3.0/source_code/python_engine/version_info.txt): Windows PE metadata (FileVersion & ProductVersion).
-- [HOW_TO_USE.txt](file:///C:/Users/ZirconX/Desktop/Ads%20Dis/ZirconX-IG-Cleaner-Pro-v3.0/HOW_TO_USE.txt): Header banner.
-- [.agent/README.md](file:///C:/Users/ZirconX/Desktop/Ads%20Dis/ZirconX-IG-Cleaner-Pro-v3.0/.agent/README.md): Documentation header.
-- Compiles via PyInstaller and deploys `UnfollowX.exe` to root.
+**What this single command executes end-to-end:**
+1. **Version Synchronization**: Updates `version.py`, `version_info.txt`, `HOW_TO_USE.txt`, and `.agent/README.md`.
+2. **EXE Compilation**: Compiles `UnfollowX.exe` with Windows PE metadata and copies to root.
+3. **Git Commit & Tag**: Commits under `ZXD44 <zxd44@users.noreply.github.com>` and tags `v0.0.2`.
+4. **Push to GitHub**: Pushes commit and tag to `https://github.com/ZXD44/UnfollowX.git`.
+5. **Publish GitHub Release**: Calls GitHub API to create/update release on `https://github.com/ZXD44/UnfollowX/releases` with beautiful bilingual release notes.
+6. **Upload Binary Asset**: Uploads `UnfollowX.exe` directly to the release assets.
 
 ---
 

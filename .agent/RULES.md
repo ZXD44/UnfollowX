@@ -66,6 +66,7 @@ The automation worker must immediately halt and notify the user if:
 - **Accent**: Indigo/Violet (`#6366f1` / `#818cf8`), Emerald (`#10b981`), Amber (`#f59e0b`), Rose (`#f43f5e`).
 - **Compactness**: Compact headers (≤ 38px), dense tables (≤ 34px row height), zero fluff, no wasted whitespace.
 - **Offline Self-Containment**: Zero external CDN calls (`unpkg`, `cdnjs`, Google Fonts). All styles, SVG icons, and audio synth must run 100% offline.
+- **Bilingual Requirement**: All text elements MUST support both Thai (Primary) and English via the `I18N` engine.
 
 ### 3.2 Feedback & Telemetry
 - Always provide live progress percentage indicators for long-running tasks.
@@ -82,3 +83,21 @@ The automation worker must immediately halt and notify the user if:
 - Exclude unnecessary heavy libraries (e.g. `numpy`, `scipy`, `matplotlib`) to keep EXE size under 60MB.
 - Embed `version_info.txt` into the EXE specification.
 - Output executable name: `UnfollowX.exe`.
+
+---
+
+## 5. Post-Build Version Bump & GitHub Release Protocol (MANDATORY)
+
+Whenever a new version is created or an executable is compiled:
+1. **Automated 1-Command Pipeline**:
+   The agent or developer MUST run:
+   ```powershell
+   python set_version.py <version> --build --release
+   ```
+2. **Mandatory Protocol Requirements**:
+   - **Version Sync**: Synchronize version in `version.py`, `version_info.txt`, `HOW_TO_USE.txt`, and `.agent/README.md`.
+   - **Standalone Compilation**: Build `UnfollowX.exe` and deploy directly to project root.
+   - **Git Commit & Tag**: Commit under author `ZXD44 <zxd44@users.noreply.github.com>` and create tag `v<version>`.
+   - **Push to GitHub**: Push commits and tags to `https://github.com/ZXD44/UnfollowX.git`.
+   - **GitHub Release Publishing**: Automatically create or update the GitHub Release on `https://github.com/ZXD44/UnfollowX/releases` with rich bilingual (Thai & English) release notes.
+   - **Binary Asset Upload**: Upload `UnfollowX.exe` (~51MB) directly to the release assets so users can immediately download and run it without needing Python.
