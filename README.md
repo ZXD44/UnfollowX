@@ -1,14 +1,12 @@
-<div align="right">
-  <strong>🌐 Language / ภาษา:</strong>
-  <a href="README.md"><strong>🇹🇭 ภาษาไทย (หลัก)</strong></a> |
-  <a href="README_EN.md">🇬🇧 English</a>
-</div>
-
 <p align="center">
   <h1 align="center">🚀 UnfollowX PRO</h1>
   <p align="center">
-    <strong>เครื่องมือตรวจสอบและเลิกติดตามผู้ที่ไม่ติดตามกลับบน Instagram อัตโนมัติ</strong><br>
-    <em>ออกแบบด้วยสถาปัตยกรรมความปลอดภัยสูงสุด ทำงานผ่านเบราว์เซอร์จริง ปลอดภัย ไร้กังวล 100%</em>
+    <strong>เครื่องมือตรวจสอบและเลิกติดตามผู้ที่ไม่ติดตามกลับบน Instagram อัตโนมัติ (ปลอดภัย 100%)</strong><br>
+    <em>Modern, Safety-First Instagram Non-Follower Cleaner & Relationship Auditor</em>
+  </p>
+  <p align="center">
+    <a href="#-ภาษาไทย-ฉบับสมบูรณ์">🇹🇭 <strong>อ่านภาษาไทย (หลัก)</strong></a> &nbsp;&nbsp;|&nbsp;&nbsp;
+    <a href="#-english-complete-guide">🇬🇧 <strong>Read in English</strong></a>
   </p>
 </p>
 
@@ -22,7 +20,11 @@
 
 ---
 
-## 📖 สารบัญ (Table of Contents)
+# 🇹🇭 ภาษาไทย (ฉบับสมบูรณ์)
+
+> เครื่องมือ Desktop Automation อัจฉริยะสำหรับตรวจสอบบัญชีที่ไม่ได้ติดตามคุณกลับบน Instagram ทำงานผ่านเบราว์เซอร์จริง ปลอดภัยสูงสุด 100% ไร้ปัญหาหน้าต่างค้าง (Not Responding)
+
+## 📖 สารบัญ
 * [จุดเด่นและฟีเจอร์ระดับ Pro](#-จุดเด่นและฟีเจอร์ระดับ-pro)
 * [แผนผังสถาปัตยกรรมระบบ (Architecture)](#-แผนผังสถาปัตยกรรมระบบ-architecture)
 * [วิธีติดตั้งและเริ่มใช้งาน (Quick Start)](#-วิธีติดตั้งและเริ่มใช้งาน-quick-start)
@@ -30,7 +32,6 @@
 * [ตารางเปรียบเทียบโหมดความเร็ว (Speed Modes)](#-ตารางเปรียบเทียบโหมดความเร็ว-speed-modes)
 * [โครงสร้างแฟ้มไฟล์โปรเจกต์ (Project Tree)](#-โครงสร้างแฟ้มไฟล์โปรเจกต์-project-tree)
 * [ข้อควรระวังและความปลอดภัย (Safety Rules)](#-ข้อควรระวังและความปลอดภัย-safety-rules)
-* [ใบอนุญาตและการสนับสนุน (License)](#-ใบอนุญาตและการสนับสนุน-license)
 
 ---
 
@@ -67,7 +68,7 @@ graph LR
 
 ## 🚀 วิธีติดตั้งและเริ่มใช้งาน (Quick Start)
 
-### วิธีที่ 1: ดาวน์โหลดโปรแกรมพร้อมใช้งาน (.exe) — สะดวกที่สุด
+### วิธีที่ 1: ดาวน์โหลดโปรแกรมพร้อมใช้งาน (.exe) — แนะนำ
 1. เข้าไปที่หน้า [**Releases**](https://github.com/ZXD44/UnfollowX/releases) บน GitHub
 2. ดาวน์โหลดไฟล์ `UnfollowX.exe` เวอร์ชันล่าสุด
 3. ดับเบิลคลิกเปิดใช้งานได้ทันที (ไม่ต้องติดตั้ง Python หรือโปรแกรมอื่นเพิ่มเติม)
@@ -122,8 +123,7 @@ python set_version.py 0.0.2 --build
 ```
 UnfollowX/
 ├── LICENSE                            # 📜 สัญญาอนุญาต MIT License สากล
-├── README.md                          # 📖 คู่มือภาษาไทย (หลัก)
-├── README_EN.md                       # 📖 คู่มือภาษาอังกฤษ (English Edition)
+├── README.md                          # 📖 เอกสารแนะนำโปรเจกต์หลัก (ไทย & อังกฤษ รวมในไฟล์เดียว)
 ├── HOW_TO_USE.txt                     # 📖 คู่มือการใช้งานสำหรับผู้ใช้ทั่วไป
 ├── set_version.py                     # ⚡ เครื่องมือจัดการเวอร์ชันและคอมไพล์อัตโนมัติ
 ├── .gitignore                         # กำหนดไฟล์ที่ไม่ต้อง push ขึ้น Git
@@ -153,9 +153,81 @@ UnfollowX/
 * **การเว้นระยะ**: ควรพักการทำงานอย่างน้อย 1-2 ชั่วโมงหลังจากการเลิกติดตามแต่ละชุด
 
 ---
+---
 
-## 📄 ใบอนุญาตและการสนับสนุน (License)
+# 🇬🇧 English (Complete Guide)
 
-โปรเจกต์นี้เผยแพร่ภายใต้ใบอนุญาต [MIT License](LICENSE) สามารถนำไปต่อยอด แก้ไข และใช้งานได้อย่างอิสระ
+> Intelligent, high-performance desktop utility engineered to audit Instagram relationships, identify non-followers with live percentage telemetry, and safely automate unfollow batches through real browser sessions.
 
-พัฒนาและดูแลโดย **[ZirconX](https://github.com/ZXD44)** — หากชื่นชอบโปรเจกต์นี้ อย่าลืมกด **⭐ Star** บน GitHub เพื่อเป็นกำลังใจ!
+## 📖 Table of Contents
+* [Pro Highlights & Features](#-pro-highlights--features-1)
+* [Quick Start Guide](#-quick-start-guide-1)
+* [Speed Modes & Safety Thresholds](#-speed-modes--safety-thresholds)
+* [Security & Responsible Automation](#-security--responsible-automation)
+* [License & Author](#-license--author)
+
+---
+
+## ✨ Pro Highlights & Features
+
+| Category | Feature | Technical Explanation |
+| :--- | :--- | :--- |
+| 🌐 **Bilingual System** | Built-in Dual Language | Toggle between **Thai (Default) / English** on-the-fly with persistent `localStorage` memory. |
+| 🎨 **Impeccable UI** | Obsidian Dark Interface | Compact mini dashboard adhering to [impeccable.style](https://impeccable.style/) principles. 60FPS smooth rendering. |
+| ⚡ **Live Telemetry** | Real-Time Scan Progress `0-100%` | Progress percentage streamed directly from browser execution context to the UI. |
+| 🛡️ **Anti-Freeze Tech** | 100% Freeze Prevention | Resolves WinForms `.NET` Deadlocks via pull-based asynchronous state polling & Win32 API isolation. |
+| 📌 **Always-on-Top** | Window Pinning | Float the application above all other windows to monitor background progress effortlessly. |
+| 🔊 **Audio Synthesizer** | Pure Web Audio Chimes | Generates pleasant sine-wave notifications with zero external MP3/audio file dependencies. |
+| 🛡️ **Smart Whitelist** | VIP & Friend Protection | Click the shield `🛡️` to permanently protect specific accounts from automated unfollowing. |
+| 📜 **Audit History** | Historical Action Logging | Built-in immutable audit log to review past unfollow operations with CSV export support. |
+
+---
+
+## 🚀 Quick Start Guide
+
+### Option 1: Standalone Windows Executable (.exe) — Recommended
+1. Head to the [**Releases**](https://github.com/ZXD44/UnfollowX/releases) section.
+2. Download the latest `UnfollowX.exe` asset.
+3. Double-click to run (zero installation or Python dependencies needed).
+
+### Option 2: Run from Source (For Developers)
+```powershell
+# 1. Clone this repository
+git clone https://github.com/ZXD44/UnfollowX.git
+cd UnfollowX
+
+# 2. Install required Python packages
+pip install -r source_code/python_engine/requirements.txt
+
+# 3. Install Playwright Chromium browser
+playwright install chromium
+
+# 4. Launch the application
+python source_code/python_engine/gui_app.py
+```
+
+---
+
+## ⚙️ Speed Modes & Safety Thresholds
+
+| Speed Mode | Delay Per Target | Safety Level | Recommended Usage |
+| :---: | :---: | :---: | :--- |
+| ⚡ **Turbo** | 0.8 - 1.2 seconds | Moderate | Suitable for established accounts or small batches (≤ 30 targets). |
+| 🚀 **Fast** | 1.2 - 1.8 seconds | High | Standard recommended mode for routine cleanups. |
+| 🛡️ **Safe** | 2.0 - 3.2 seconds | Maximum | Ideal for newer accounts or larger batches (prevents Action Blocks). |
+
+---
+
+## 🛡️ Security & Responsible Automation
+
+* **Zero Password Collection**: UnfollowX never prompts for or stores your credentials. Authentication is handled directly inside the real Chromium browser session.
+* **Daily Action Guardrails**: To comply with Instagram's anti-spam heuristics, avoid unfollowing more than **100-150 accounts per 24-hour cycle**.
+* **Cooldown Periods**: Always allow 1-2 hours of cooldown between multiple batches.
+
+---
+
+## 📄 License & Author
+
+Distributed under the [MIT License](LICENSE).
+
+Crafted and maintained with ❤️ by **[ZirconX](https://github.com/ZXD44)** — If you find this project helpful, please consider leaving a **⭐ Star**!
