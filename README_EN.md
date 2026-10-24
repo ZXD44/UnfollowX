@@ -4,105 +4,158 @@
   <a href="README_EN.md"><strong>🇬🇧 English</strong></a>
 </div>
 
-# 🚀 UnfollowX PRO v0.0.1 — By ZirconX
+<p align="center">
+  <h1 align="center">🚀 UnfollowX PRO</h1>
+  <p align="center">
+    <strong>Modern, Safety-First Instagram Non-Follower Cleaner & Relationship Auditor</strong><br>
+    <em>Engineered with Playwright automation, real browser sessions, and zero-deadlock desktop architecture.</em>
+  </p>
+</p>
 
-> **Automated, safe, and modern Instagram Non-Follower Cleaner powered by Python Engine + Playwright + PyWebView**
-
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/Version-0.0.1-purple.svg)](source_code/python_engine/version.py)
-[![Architecture](https://img.shields.io/badge/Arch-PyWebView%20%2B%20Playwright-indigo.svg)](.agent/ARCHITECTURE.md)
-[![Language](https://img.shields.io/badge/Language-TH%20%7C%20EN-blue.svg)](README.md)
-[![Platform](https://img.shields.io/badge/Platform-Windows%2010%20%7C%2011-emerald.svg)](HOW_TO_USE.txt)
+<p align="center">
+  <a href="https://github.com/ZXD44/UnfollowX/releases"><img src="https://img.shields.io/github/v/release/ZXD44/UnfollowX?color=6366f1&style=for-the-badge&logo=github" alt="GitHub Release"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-10b981.svg?style=for-the-badge" alt="License"></a>
+  <a href="https://python.org"><img src="https://img.shields.io/badge/Python-3.10%2B-3b82f6.svg?style=for-the-badge&logo=python" alt="Python"></a>
+  <a href="https://playwright.dev"><img src="https://img.shields.io/badge/Engine-Playwright-f43f5e.svg?style=for-the-badge&logo=playwright" alt="Playwright"></a>
+  <a href="https://github.com/ZXD44/UnfollowX/stargazers"><img src="https://img.shields.io/github/stars/ZXD44/UnfollowX?style=for-the-badge&color=f59e0b" alt="Stars"></a>
+</p>
 
 ---
 
-## ✨ Key Features
+## 📖 Table of Contents
+* [Pro Highlights & Features](#-pro-highlights--features)
+* [System Architecture](#-system-architecture)
+* [Quick Start Guide](#-quick-start-guide)
+* [Version Manager & Build Automation](#-version-manager--build-automation)
+* [Speed Modes & Safety Matrix](#-speed-modes--safety-matrix)
+* [Project Directory Structure](#-project-directory-structure)
+* [Security & Account Safety](#-security--account-safety)
+* [License & Author](#-license--author)
 
-* 🌐 **Bilingual System (Thai & English)**: Toggle between `🇹🇭 TH` and `🇬🇧 EN` instantly with persistent language memory (Thai default).
-* 🎨 **Impeccable Obsidian Dark UI**: Compact, high-density mini dashboard inspired by [impeccable.style](https://impeccable.style/).
-* ⚡ **Live Real-time Scan %**: Real-time progress bar streaming directly from the browser context (`0% - 100%`).
-* 🛡️ **Zero Freeze / Deadlock Architecture**: Resolves WinForms UI deadlocks with async pull state polling and Win32 API isolation.
-* 📌 **Always-on-Top Window Pinning**: Keep the window floating above other windows while multitasking.
-* 🔊 **Web Audio Synthesizer**: Pure sine-wave feedback sounds with zero external audio dependencies.
-* 📜 **Audit History & Whitelist**: Keep track of all unfollow actions and protect important creators/friends with 1-click protection.
-* 🔐 **100% Account Safety**: Uses actual persistent Chromium user data. Never requires passwords inside the app; features randomized jitter delays to prevent Instagram Action Blocks.
+---
+
+## ✨ Pro Highlights & Features
+
+| Category | Feature | Technical Explanation |
+| :--- | :--- | :--- |
+| 🌐 **Bilingual System** | Built-in Dual Language | Toggle between **Thai (Default) / English** on-the-fly with persistent `localStorage` memory. |
+| 🎨 **Impeccable UI** | Obsidian Dark Interface | Compact mini dashboard adhering to [impeccable.style](https://impeccable.style/) principles. 60FPS smooth rendering. |
+| ⚡ **Live Telemetry** | Real-Time Scan Progress `0-100%` | Progress percentage streamed directly from browser execution context to the UI. |
+| 🛡️ **Anti-Freeze Tech** | 100% Freeze Prevention | Resolves WinForms `.NET` Deadlocks via pull-based asynchronous state polling & Win32 API isolation. |
+| 📌 **Always-on-Top** | Window Pinning | Float the application above all other windows to monitor background progress effortlessly. |
+| 🔊 **Audio Synthesizer** | Pure Web Audio Chimes | Generates pleasant sine-wave notifications with zero external MP3/audio file dependencies. |
+| 🛡️ **Smart Whitelist** | VIP & Friend Protection | Click the shield `🛡️` to permanently protect specific accounts from automated unfollowing. |
+| 📜 **Audit History** | Historical Action Logging | Built-in immutable audit log to review past unfollow operations with CSV export support. |
+
+---
+
+## 🏛️ System Architecture
+
+```mermaid
+graph LR
+    UI["🖥️ Obsidian UI<br/>(gui_template.html)"]
+    Bridge["⚡ PyWebView API Bridge<br/>(gui_app.py)"]
+    Engine["🤖 Playwright Engine<br/>(Chromium Background)"]
+    IG["📸 Instagram Official API<br/>(Friendship / GraphQL)"]
+
+    UI <-->|"JSON-RPC / State Pull"| Bridge
+    Bridge <-->|"Async Threading"| Engine
+    Engine <-->|"In-Session Authenticated Requests"| IG
+```
 
 ---
 
 ## 🚀 Quick Start Guide
 
-### Method 1: Pre-compiled Executable (.exe)
-1. Download or launch `UnfollowX.exe`.
-2. Click **"Chrome"** to open the browser and log in to Instagram normally (handles 2FA, OTP, and captcha).
-3. Once logged in, return to UnfollowX and click **"Scan"**.
-4. Review the detected non-followers list, protect accounts if needed (`🛡️`), and click **"1-Click Clean"** or **"Unfollow Selected"**.
+### Option 1: Standalone Windows Executable (.exe) — Recommended
+1. Head to the [**Releases**](https://github.com/ZXD44/UnfollowX/releases) section.
+2. Download the latest `UnfollowX.exe` asset.
+3. Double-click to run (zero installation or Python dependencies needed).
 
-### Method 2: Run from Source (For Developers)
+### Option 2: Run from Source (For Developers)
 ```powershell
-# 1. Install dependencies
-pip install -r source_code\python_engine\requirements.txt
+# 1. Clone this repository
+git clone https://github.com/ZXD44/UnfollowX.git
+cd UnfollowX
 
-# 2. Install Playwright Chromium
+# 2. Install required Python packages
+pip install -r source_code/python_engine/requirements.txt
+
+# 3. Install Playwright Chromium browser
 playwright install chromium
 
-# 3. Launch application
-python source_code\python_engine\gui_app.py
+# 4. Launch the application
+python source_code/python_engine/gui_app.py
 ```
 
 ---
 
-## 🛠️ Version Manager & Build Automation
+## ⚡ Version Manager & Build Automation
 
-UnfollowX includes a single-source-of-truth version management tool [set_version.py](file:///C:/Users/ZirconX/Desktop/Ads%20Dis/ZirconX-IG-Cleaner-Pro-v3.0/set_version.py):
+UnfollowX comes with a CLI single-source-of-truth version management script:
 
 ```powershell
-# Check current version
+# Display current version
 python set_version.py
 
-# Bump version across all files
+# Bump version across all files and documentation
 python set_version.py 0.0.2
 
-# Bump version AND build executable in one single command
+# Bump version AND compile new standalone UnfollowX.exe in one command
 python set_version.py 0.0.2 --build
 ```
 
 ---
 
-## 📂 Repository Structure
+## ⚙️ Speed Modes & Safety Matrix
+
+| Speed Mode | Delay Per Target | Safety Level | Recommended Usage |
+| :---: | :---: | :---: | :--- |
+| ⚡ **Turbo** | 0.8 - 1.2 seconds | Moderate | Suitable for established accounts or small batches (≤ 30 targets). |
+| 🚀 **Fast** | 1.2 - 1.8 seconds | High | Standard recommended mode for routine cleanups. |
+| 🛡️ **Safe** | 2.0 - 3.2 seconds | Maximum | Ideal for newer accounts or larger batches (prevents Action Blocks). |
+
+---
+
+## 📂 Project Directory Structure
 
 ```
-ZirconX-IG-Cleaner-Pro-v3.0/
+UnfollowX/
 ├── LICENSE                            # 📜 MIT License
-├── README.md                          # 📖 Main Documentation (Thai - Default)
+├── README.md                          # 📖 Thai Documentation (Default)
 ├── README_EN.md                       # 📖 English Documentation (This file)
-├── HOW_TO_USE.txt                     # 📖 User Quick Guide (Bilingual TH / EN)
+├── HOW_TO_USE.txt                     # 📖 Simple bilingual user instructions
 ├── set_version.py                     # ⚡ Version Manager & Build CLI
-├── .gitignore                         # Git exclusion rules
-├── .agent/                            # 🤖 Internal System Rules & Architecture
-│   ├── README.md                      # Directory index
-│   ├── RULES.md                       # Security, Threading & Bridge constraints
-│   ├── ARCHITECTURE.md                # System diagrams & Data workflows
-│   └── GUIDE.md                       # Testing, building & debugging guide
-└── source_code/                       # 💻 Complete source code
-    ├── README.md                      # Source code overview
+├── .gitignore                         # Build and temporary files exclusion
+├── .agent/                            # 🤖 In-depth agent & developer rules
+│   ├── README.md                      # Index
+│   ├── RULES.md                       # Critical safety rules & JS bridge boundaries
+│   ├── ARCHITECTURE.md                # System diagrams & Data flows
+│   └── GUIDE.md                       # Testing, building, and debugging guides
+└── source_code/                       # 💻 Complete source codebase
+    ├── README.md                      # Source overview
     └── python_engine/
         ├── gui_app.py                 # Core Controller (Playwright + PyWebView)
-        ├── gui_template.html          # Obsidian Dark Mini UI (i18n engine)
+        ├── gui_template.html          # Obsidian Dark Minimalist Interface
         ├── version.py                 # Single Source of Truth for version
-        ├── version_info.txt           # Windows Executable metadata
+        ├── version_info.txt           # Windows Executable File Metadata
         ├── set_version.py             # Engine version sync script
-        ├── build_gui_exe.spec         # PyInstaller Spec
-        └── requirements.txt           # Python dependencies
+        ├── build_gui_exe.spec         # PyInstaller Configuration
+        └── requirements.txt           # Python Dependencies
 ```
 
 ---
 
-## ⚖️ Disclaimer
+## 🛡️ Security & Account Safety
 
-This software is developed strictly for educational and personal account organization purposes. Always abide by Instagram's terms of service. Recommended daily unfollow limit: 100-150 accounts with 15-35s delays. The developers assume no liability for misuse.
+* **Zero Password Collection**: UnfollowX never prompts for or stores your credentials. Authentication is handled directly inside the real Chromium browser session.
+* **Daily Action Guardrails**: To comply with Instagram's anti-spam heuristics, avoid unfollowing more than **100-150 accounts per 24-hour cycle**.
+* **Cooldown Periods**: Always allow 1-2 hours of cooldown between multiple batches.
 
 ---
 
-## 📄 License
+## 📄 License & Author
 
-This project is licensed under the [MIT License](LICENSE).
+Distributed under the [MIT License](LICENSE).
+
+Crafted and maintained with ❤️ by **[ZirconX](https://github.com/ZXD44)** — If you find this project helpful, please consider leaving a **⭐ Star**!

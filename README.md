@@ -4,104 +4,158 @@
   <a href="README_EN.md">🇬🇧 English</a>
 </div>
 
-# 🚀 UnfollowX PRO v0.0.1 — By ZirconX
+<p align="center">
+  <h1 align="center">🚀 UnfollowX PRO</h1>
+  <p align="center">
+    <strong>เครื่องมือตรวจสอบและเลิกติดตามผู้ที่ไม่ติดตามกลับบน Instagram อัตโนมัติ</strong><br>
+    <em>ออกแบบด้วยสถาปัตยกรรมความปลอดภัยสูงสุด ทำงานผ่านเบราว์เซอร์จริง ปลอดภัย ไร้กังวล 100%</em>
+  </p>
+</p>
 
-> **เครื่องมือตรวจสอบและเลิกติดตามผู้ที่ไม่ติดตามกลับบน Instagram อัตโนมัติ ปลอดภัย 100% ด้วย Python Engine + Playwright + PyWebView**
-
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/Version-0.0.1-purple.svg)](source_code/python_engine/version.py)
-[![Architecture](https://img.shields.io/badge/Arch-PyWebView%20%2B%20Playwright-indigo.svg)](.agent/ARCHITECTURE.md)
-[![Language](https://img.shields.io/badge/Language-TH%20%7C%20EN-blue.svg)](README_EN.md)
-[![Platform](https://img.shields.io/badge/Platform-Windows%2010%20%7C%2011-emerald.svg)](HOW_TO_USE.txt)
-
----
-
-## ✨ ไฮไลท์ฟีเจอร์เด่น (Key Features)
-
-* 🌐 **Bilingual System (ระบบ 2 ภาษา)**: มีปุ่มสลับภาษา `🇹🇭 TH | 🇬🇧 EN` บนหน้าโปรแกรม เปลี่ยนภาษาได้ทันทีและจำค่าถาวร (ตั้งต้นเป็นภาษาไทย)
-* 🎨 **Impeccable Obsidian Dark UI**: หน้ากากแบบ Mini Dashboard ขนาดกะทัดรัด สไตล์กระจกดำหรูหรา ใช้งานลื่นไหล ไม่กินพื้นที่หน้าจอ
-* ⚡ **Live Real-time Scan %**: แสดงหลอดความคืบหน้าการสแกนแบบเรียลไทม์ `0% - 100%` จากเบราว์เซอร์ตรงสู่หน้าจอ
-* 🛡️ **Zero Freeze / Deadlock Architecture**: แก้ปัญหา WinForms UI Deadlock 100% ด้วย Async Pull State Polling และ Win32 API Isolation
-* 📌 **Always-on-Top (โหมดปักหมุด)**: ตรึงหน้าต่างให้อยู่บนสุดตลอดเวลาขณะสลับทำงานอื่น
-* 🔊 **Web Audio Synthesizer**: สังเคราะห์เสียงเอฟเฟกต์แจ้งเตือนระดับ Sine Wave สบายหู ไม่ต้องใช้ไฟล์เสียงภายนอก
-* 📜 **Audit History & Whitelist**: บันทึกประวัติการเลิกติดตามย้อนหลัง และมีระบบปกป้องเพื่อน/คนสำคัญไม่ให้ถูกเผลอเลิกติดตาม
-* 🔐 **100% Account Safety**: ทำงานผ่าน Chrome Profile จริง ไม่ต้องกรอกรหัสผ่านในโปรแกรม และมี Random Jitter Cooldown ป้องกัน Action Block
+<p align="center">
+  <a href="https://github.com/ZXD44/UnfollowX/releases"><img src="https://img.shields.io/github/v/release/ZXD44/UnfollowX?color=6366f1&style=for-the-badge&logo=github" alt="GitHub Release"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-10b981.svg?style=for-the-badge" alt="License"></a>
+  <a href="https://python.org"><img src="https://img.shields.io/badge/Python-3.10%2B-3b82f6.svg?style=for-the-badge&logo=python" alt="Python"></a>
+  <a href="https://playwright.dev"><img src="https://img.shields.io/badge/Engine-Playwright-f43f5e.svg?style=for-the-badge&logo=playwright" alt="Playwright"></a>
+  <a href="https://github.com/ZXD44/UnfollowX/stargazers"><img src="https://img.shields.io/github/stars/ZXD44/UnfollowX?style=for-the-badge&color=f59e0b" alt="Stars"></a>
+</p>
 
 ---
 
-## 🚀 วิธีเริ่มใช้งานอย่างรวดเร็ว (Quick Start)
+## 📖 สารบัญ (Table of Contents)
+* [จุดเด่นและฟีเจอร์ระดับ Pro](#-จุดเด่นและฟีเจอร์ระดับ-pro)
+* [แผนผังสถาปัตยกรรมระบบ (Architecture)](#-แผนผังสถาปัตยกรรมระบบ-architecture)
+* [วิธีติดตั้งและเริ่มใช้งาน (Quick Start)](#-วิธีติดตั้งและเริ่มใช้งาน-quick-start)
+* [ระบบจัดการเวอร์ชัน (Version Manager CLI)](#-ระบบจัดการเวอร์ชัน-version-manager-cli)
+* [ตารางเปรียบเทียบโหมดความเร็ว (Speed Modes)](#-ตารางเปรียบเทียบโหมดความเร็ว-speed-modes)
+* [โครงสร้างแฟ้มไฟล์โปรเจกต์ (Project Tree)](#-โครงสร้างแฟ้มไฟล์โปรเจกต์-project-tree)
+* [ข้อควรระวังและความปลอดภัย (Safety Rules)](#-ข้อควรระวังและความปลอดภัย-safety-rules)
+* [ใบอนุญาตและการสนับสนุน (License)](#-ใบอนุญาตและการสนับสนุน-license)
 
-### วิธีที่ 1: ใช้งานผ่านไฟล์พร้อมรัน (.exe)
-1. ดาวน์โหลดหรือเปิดไฟล์ `UnfollowX.exe`
-2. กดปุ่ม **"เปิดหน้าต่างล็อกอิน Instagram"** แล้วล็อกอินเข้าบัญชีของคุณตามปกติ
-3. เมื่อเข้าฟีดแล้ว ให้กลับมากดปุ่ม **"เริ่มสแกนคนไม่ฟอลกลับ"**
-4. ตรวจสอบรายชื่อ เลือกคนที่ต้องการ และกด **"เริ่มเลิกติดตาม"**
+---
 
-### วิธีที่ 2: รันจาก Source Code (สำหรับ Developers)
-```powershell
-# 1. ติดตั้งไลบรารีที่จำเป็น
-pip install -r source_code\python_engine\requirements.txt
+## ✨ จุดเด่นและฟีเจอร์ระดับ Pro
 
-# 2. ติดตั้งเบราว์เซอร์ Playwright Chromium
-playwright install chromium
+| หมวดหมู่ | ฟีเจอร์เด่น | คำอธิบายเชิงเทคนิค |
+| :--- | :--- | :--- |
+| 🌐 **Bilingual System** | ระบบ 2 ภาษาในตัว | สลับภาษา **ไทย (หลัก) / อังกฤษ** ได้ทันทีผ่านปุ่มบน Header พร้อมจำค่าถาวร |
+| 🎨 **Impeccable UI** | กระจกดำ Obsidian Dark | Mini Dashboard ขนาดกะทัดรัด สไตล์ [impeccable.style](https://impeccable.style/) ไร้กระตุก 60FPS |
+| ⚡ **Live Telemetry** | เปอร์เซ็นต์สแกนสด `0-100%` | ส่งต่อความคืบหน้าตรงจาก Browser Context สู่หน้าจอ ไม่ต้องกะเวลาเอง |
+| 🛡️ **Anti-Freeze Tech** | ป้องกัน Not Responding 100% | แก้ปัญหา WinForms `.NET` Deadlock ด้วย Async State Polling และ Win32 API Isolation |
+| 📌 **Always-on-Top** | ปักหมุดหน้าต่างบนสุด | สลับทำงานอื่นพร้อมเฝ้าดูความคืบหน้าได้ตลอดเวลา ไม่ต้องสลับหน้าต่างไปมา |
+| 🔊 **Audio Synthesizer** | เสียงสังเคราะห์แจ้งเตือน | ใช้ Web Audio API สร้างคลื่นเสียง Sine Wave ระดับ Hi-Fi โดยไม่ต้องพึ่งพาไฟล์เสียงภายนอก |
+| 🛡️ **Smart Whitelist** | ระบบป้องกันเพื่อน/คนสำคัญ | กดไอคอนโล่ `🛡️` เพื่อล็อกบัญชีไม่ให้ระบบเผลอเลิกติดตามโดยเด็ดขาด |
+| 📜 **Audit History** | บันทึกประวัติการทำงานย้อนหลัง | มี Log ในตัว ตรวจสอบบัญชีที่เคยเลิกติดตาม และส่งออกเป็น CSV ได้ทุกเวลา |
 
-# 3. รันโปรแกรม
-python source_code\python_engine\gui_app.py
+---
+
+## 🏛️ แผนผังสถาปัตยกรรมระบบ (Architecture)
+
+```mermaid
+graph LR
+    UI["🖥️ Obsidian UI<br/>(gui_template.html)"]
+    Bridge["⚡ PyWebView API Bridge<br/>(gui_app.py)"]
+    Engine["🤖 Playwright Engine<br/>(Chromium Background)"]
+    IG["📸 Instagram Official API<br/>(Friendship / GraphQL)"]
+
+    UI <-->|"JSON-RPC / State Pull"| Bridge
+    Bridge <-->|"Async Threading"| Engine
+    Engine <-->|"In-Session Authenticated Requests"| IG
 ```
 
 ---
 
-## 🛠️ ระบบจัดการเวอร์ชันและสั่ง Build (Version Manager)
+## 🚀 วิธีติดตั้งและเริ่มใช้งาน (Quick Start)
 
-โปรเจกต์มีสคริปต์ [set_version.py](file:///C:/Users/ZirconX/Desktop/Ads%20Dis/ZirconX-IG-Cleaner-Pro-v3.0/set_version.py) ช่วยซิงค์ข้อมูลเวอร์ชันทุกจุดและคอมไพล์ EXE ใหม่ในคำสั่งเดียว:
+### วิธีที่ 1: ดาวน์โหลดโปรแกรมพร้อมใช้งาน (.exe) — สะดวกที่สุด
+1. เข้าไปที่หน้า [**Releases**](https://github.com/ZXD44/UnfollowX/releases) บน GitHub
+2. ดาวน์โหลดไฟล์ `UnfollowX.exe` เวอร์ชันล่าสุด
+3. ดับเบิลคลิกเปิดใช้งานได้ทันที (ไม่ต้องติดตั้ง Python หรือโปรแกรมอื่นเพิ่มเติม)
+
+### วิธีที่ 2: รันจาก Source Code (สำหรับนักพัฒนา)
+```powershell
+# 1. Clone repository นี้ลงเครื่อง
+git clone https://github.com/ZXD44/UnfollowX.git
+cd UnfollowX
+
+# 2. ติดตั้งไลบรารีที่จำเป็น
+pip install -r source_code/python_engine/requirements.txt
+
+# 3. ติดตั้งเบราว์เซอร์ Playwright Chromium
+playwright install chromium
+
+# 4. เริ่มรันแอปพลิเคชัน
+python source_code/python_engine/gui_app.py
+```
+
+---
+
+## ⚡ ระบบจัดการเวอร์ชัน (Version Manager CLI)
+
+โปรเจกต์นี้มาพร้อมเครื่องมือ Single Source of Truth `set_version.py` ที่ช่วยซิงค์เวอร์ชันทุกจุด (โค้ด, UI, Metadata, เอกสาร) พร้อมคอมไพล์ EXE ใหม่ในคำสั่งเดียว:
 
 ```powershell
 # ตรวจสอบเวอร์ชันปัจจุบัน
 python set_version.py
 
-# อัปเดตเวอร์ชันใหม่
+# อัปเดตเวอร์ชันใหม่ทุกไฟล์อัตโนมัติ
 python set_version.py 0.0.2
 
-# อัปเดตเวอร์ชันใหม่พร้อมคอมไพล์ UnfollowX.exe ทันที
+# อัปเดตเวอร์ชันพร้อมคอมไพล์เป็น UnfollowX.exe ใหม่ทันที
 python set_version.py 0.0.2 --build
 ```
 
 ---
 
-## 📂 โครงสร้างแฟ้มไฟล์โปรเจกต์ (Repository Structure)
+## ⚙️ ตารางเปรียบเทียบโหมดความเร็ว (Speed Modes)
+
+| โหมดความเร็ว | ระยะเวลาหน่วงต่อบัญชี | ความปลอดภัย | คำแนะนำในการใช้งาน |
+| :---: | :---: | :---: | :--- |
+| ⚡ **Turbo** | 0.8 - 1.2 วินาที | ปานกลาง | เหมาะสำหรับบัญชีเก่าประวัติดี หรือเลิกติดตามไม่เกิน 30 คนต่อรอบ |
+| 🚀 **Fast** | 1.2 - 1.8 วินาที | สูง | โหมดมาตรฐาน แนะนำสำหรับการใช้งานทั่วไป |
+| 🛡️ **Safe** | 2.0 - 3.2 วินาที | ปลอดภัยสูงสุด | เหมาะสำหรับบัญชีใหม่ หรือเลิกติดตามจำนวนมาก (ป้องกัน Action Block 100%) |
+
+---
+
+## 📂 โครงสร้างแฟ้มไฟล์โปรเจกต์ (Project Tree)
 
 ```
-ZirconX-IG-Cleaner-Pro-v3.0/
-├── LICENSE                            # 📜 MIT License
-├── README.md                          # 📖 เอกสารแนะนำโปรเจกต์หลัก (หน้านี้)
+UnfollowX/
+├── LICENSE                            # 📜 สัญญาอนุญาต MIT License สากล
+├── README.md                          # 📖 คู่มือภาษาไทย (หลัก)
+├── README_EN.md                       # 📖 คู่มือภาษาอังกฤษ (English Edition)
 ├── HOW_TO_USE.txt                     # 📖 คู่มือการใช้งานสำหรับผู้ใช้ทั่วไป
-├── set_version.py                     # ⚡ เครื่องมือจัดการเวอร์ชันอัตโนมัติ
+├── set_version.py                     # ⚡ เครื่องมือจัดการเวอร์ชันและคอมไพล์อัตโนมัติ
 ├── .gitignore                         # กำหนดไฟล์ที่ไม่ต้อง push ขึ้น Git
-├── .agent/                            # 🤖 เอกสารเชิงลึกสำหรับ Developer & AI Agent
-│   ├── README.md                      # สารบัญเอกสาร
+├── .agent/                            # 🤖 กฎเกณฑ์เชิงลึกสำหรับ AI Agent & Developers
+│   ├── README.md                      # สารบัญคู่มือ
 │   ├── RULES.md                       # กฎเหล็กความปลอดภัย JS Bridge, Win32, Rate Limits
 │   ├── ARCHITECTURE.md                # แผนผังสถาปัตยกรรมระบบ, Workflows, Schemas
 │   └── GUIDE.md                       # คู่มือการทดสอบ, การดีบั๊ก, และการแก้ปัญหา
-└── source_code/                       # 💻 ซอร์สโค้ดของระบบทั้งหมด
+└── source_code/                       # 💻 ซอร์สโค้ดโปรเจกต์ทั้งหมด
     ├── README.md                      # เอกสารซอร์สโค้ด
     └── python_engine/
         ├── gui_app.py                 # Core Controller (Playwright + PyWebView)
-        ├── gui_template.html          # Obsidian Dark Minimalist Interface
+        ├── gui_template.html          # Obsidian Dark Minimalist Interface (i18n engine)
         ├── version.py                 # Single Source of Truth สำหรับเวอร์ชัน
         ├── version_info.txt           # Windows Executable File Metadata
         ├── set_version.py             # Script ซิงค์เวอร์ชันของ Engine
-        ├── build_gui_exe.spec         # PyInstaller Configuration
+        ├── build_gui_exe.spec         # PyInstaller Spec Configuration
         └── requirements.txt           # Python Dependencies
 ```
 
 ---
 
-## ⚖️ ข้อกำหนดและการใช้งานอย่างปลอดภัย (Disclaimer)
+## 🛡️ ข้อควรระวังและความปลอดภัย (Safety Rules)
 
-โปรเจกต์นี้พัฒนาขึ้นเพื่อการศึกษาและการจัดระเบียบบัญชีส่วนตัวเท่านั้น กรุณาใช้งานตามขีดจำกัดที่ปลอดภัย (แนะนำเลิกติดตามไม่เกิน 100-150 บัญชีต่อวัน และตั้งค่าหน่วงเวลา 15-35 วินาทีขึ้นไป) ผู้พัฒนาไม่รับผิดชอบต่อการนำไปใช้งานที่ผิดข้อกำหนดการใช้งานของแพลตฟอร์ม
+* **ไม่เก็บรหัสผ่าน**: โปรแกรมไม่เคยถามหรือบันทึกรหัสผ่าน Instagram ใดๆ การล็อกอินกระทำผ่านเบราว์เซอร์จริงโดยตรง
+* **ขีดจำกัดที่แนะนำ**: เพื่อป้องกันการติด Action Block จาก Instagram ไม่ควรเลิกติดตามเกิน **100-150 บัญชีต่อวัน**
+* **การเว้นระยะ**: ควรพักการทำงานอย่างน้อย 1-2 ชั่วโมงหลังจากการเลิกติดตามแต่ละชุด
 
 ---
 
-## 📄 ใบอนุญาต (License)
+## 📄 ใบอนุญาตและการสนับสนุน (License)
 
-โปรเจกต์นี้เผยแพร่ภายใต้ใบอนุญาต [MIT License](LICENSE)
+โปรเจกต์นี้เผยแพร่ภายใต้ใบอนุญาต [MIT License](LICENSE) สามารถนำไปต่อยอด แก้ไข และใช้งานได้อย่างอิสระ
+
+พัฒนาและดูแลโดย **[ZirconX](https://github.com/ZXD44)** — หากชื่นชอบโปรเจกต์นี้ อย่าลืมกด **⭐ Star** บน GitHub เพื่อเป็นกำลังใจ!

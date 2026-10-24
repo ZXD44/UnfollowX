@@ -4,7 +4,8 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](../LICENSE)
 [![Version](https://img.shields.io/badge/Version-0.0.1-purple.svg)](version.py)
-[![Author](https://img.shields.io/badge/Creator-ZirconX-f43f5e.svg)](https://instagram.com)
+[![Author](https://img.shields.io/badge/Creator-ZirconX-f43f5e.svg)](https://github.com/ZXD44)
+[![GitHub](https://img.shields.io/badge/GitHub-ZXD44%2FUnfollowX-indigo.svg)](https://github.com/ZXD44/UnfollowX)
 
 ---
 
