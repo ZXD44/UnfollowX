@@ -1,3 +1,9 @@
+<div align="right">
+  <strong>🌐 Language / ภาษา:</strong>
+  <a href="README.md"><strong>🇹🇭 ภาษาไทย (หลัก)</strong></a> |
+  <a href="README_EN.md">🇬🇧 English</a>
+</div>
+
 # 🚀 UnfollowX PRO v0.0.1 — By ZirconX
 
 > **เครื่องมือตรวจสอบและเลิกติดตามผู้ที่ไม่ติดตามกลับบน Instagram อัตโนมัติ ปลอดภัย 100% ด้วย Python Engine + Playwright + PyWebView**
@@ -5,12 +11,14 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Version](https://img.shields.io/badge/Version-0.0.1-purple.svg)](source_code/python_engine/version.py)
 [![Architecture](https://img.shields.io/badge/Arch-PyWebView%20%2B%20Playwright-indigo.svg)](.agent/ARCHITECTURE.md)
+[![Language](https://img.shields.io/badge/Language-TH%20%7C%20EN-blue.svg)](README_EN.md)
 [![Platform](https://img.shields.io/badge/Platform-Windows%2010%20%7C%2011-emerald.svg)](HOW_TO_USE.txt)
 
 ---
 
 ## ✨ ไฮไลท์ฟีเจอร์เด่น (Key Features)
 
+* 🌐 **Bilingual System (ระบบ 2 ภาษา)**: มีปุ่มสลับภาษา `🇹🇭 TH | 🇬🇧 EN` บนหน้าโปรแกรม เปลี่ยนภาษาได้ทันทีและจำค่าถาวร (ตั้งต้นเป็นภาษาไทย)
 * 🎨 **Impeccable Obsidian Dark UI**: หน้ากากแบบ Mini Dashboard ขนาดกะทัดรัด สไตล์กระจกดำหรูหรา ใช้งานลื่นไหล ไม่กินพื้นที่หน้าจอ
 * ⚡ **Live Real-time Scan %**: แสดงหลอดความคืบหน้าการสแกนแบบเรียลไทม์ `0% - 100%` จากเบราว์เซอร์ตรงสู่หน้าจอ
 * 🛡️ **Zero Freeze / Deadlock Architecture**: แก้ปัญหา WinForms UI Deadlock 100% ด้วย Async Pull State Polling และ Win32 API Isolation

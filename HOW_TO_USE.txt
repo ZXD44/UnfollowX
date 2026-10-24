@@ -2,15 +2,30 @@
    UnfollowX PRO v0.0.1 — By ZirconX
 ==================================================
 
-【 วิธีใช้งาน 】
+[🇹🇭 ภาษาไทย - คู่มือการใช้งานหลัก]
 1. ดับเบิลคลิกเปิดไฟล์: UnfollowX.exe
-2. เข้าสู่ระบบ Instagram ในหน้าต่าง Chrome ที่เปิดขึ้นมา (จำเซสชันถาวร ไม่ต้องล็อกอินซ้ำ)
+2. กดปุ่ม "Chrome" เพื่อเข้าสู่ระบบ Instagram (จำเซสชันถาวร ปลอดภัย 100%)
 3. สลับมาที่หน้าแอป UnfollowX:
-   - ติ๊กเลือกคนที่ไม่ติดตามกลับ หรือใช้ระบบ 1-Click Auto Clean
+   - กดปุ่ม "🇹🇭 TH / 🇬🇧 EN" ที่แถบด้านบนเพื่อสลับภาษาตามต้องการ
+   - กดปุ่ม "สแกน" เพื่อดึงรายชื่อคนไม่ฟอลกลับ (แสดงความคืบหน้า 0% - 100%)
+   - กดปุ่ม "🛡️" หน้าชื่อคนสำคัญที่ไม่ต้องการให้โดนลบ (ระบบ Whitelist)
+   - เลือกคนที่ไม่ติดตามกลับ หรือใช้ปุ่ม "1-Click เคลียร์"
    - เลือกระดับความเร็ว (Turbo ⚡ / Fast 🚀 / Safe 🛡️)
-   - กดปุ่ม "🛡️" หน้าชื่อคนที่ไม่ต้องการให้โดนลบ (ระบบคุ้มครอง Whitelist)
-   - กดปุ่ม "เลิกติดตามที่เลือก"
-   - บอทจะใช้ High-Speed In-Session API ช่วยเลิกติดตามอย่างรวดเร็ว ปลอดภัย และไม่ค้าง 100%!
+   - กดปุ่ม "ลบ" เพื่อเริ่มกระบวนการเลิกติดตามอัตโนมัติ
 
-* พัฒนาและแจกฟรีโดย ZirconX
+--------------------------------------------------
+
+[🇬🇧 ENGLISH - QUICK USER GUIDE]
+1. Double-click to launch: UnfollowX.exe
+2. Click "Chrome" button to log in to Instagram (Session persists safely).
+3. Return to the UnfollowX window:
+   - Click "🇹🇭 TH / 🇬🇧 EN" at the top to toggle language anytime.
+   - Click "Scan" to fetch non-followers (Live progress 0% - 100%).
+   - Click "🛡️" to protect important accounts (Whitelist).
+   - Select targets or click "1-Click Clean".
+   - Choose speed mode (Turbo ⚡ / Fast 🚀 / Safe 🛡️).
+   - Click "Unfollow" to execute safely.
+
+==================================================
+* พัฒนาและแจกฟรีโดย ZirconX / Developed by ZirconX
 ==================================================

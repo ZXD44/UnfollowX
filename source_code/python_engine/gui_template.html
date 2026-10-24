@@ -978,7 +978,12 @@
 
       <!-- 📜 Audit History Log -->
       <button class="btn btn-ghost" id="btnHistory" onclick="openHistoryModal()" title="ดูประวัติการเลิกติดตามย้อนหลัง">
-        <span>📜 ประวัติ</span>
+        <span>📜 <span data-i18n="btnHistory">ประวัติ</span></span>
+      </button>
+
+      <!-- 🌐 Language Switcher (TH / EN) -->
+      <button class="btn btn-ghost" id="btnLangToggle" onclick="toggleLanguage()" title="เปลี่ยนภาษา / Switch Language (TH / EN)">
+        <span id="langText">🇹🇭 TH</span>
       </button>
 
       <button class="btn btn-ghost" onclick="openChromeBrowser()" title="เปิดเบราว์เซอร์ Chrome">
@@ -988,7 +993,7 @@
 
       <button class="btn btn-ghost" id="btnScan" onclick="triggerScan()" title="เริ่มสแกนบัญชีใหม่">
         <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
-        <span>สแกน</span>
+        <span data-i18n="btnScan">สแกน</span>
       </button>
 
       <button class="btn btn-ghost" onclick="exportData('csv')" title="ส่งออก CSV">
@@ -1001,27 +1006,27 @@
   <!-- 2. MINI METRICS RIBBON -->
   <div class="metrics-ribbon">
     <div class="metric-chip" onclick="setFilter('all')">
-      <span class="metric-label">กำลังติดตาม:</span>
+      <span class="metric-label" data-i18n="metricFollowing">กำลังติดตาม:</span>
       <span class="metric-value" id="statFollowing">0</span>
     </div>
 
     <div class="metric-chip" onclick="setFilter('all')">
-      <span class="metric-label">ผู้ติดตาม:</span>
+      <span class="metric-label" data-i18n="metricFollowers">ผู้ติดตาม:</span>
       <span class="metric-value" id="statFollowers">0</span>
     </div>
 
     <div class="metric-chip" onclick="setFilter('all')">
-      <span class="metric-label">ติดตามกัน:</span>
+      <span class="metric-label" data-i18n="metricMutual">ติดตามกัน:</span>
       <span class="metric-value" id="statMutual">0</span>
     </div>
 
     <div class="metric-chip alert-chip active" id="cardNonFollowers" onclick="setFilter('non_followers')">
-      <span class="metric-label">ไม่ฟอลกลับ:</span>
+      <span class="metric-label" data-i18n="metricNonFollowers">ไม่ฟอลกลับ:</span>
       <span class="metric-value" id="statNonFollowers">0</span>
     </div>
 
     <div class="metric-chip shield-chip" onclick="setFilter('protected')">
-      <span class="metric-label">🛡️ คุ้มครอง:</span>
+      <span class="metric-label" data-i18n="metricProtected">🛡️ คุ้มครอง:</span>
       <span class="metric-value" id="statProtected">0</span>
     </div>
   </div>
@@ -1031,21 +1036,21 @@
     <!-- Search Box -->
     <div class="search-wrap">
       <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-      <input type="text" id="searchInput" class="search-input" placeholder="ค้นหา username...">
+      <input type="text" id="searchInput" class="search-input" data-i18n-placeholder="searchPlaceholder" placeholder="ค้นหา username...">
       <button id="searchClearBtn" class="search-clear" onclick="clearSearch()">✕</button>
     </div>
 
     <!-- Filter Pills -->
     <div class="filter-tabs">
-      <button class="filter-tab active" data-filter="non_followers" onclick="setFilter('non_followers')">ไม่ฟอลกลับ</button>
-      <button class="filter-tab" data-filter="verified" onclick="setFilter('verified')">ติ๊กถูก</button>
-      <button class="filter-tab" data-filter="private" onclick="setFilter('private')">ส่วนตัว</button>
-      <button class="filter-tab" data-filter="protected" onclick="setFilter('protected')">คุ้มครอง</button>
+      <button class="filter-tab active" data-filter="non_followers" data-i18n="tabNonFollowers" onclick="setFilter('non_followers')">ไม่ฟอลกลับ</button>
+      <button class="filter-tab" data-filter="verified" data-i18n="tabVerified" onclick="setFilter('verified')">ติ๊กถูก</button>
+      <button class="filter-tab" data-filter="private" data-i18n="tabPrivate" onclick="setFilter('private')">ส่วนตัว</button>
+      <button class="filter-tab" data-filter="protected" data-i18n="tabProtected" onclick="setFilter('protected')">คุ้มครอง</button>
     </div>
 
     <!-- Speed Mode Dropdown -->
     <div class="speed-wrap">
-      <span>เร็ว:</span>
+      <span data-i18n="speedLabel">เร็ว:</span>
       <select id="speedMode" class="speed-select">
         <option value="turbo" selected>⚡ Turbo (0.8-1.2s)</option>
         <option value="fast">⚡ Fast (1.2-1.8s)</option>
@@ -1057,17 +1062,17 @@
     <div class="main-ctas">
       <button class="btn btn-emerald" id="btnAutoClean" onclick="startOneClickAutoClean()">
         <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-        <span>1-Click เคลียร์</span>
+        <span data-i18n="btnAutoClean">1-Click เคลียร์</span>
       </button>
 
       <button class="btn btn-rose" id="btnUnfollowSelected" onclick="unfollowSelected()" disabled>
         <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-        <span>ลบ (<span id="selectedCount">0</span>)</span>
+        <span><span data-i18n="btnUnfollowSelected">ลบ</span> (<span id="selectedCount">0</span>)</span>
       </button>
 
       <button class="btn btn-amber" id="btnStop" onclick="stopUnfollow()" style="display: none;">
         <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 10a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z"></path></svg>
-        <span>หยุด</span>
+        <span data-i18n="btnStop">หยุด</span>
       </button>
     </div>
   </div>
@@ -1087,9 +1092,9 @@
   <div class="table-dock">
     <div class="table-head">
       <div><input type="checkbox" class="checkbox" id="selectAll" onchange="toggleSelectAll(this)" title="เลือกทั้งหมด"></div>
-      <div>ผู้ใช้ (Username & Full Name)</div>
-      <div>สถานะบัญชี</div>
-      <div style="text-align: right;">จัดการ</div>
+      <div data-i18n="colUser">ผู้ใช้ (Username & Full Name)</div>
+      <div data-i18n="colStatus">สถานะบัญชี</div>
+      <div style="text-align: right;" data-i18n="colManage">จัดการ</div>
     </div>
 
     <div class="user-viewport" id="userList">
@@ -1118,8 +1123,8 @@
       </div>
 
       <div class="modal-foot" id="modalActions">
-        <button class="btn btn-ghost" id="modalCancelBtn" onclick="closeModal(false)">ยกเลิก</button>
-        <button class="btn btn-rose" id="modalConfirmBtn" onclick="closeModal(true)">ยืนยัน</button>
+        <button class="btn btn-ghost" id="modalCancelBtn" data-i18n="modalCancel" onclick="closeModal(false)">ยกเลิก</button>
+        <button class="btn btn-rose" id="modalConfirmBtn" data-i18n="modalConfirm" onclick="closeModal(true)">ยืนยัน</button>
       </div>
     </div>
   </div>
@@ -1133,15 +1138,15 @@
             📜
           </div>
           <div>
-            <div class="modal-title" style="font-size: 0.82rem;">ประวัติการเลิกติดตาม (Audit Log)</div>
-            <div class="modal-subtitle" style="font-size: 0.66rem;">รายการที่ระบบทำงานสำเร็จ (<span id="historyCount">0</span> รายการ)</div>
+            <div class="modal-title" style="font-size: 0.82rem;" data-i18n="historyTitle">ประวัติการเลิกติดตาม (Audit Log)</div>
+            <div class="modal-subtitle" style="font-size: 0.66rem;"><span data-i18n="historySub">รายการที่ระบบทำงานสำเร็จ</span> (<span id="historyCount">0</span> <span data-i18n="historyItemsUnit">รายการ</span>)</div>
           </div>
         </div>
         <button class="btn btn-ghost" onclick="closeHistoryModal()" style="height: 20px; padding: 0 5px;">✕</button>
       </div>
 
       <div style="display: flex; gap: 6px; align-items: center;">
-        <input type="text" id="historySearchInput" class="search-input" style="height: 24px; font-size: 0.70rem;" placeholder="ค้นหาประวัติ @username...">
+        <input type="text" id="historySearchInput" class="search-input" style="height: 24px; font-size: 0.70rem;" data-i18n-placeholder="historySearchPlaceholder" placeholder="ค้นหาประวัติ @username...">
       </div>
 
       <div class="user-viewport" id="historyListContainer" style="max-height: 300px; min-height: 160px; border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); background: rgba(0,0,0,0.3);">
@@ -1149,14 +1154,14 @@
       </div>
 
       <div class="modal-foot" style="justify-content: space-between; align-items: center;">
-        <button class="btn btn-ghost" onclick="clearHistoryLog()" style="color: #fb7185; font-size: 0.68rem;" title="ล้างประวัติทั้งหมด">
+        <button class="btn btn-ghost" onclick="clearHistoryLog()" style="color: #fb7185; font-size: 0.68rem;" data-i18n="historyClear" title="ล้างประวัติทั้งหมด">
           ล้างประวัติ
         </button>
         <div style="display: flex; gap: 6px;">
-          <button class="btn btn-ghost" onclick="exportHistoryCSV()" style="font-size: 0.68rem;">
+          <button class="btn btn-ghost" onclick="exportHistoryCSV()" style="font-size: 0.68rem;" data-i18n="historyExport">
             ส่งออก CSV
           </button>
-          <button class="btn btn-emerald" onclick="closeHistoryModal()" style="font-size: 0.68rem;">
+          <button class="btn btn-emerald" onclick="closeHistoryModal()" style="font-size: 0.68rem;" data-i18n="modalClose">
             ปิด
           </button>
         </div>
@@ -1175,6 +1180,210 @@
 
   <!-- SCRIPT LOGIC (OPTIMIZED WITH ALWAYS-ON-TOP, AUDIO CHIMES & AUDIT HISTORY) -->
   <script>
+    // -------------------------------------------------------------
+    // BILINGUAL I18N ENGINE (Default: Thai / ภาษาไทยเป็นหลัก)
+    // -------------------------------------------------------------
+    const I18N = {
+      th: {
+        appTitle: "UnfollowX PRO",
+        btnHistory: "ประวัติ",
+        btnScan: "สแกน",
+        btnPin: "ปักหมุดหน้าต่างบนสุด",
+        btnSound: "เปิด/ปิดเสียงแจ้งเตือน",
+        langToggle: "🇹🇭 TH",
+        langTitle: "สลับเป็น English",
+        metricFollowing: "กำลังติดตาม:",
+        metricFollowers: "ผู้ติดตาม:",
+        metricMutual: "ติดตามกัน:",
+        metricNonFollowers: "ไม่ฟอลกลับ:",
+        metricProtected: "🛡️ คุ้มครอง:",
+        searchPlaceholder: "ค้นหา username...",
+        tabNonFollowers: "ไม่ฟอลกลับ",
+        tabVerified: "ติ๊กถูก",
+        tabPrivate: "ส่วนตัว",
+        tabProtected: "คุ้มครอง",
+        speedLabel: "เร็ว:",
+        btnAutoClean: "1-Click เคลียร์",
+        btnUnfollowSelected: "ลบ",
+        btnStop: "หยุด",
+        colUser: "ผู้ใช้ (Username & Full Name)",
+        colStatus: "สถานะบัญชี",
+        colManage: "จัดการ",
+        emptyConnecting: "กำลังเชื่อมต่อระบบอัตโนมัติ...",
+        emptyClean: "ไม่มีรายชื่อผู้ใช้ที่ตรงเงื่อนไข",
+        emptyCleanSub: "บัญชีสะอาดเรียบร้อย หรือไม่พบคำค้นหา",
+        showMoreBtn: "แสดงเพิ่มอีก {next} คน (เหลืออีก {remaining} คน)",
+        btnProtect: "คุ้มครอง",
+        btnUnprotect: "ยกเลิกคุ้มครอง",
+        btnUnfollowRow: "เลิกติดตาม",
+        statusConnecting: "กำลังเชื่อมต่อ Chrome...",
+        statusWaitingLogin: "รอเข้าสู่ระบบใน Chrome...",
+        statusReady: "พร้อมใช้งาน (เข้าสู่ระบบแล้ว)",
+        statusScanning: "กำลังสแกน...",
+        statusUnfollowing: "กำลังเลิกติดตาม...",
+        modalCancel: "ยกเลิก",
+        modalConfirm: "ยืนยัน",
+        modalClose: "ปิด",
+        historyTitle: "ประวัติการเลิกติดตาม (Audit Log)",
+        historySub: "รายการที่ระบบทำงานสำเร็จ",
+        historyItemsUnit: "รายการ",
+        historySearchPlaceholder: "ค้นหาประวัติ @username...",
+        historyClear: "ล้างประวัติ",
+        historyExport: "ส่งออก CSV",
+        historyEmpty: "ยังไม่มีประวัติการเลิกติดตาม",
+        confirmUnfollowSingleTitle: "ยืนยันเลิกติดตาม",
+        confirmUnfollowSingleBody: "ต้องการเลิกติดตาม <strong>@{username}</strong> ({fullName})?",
+        confirmUnfollowSelectedTitle: "ยืนยันเลิกติดตาม ({count} คน)",
+        confirmUnfollowSelectedBody: "ระบบจะทำการเลิกติดตามทั้งหมด <strong>{count} คน</strong> ที่เลือกไว้",
+        confirmAutoCleanTitle: "1-Click เคลียร์อัตโนมัติ ({count} คน)",
+        confirmAutoCleanBody: "ระบบจะทำการเลิกติดตามคนที่ไม่ฟอลกลับ <strong>{count} คน</strong> ให้คุณอัตโนมัติ",
+        protectedSafetyNotice: "🛡️ บัญชีที่คุ้มครอง ({count} คน) จะปลอดภัย 100%",
+        confirmClearHistory: "คุณแน่ใจหรือไม่ว่าต้องการล้างประวัติทั้งหมด?",
+        toastLangSwitched: "เปลี่ยนภาษาเป็น: ภาษาไทย",
+        toastScanStart: "กำลังเริ่มต้นการสแกน...",
+        toastScanSuccess: "สแกนสำเร็จ: พบคนไม่ฟอลกลับ {count} คน",
+        toastScanError: "เกิดข้อผิดพลาดในการสแกน: {error}",
+        toastHistoryCleared: "ล้างประวัติเรียบร้อยแล้ว",
+        toastExportSuccess: "ส่งออกไฟล์เรียบร้อยแล้ว: {path}",
+        toastChromeOpened: "เปิดหน้าต่าง Chrome แล้ว",
+        toastProtectAdded: "เพิ่ม @{username} เข้าสู่รายการคุ้มครองแล้ว",
+        toastProtectRemoved: "ยกเลิกคุ้มครอง @{username} แล้ว",
+        toastSoundOn: "เปิดเสียงแจ้งเตือนแล้ว",
+        toastSoundOff: "ปิดเสียงแจ้งเตือนแล้ว",
+        toastPinOn: "ปักหมุดหน้าต่างบนสุด (Always-on-Top: ON)",
+        toastPinOff: "ยกเลิกปักหมุดหน้าต่าง (Always-on-Top: OFF)",
+        finishedTitle: "เสร็จสิ้นเรียบร้อย!",
+        finishedSub: "ทำรายการครบทุกบัญชีแล้ว",
+        abortedTitle: "หยุดการทำงานแล้ว",
+        abortedSub: "คุณสั่งหยุดการทำงานก่อนกำหนด",
+        statSuccess: "สำเร็จ",
+        statFailed: "ผิดพลาด / ข้าม",
+        modalOk: "ตกลง"
+      },
+      en: {
+        appTitle: "UnfollowX PRO",
+        btnHistory: "History",
+        btnScan: "Scan",
+        btnPin: "Pin Window on top",
+        btnSound: "Toggle alert sounds",
+        langToggle: "🇬🇧 EN",
+        langTitle: "Switch to ภาษาไทย",
+        metricFollowing: "Following:",
+        metricFollowers: "Followers:",
+        metricMutual: "Mutual:",
+        metricNonFollowers: "Not Following:",
+        metricProtected: "🛡️ Protected:",
+        searchPlaceholder: "Search username...",
+        tabNonFollowers: "Not Following",
+        tabVerified: "Verified",
+        tabPrivate: "Private",
+        tabProtected: "Protected",
+        speedLabel: "Speed:",
+        btnAutoClean: "1-Click Clean",
+        btnUnfollowSelected: "Unfollow",
+        btnStop: "Stop",
+        colUser: "User (Username & Full Name)",
+        colStatus: "Account Status",
+        colManage: "Actions",
+        emptyConnecting: "Connecting to automation worker...",
+        emptyClean: "No users match current criteria",
+        emptyCleanSub: "All caught up or search query returned no results",
+        showMoreBtn: "Show {next} more ({remaining} remaining)",
+        btnProtect: "Protect",
+        btnUnprotect: "Unprotect",
+        btnUnfollowRow: "Unfollow",
+        statusConnecting: "Connecting to Chrome...",
+        statusWaitingLogin: "Waiting for Instagram login in Chrome...",
+        statusReady: "Ready (Logged in)",
+        statusScanning: "Scanning...",
+        statusUnfollowing: "Unfollowing...",
+        modalCancel: "Cancel",
+        modalConfirm: "Confirm",
+        modalClose: "Close",
+        historyTitle: "Unfollow History (Audit Log)",
+        historySub: "Successfully completed actions",
+        historyItemsUnit: "records",
+        historySearchPlaceholder: "Search history @username...",
+        historyClear: "Clear History",
+        historyExport: "Export CSV",
+        historyEmpty: "No unfollow history recorded yet",
+        confirmUnfollowSingleTitle: "Confirm Unfollow",
+        confirmUnfollowSingleBody: "Do you want to unfollow <strong>@{username}</strong> ({fullName})?",
+        confirmUnfollowSelectedTitle: "Confirm Unfollow ({count} users)",
+        confirmUnfollowSelectedBody: "The system will unfollow <strong>{count} selected account(s)</strong>.",
+        confirmAutoCleanTitle: "1-Click Auto Clean ({count} users)",
+        confirmAutoCleanBody: "The system will automatically unfollow <strong>{count} non-followers</strong> for you.",
+        protectedSafetyNotice: "🛡️ Protected accounts ({count}) are 100% safe",
+        confirmClearHistory: "Are you sure you want to clear all history?",
+        toastLangSwitched: "Language switched to: English",
+        toastScanStart: "Starting account scan...",
+        toastScanSuccess: "Scan complete: found {count} non-followers",
+        toastScanError: "Scan error: {error}",
+        toastHistoryCleared: "History log cleared",
+        toastExportSuccess: "Export completed: {path}",
+        toastChromeOpened: "Chrome browser window opened",
+        toastProtectAdded: "Added @{username} to protected list",
+        toastProtectRemoved: "Removed @{username} from protected list",
+        toastSoundOn: "Sound enabled",
+        toastSoundOff: "Sound muted",
+        toastPinOn: "Window pinned (Always-on-Top: ON)",
+        toastPinOff: "Window unpinned (Always-on-Top: OFF)",
+        finishedTitle: "Completed Successfully!",
+        finishedSub: "All accounts processed",
+        abortedTitle: "Stopped",
+        abortedSub: "Operation was aborted by user",
+        statSuccess: "Success",
+        statFailed: "Failed / Skipped",
+        modalOk: "OK"
+      }
+    };
+
+    let currentLang = localStorage.getItem("unfollowx_lang") || "th";
+
+    function t(key, params = {}) {
+      const dict = I18N[currentLang] || I18N.th;
+      let str = dict[key] !== undefined ? dict[key] : (I18N.th[key] !== undefined ? I18N.th[key] : key);
+      for (const [k, v] of Object.entries(params)) {
+        str = str.replace(new RegExp(`\\{${k}\\}`, "g"), v);
+      }
+      return str;
+    }
+
+    function setLanguage(lang) {
+      currentLang = (lang === "en") ? "en" : "th";
+      localStorage.setItem("unfollowx_lang", currentLang);
+      document.documentElement.lang = currentLang;
+
+      // Update static nodes with data-i18n
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const k = el.getAttribute("data-i18n");
+        if (k) el.innerText = t(k);
+      });
+
+      // Update placeholders
+      document.querySelectorAll("[data-i18n-placeholder]").forEach(el => {
+        const k = el.getAttribute("data-i18n-placeholder");
+        if (k) el.placeholder = t(k);
+      });
+
+      // Update language toggle button label
+      const langText = document.getElementById("langText");
+      if (langText) langText.innerText = t("langToggle");
+      const btnLang = document.getElementById("btnLangToggle");
+      if (btnLang) btnLang.title = t("langTitle");
+
+      // Refresh list to update action button labels & badges
+      renderCurrentList(false);
+      updateSelectedUI();
+    }
+
+    function toggleLanguage() {
+      const next = currentLang === "th" ? "en" : "th";
+      setLanguage(next);
+      playChime("click");
+      showToast(t("toastLangSwitched"));
+    }
+
     let allNonFollowers = [];
     let currentFilter = "non_followers";
     let selectedSet = new Set();
@@ -1207,7 +1416,7 @@
       soundEnabled = !soundEnabled;
       localStorage.setItem("zx_sound_enabled", soundEnabled);
       document.getElementById("soundIcon").innerText = soundEnabled ? "🔊" : "🔇";
-      showToast(soundEnabled ? "เปิดเสียงแจ้งเตือนแล้ว" : "ปิดเสียงแจ้งเตือนแล้ว");
+      showToast(soundEnabled ? t("toastSoundOn") : t("toastSoundOff"));
       if (soundEnabled) playChime("click");
     }
 
@@ -1279,14 +1488,14 @@
         const pinBtn = document.getElementById("btnPinWindow");
         if (isPinned) {
           pinBtn.classList.add("pinned");
-          showToast("📌 ปักหมุดหน้าต่างอยู่บนสุดแล้ว", "success");
+          showToast(t("toastPinOn"), "success");
         } else {
           pinBtn.classList.remove("pinned");
-          showToast("ยกเลิกการปักหมุดแล้ว");
+          showToast(t("toastPinOff"));
         }
         playChime("click");
       } catch (e) {
-        showToast("ไม่สามารถเปลี่ยนสถานะปักหมุดได้", "error");
+        showToast("Error toggling pin", "error");
       }
     }
 
@@ -1341,10 +1550,10 @@
 
     async function clearHistoryLog() {
       const confirmed = await showModal({
-        title: "ล้างประวัติทั้งหมด",
-        subtitle: "การกระทำนี้ไม่สามารถย้อนกลับได้",
-        htmlContent: "คุณแน่ใจหรือไม่ว่าต้องการล้างประวัติการเลิกติดตามทั้งหมด?",
-        confirmText: "ล้างประวัติ",
+        title: t("historyClear"),
+        subtitle: currentLang === 'th' ? "การกระทำนี้ไม่สามารถย้อนกลับได้" : "This action cannot be undone",
+        htmlContent: t("confirmClearHistory"),
+        confirmText: t("historyClear"),
         confirmClass: "btn-rose"
       });
       if (!confirmed) return;
@@ -1353,7 +1562,7 @@
       cachedHistory = [];
       setIfChanged("historyCount", 0);
       renderHistoryList();
-      showToast("ล้างประวัติเรียบร้อยแล้ว", "success");
+      showToast(t("toastHistoryCleared"), "success");
     }
 
     async function exportHistoryCSV() {
@@ -1443,11 +1652,11 @@
     function toggleProtect(uname) {
       if (protectedSet.has(uname)) {
         protectedSet.delete(uname);
-        showToast(`ยกเลิกคุ้มครอง @${uname}`);
+        showToast(t("toastProtectRemoved", { username: uname }));
       } else {
         protectedSet.add(uname);
         selectedSet.delete(uname);
-        showToast(`คุ้มครอง @${uname} แล้ว`, "success");
+        showToast(t("toastProtectAdded", { username: uname }), "success");
       }
       saveProtected();
       updateSelectedUI();
@@ -1501,8 +1710,8 @@
         container.innerHTML = `
           <div class="empty-state">
             <svg width="28" height="28" fill="none" stroke="#10b981" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            <div style="font-weight:600; color:#fff;">ไม่มีรายชื่อผู้ใช้ที่ตรงเงื่อนไข</div>
-            <div style="font-size:0.70rem;">บัญชีสะอาดเรียบร้อย หรือไม่พบคำค้นหา</div>
+            <div style="font-weight:600; color:#fff;">${t("emptyClean")}</div>
+            <div style="font-size:0.70rem;">${t("emptyCleanSub")}</div>
           </div>`;
         return;
       }
@@ -1516,7 +1725,7 @@
         let tags = [];
         if (u.is_verified) tags.push(`<span class="badge-pill badge-verified">✓ Verified</span>`);
         if (u.is_private) tags.push(`<span class="badge-pill badge-private">🔒 Private</span>`);
-        if (isProtected) tags.push(`<span class="badge-pill badge-protected">🛡️ Protected</span>`);
+        if (isProtected) tags.push(`<span class="badge-pill badge-protected">🛡️ ${t("badgeProtected") || "Protected"}</span>`);
 
         const avatarImg = u.profile_pic_url 
           ? `<img class="avatar" src="${u.profile_pic_url}" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.outerHTML='<div class=\\'avatar\\'>${initial}</div>'">`
@@ -1530,17 +1739,17 @@
             <div class="user-cell">
               ${avatarImg}
               <div class="user-meta">
-                <a class="user-handle" href="https://www.instagram.com/${u.username}/" target="_blank" title="เปิด IG">@${u.username}</a>
+                <a class="user-handle" href="https://www.instagram.com/${u.username}/" target="_blank" title="Instagram">@${u.username}</a>
                 <span class="user-fullname">${u.full_name || '-'}</span>
               </div>
             </div>
             <div>${tags.join(" ") || '<span style="color:var(--text-dim);font-size:0.70rem;">-</span>'}</div>
             <div class="row-actions">
-              <button class="btn-shield ${isProtected ? 'active' : ''}" title="${isProtected ? 'ยกเลิกคุ้มครอง' : 'คุ้มครอง'}" onclick="toggleProtect('${u.username}')">
+              <button class="btn-shield ${isProtected ? 'active' : ''}" title="${isProtected ? t('btnUnprotect') : t('btnProtect')}" onclick="toggleProtect('${u.username}')">
                 🛡️
               </button>
               <button class="btn-unfollow-row" ${isProtected ? 'disabled' : ''} onclick="unfollowSingle('${u.id}', '${u.username}', '${u.full_name || ''}')">
-                เลิกติดตาม
+                ${t("btnUnfollowRow")}
               </button>
             </div>
           </div>
@@ -1553,7 +1762,7 @@
         footerHtml = `
           <div style="text-align:center; padding:8px;">
             <button class="btn btn-ghost" onclick="loadMoreUsers()" style="margin:0 auto; font-size:0.70rem;">
-              แสดงเพิ่มอีก ${Math.min(80, remaining)} คน (เหลืออีก ${remaining} คน)
+              ${t("showMoreBtn", { next: Math.min(80, remaining), remaining: remaining })}
             </button>
           </div>`;
       }
@@ -1629,14 +1838,14 @@
 
     async function openChromeBrowser() {
       await window.pywebview.api.open_browser_window();
-      showToast("เปิดหน้าต่าง Chrome แล้ว");
+      showToast(t("toastChromeOpened"));
     }
 
     // 1-Click Auto Clean Hero Function
     async function startOneClickAutoClean() {
       if (isBusy) return;
       if (!allNonFollowers || allNonFollowers.length === 0) {
-        showToast("ยังไม่มีข้อมูลรายชื่อ กรุณารอสแกนสักครู่", "info");
+        showToast(currentLang === 'th' ? "ยังไม่มีข้อมูลรายชื่อ กรุณารอสแกนสักครู่" : "No scan data yet. Please run a scan.", "info");
         return;
       }
 
@@ -1657,7 +1866,7 @@
       updateSelectedUI();
 
       if (targets.length === 0) {
-        showToast("ไม่มีบัญชีที่ต้องเลิกติดตาม หรือทั้งหมดอยู่ในรายการคุ้มครอง", "success");
+        showToast(currentLang === 'th' ? "ไม่มีบัญชีที่ต้องเลิกติดตาม หรือทั้งหมดอยู่ในรายการคุ้มครอง" : "No accounts to unfollow or all are protected.", "success");
         return;
       }
 
@@ -1669,15 +1878,15 @@
       };
 
       const confirmed = await showModal({
-        title: `1-Click เคลียร์อัตโนมัติ (${targets.length} คน)`,
-        subtitle: `ความเร็ว: ${speedLabels[speed] || speed}`,
+        title: t("confirmAutoCleanTitle", { count: targets.length }),
+        subtitle: `${t("speedLabel")} ${speedLabels[speed] || speed}`,
         htmlContent: `
-          <div>ระบบจะทำการเลิกติดตามคนที่ไม่ฟอลกลับ <strong>${targets.length} คน</strong> ให้คุณอัตโนมัติ</div>
+          <div>${t("confirmAutoCleanBody", { count: targets.length })}</div>
           <div style="margin-top:6px; font-size:0.70rem; color:#a5b4fc;">
-            🛡️ บัญชีที่คุ้มครอง (${protectedSet.size} คน) จะปลอดภัย 100%
+            ${t("protectedSafetyNotice", { count: protectedSet.size })}
           </div>
         `,
-        confirmText: `เริ่มเคลียร์ทันที`,
+        confirmText: t("btnAutoClean"),
         confirmClass: "btn-emerald"
       });
 
@@ -1696,17 +1905,17 @@
     async function unfollowSingle(userId, uname, fullName) {
       if (isBusy) return;
       if (protectedSet.has(uname)) {
-        showToast(`@${uname} อยู่ในรายการคุ้มครอง`, "error");
+        showToast(t("toastProtectAdded", { username: uname }), "error");
         return;
       }
 
       const confirmed = await showModal({
-        title: "ยืนยันเลิกติดตาม",
+        title: t("confirmUnfollowSingleTitle"),
         subtitle: `@${uname}`,
         htmlContent: `
-          <div>ต้องการเลิกติดตาม <strong>@${uname}</strong> (${fullName || '-'})?</div>
+          <div>${t("confirmUnfollowSingleBody", { username: uname, fullName: fullName || '-' })}</div>
         `,
-        confirmText: "เลิกติดตาม",
+        confirmText: t("btnUnfollowRow"),
         confirmClass: "btn-rose"
       });
 
@@ -1718,7 +1927,7 @@
       handledUsers.clear();
       setExecutingState(true);
       document.getElementById("progressSection").style.display = "flex";
-      setIfChanged("progressText", `กำลังเลิกติดตาม @${uname}...`);
+      setIfChanged("progressText", `(${targets.length}) @${uname}...`);
 
       await window.pywebview.api.request_unfollow_batch(targets, speed);
     }
@@ -1735,15 +1944,15 @@
       };
 
       const confirmed = await showModal({
-        title: `ยืนยันเลิกติดตาม (${selectedUsernames.length} คน)`,
-        subtitle: `ความเร็ว: ${speedLabels[speed] || speed}`,
+        title: t("confirmUnfollowSelectedTitle", { count: selectedUsernames.length }),
+        subtitle: `${t("speedLabel")} ${speedLabels[speed] || speed}`,
         htmlContent: `
-          <div>ระบบจะทำการเลิกติดตามทั้งหมด <strong>${selectedUsernames.length} คน</strong> ที่เลือกไว้</div>
+          <div>${t("confirmUnfollowSelectedBody", { count: selectedUsernames.length })}</div>
           <div style="margin-top:5px; font-size:0.70rem; color:#a5b4fc;">
-            🛡️ บัญชีที่คุ้มครองจะปลอดภัย 100%
+            ${t("protectedSafetyNotice", { count: protectedSet.size })}
           </div>
         `,
-        confirmText: `เริ่มเลิกติดตาม`,
+        confirmText: t("btnUnfollowSelected"),
         confirmClass: "btn-rose"
       });
 
@@ -1882,7 +2091,7 @@
           statusBadge.classList.remove("connecting", "error");
           if (st.is_scanning) {
             const pct = st.scan_percent || 0;
-            const progMsg = st.scan_progress || `กำลังสแกน... (${pct}%)`;
+            const progMsg = st.scan_progress || `${t("statusScanning")} (${pct}%)`;
             setIfChanged("statusText", progMsg);
 
             // Live progress dock during scan
@@ -1901,9 +2110,9 @@
             const sub = document.getElementById("scanSubText");
             if (sub && st.scan_progress) sub.innerText = st.scan_progress;
           } else if (st.is_unfollowing) {
-            setIfChanged("statusText", "กำลังเลิกติดตาม...");
+            setIfChanged("statusText", t("statusUnfollowing"));
           } else {
-            setIfChanged("statusText", "พร้อมใช้งาน (เข้าสู่ระบบแล้ว)");
+            setIfChanged("statusText", t("statusReady"));
           }
 
           // Auto-trigger scan once logged in
@@ -1913,7 +2122,7 @@
           }
         } else {
           statusBadge.classList.add("connecting");
-          setIfChanged("statusText", "รอเข้าสู่ระบบใน Chrome...");
+          setIfChanged("statusText", t("statusWaitingLogin"));
         }
 
         // 2. Scan Results Retrieval via Bridge
@@ -1935,7 +2144,7 @@
             renderCurrentList(true);
             updateSelectedUI();
             playChime("scan_complete");
-            showToast(`สแกนสำเร็จ: พบคนไม่ฟอลกลับ ${allNonFollowers.length} คน`, "success");
+            showToast(t("toastScanSuccess", { count: allNonFollowers.length }), "success");
           }
         }
 
@@ -1944,7 +2153,7 @@
           setLoading(false);
           const progDock = document.getElementById("progressSection");
           if (progDock && !st.is_unfollowing) progDock.style.display = "none";
-          showToast("เกิดข้อผิดพลาดในการสแกน: " + st.scan_error, "error");
+          showToast(t("toastScanError", { error: st.scan_error }), "error");
         }
 
         // 4. Unfollowing Progress
@@ -1952,8 +2161,8 @@
           const info = st.unfollow_progress;
           const pct = Math.round((info.index / info.total) * 100);
           document.getElementById("progressBarFill").style.width = `${pct}%`;
-          setIfChanged("progressStats", `${info.index} / ${info.total} (สำเร็จ: ${info.success_count} | ข้าม: ${info.failed_count})`);
-          setIfChanged("progressText", `(${info.index}/${info.total}) เลิกติดตาม @${info.username}...`);
+          setIfChanged("progressStats", `${info.index} / ${info.total} (${t("statSuccess")}: ${info.success_count} | ${t("statFailed")}: ${info.failed_count})`);
+          setIfChanged("progressText", `(${info.index}/${info.total}) @${info.username}...`);
 
           if (info.success && !handledUsers.has(info.username)) {
             handledUsers.add(info.username);
@@ -1971,21 +2180,21 @@
 
           const isAbort = summary.aborted;
           await showModal({
-            title: isAbort ? "หยุดการทำงานแล้ว" : "เสร็จสิ้นเรียบร้อย!",
-            subtitle: isAbort ? "คุณสั่งหยุดการทำงานก่อนกำหนด" : "ทำรายการครบทุกบัญชีแล้ว",
+            title: isAbort ? t("abortedTitle") : t("finishedTitle"),
+            subtitle: isAbort ? t("abortedSub") : t("finishedSub"),
             htmlContent: `
               <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-top:2px;">
                 <div style="background:var(--emerald-subtle); border:1px solid var(--emerald-border); border-radius:6px; padding:6px; text-align:center;">
-                  <div style="color:var(--text-secondary); font-size:0.68rem;">สำเร็จ</div>
+                  <div style="color:var(--text-secondary); font-size:0.68rem;">${t("statSuccess")}</div>
                   <div style="color:#34d399; font-size:1.1rem; font-weight:700;">${summary.success}</div>
                 </div>
                 <div style="background:var(--rose-subtle); border:1px solid var(--rose-border); border-radius:6px; padding:6px; text-align:center;">
-                  <div style="color:var(--text-secondary); font-size:0.68rem;">ผิดพลาด / ข้าม</div>
+                  <div style="color:var(--text-secondary); font-size:0.68rem;">${t("statFailed")}</div>
                   <div style="color:#fb7185; font-size:1.1rem; font-weight:700;">${summary.failed}</div>
                 </div>
               </div>
             `,
-            confirmText: "ตกลง",
+            confirmText: t("modalOk"),
             confirmClass: "btn-ghost",
             isAlert: true
           });
@@ -2001,6 +2210,7 @@
     // Fully Automatic Initializer
     window.addEventListener('pywebviewready', async () => {
       saveProtected();
+      setLanguage(currentLang);
       document.getElementById("soundIcon").innerText = soundEnabled ? "🔊" : "🔇";
       try {
         if (window.pywebview && window.pywebview.api && window.pywebview.api.get_version_info) {
