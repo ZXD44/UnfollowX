@@ -1,9 +1,9 @@
-# 🚀 UnfollowX PRO v0.0.1 — By ZXD44
+# 🚀 UnfollowX PRO v0.0.4 — By ZXD44
 
 > **เครื่องมือตรวจสอบและเลิกติดตามผู้ที่ไม่ติดตามกลับบน Instagram อัตโนมัติ ปลอดภัย 100% ด้วย Python Engine + Playwright + PyWebView**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](../LICENSE)
-[![Version](https://img.shields.io/badge/Version-0.0.1-purple.svg)](version.py)
+[![Version](https://img.shields.io/badge/Version-0.0.4-purple.svg)](python_engine/version.py)
 [![Author](https://img.shields.io/badge/Creator-ZXD44-f43f5e.svg)](https://github.com/ZXD44)
 [![GitHub](https://img.shields.io/badge/GitHub-ZXD44%2FUnfollowX-indigo.svg)](https://github.com/ZXD44/UnfollowX)
 

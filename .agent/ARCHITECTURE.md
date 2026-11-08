@@ -26,26 +26,32 @@ graph TD
 
     subgraph Engine_Layer ["Core Engine & Automation"]
         Worker["AutomationWorker (threading.Thread)"]
-        PW["Playwright Chromium Context"]
+        PW["Playwright Stealth Chromium Context"]
+        Watchdog["Circuit Breaker & Checkpoint Watchdog"]
+        Emulation["Human Emulation & Feed Telemetry"]
         Py_API --> Worker
         Worker --> PW
+        PW --> Watchdog
+        PW --> Emulation
     end
 
     subgraph Network_Layer ["Instagram Web API"]
         IG_Auth["Session & Cookie Detection"]
         IG_Query["Friendship API (/following, /followers)"]
-        IG_Mutate["Unfollow Mutation (POST /web/friendships/)"]
+        IG_Mutate["Official Web Unfollow (POST /web/friendships/.../unfollow/)"]
         PW --> IG_Auth
         PW --> IG_Query
         PW --> IG_Mutate
     end
 
-    subgraph Storage_Layer ["Local Persistence"]
-        WL["whitelist.json"]
-        Audit["audit_history.json"]
-        SessionStore[".profile_data/ig_user_data"]
+    subgraph Storage_Layer ["Local Persistence (%LOCALAPPDATA%/ZXD44-IG-Cleaner)"]
+        WL["localStorage (zx_protected_users)"]
+        Audit["unfollow_history.json (Audit Records)"]
+        AuditLog["unfollowx_audit.log (Rotating Execution Log)"]
+        SessionStore["browser_profile (Persistent Chromium Context)"]
         Py_API --> WL
         Py_API --> Audit
+        Py_API --> AuditLog
         PW --> SessionStore
     end
 ```

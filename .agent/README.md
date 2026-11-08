@@ -1,6 +1,6 @@
 # .agent Directory Index (สารบัญคู่มือระบบ)
 
-Welcome to the internal system and agentic documentation directory for **UnfollowX PRO v0.0.1** (Bilingual TH / EN).
+Welcome to the internal system and agentic documentation directory for **UnfollowX PRO v0.0.4** (Bilingual TH / EN).
 
 ## User & Public Documentation
 - [README.md (🇹🇭 ภาษาไทย & 🇬🇧 English)](file:///C:/Users/ZirconX/Desktop/Ads%20Dis/ZirconX-IG-Cleaner-Pro-v3.0/README.md): เอกสารแนะนำโปรเจกต์ฉบับสมบูรณ์ (รวมภาษาไทยและภาษาอังกฤษในไฟล์เดียว)

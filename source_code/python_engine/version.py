@@ -3,7 +3,7 @@
 UnfollowX PRO — Single Source of Truth for Version Information
 """
 
-VERSION = "0.0.1"
+VERSION = "0.0.4"
 APP_NAME = "UnfollowX PRO"
 AUTHOR = "ZXD44"
 COMPANY = "ZXD44"

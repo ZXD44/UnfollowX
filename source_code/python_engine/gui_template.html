@@ -1000,6 +1000,10 @@
         <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
         <span>CSV</span>
       </button>
+
+      <button class="btn btn-ghost" onclick="openLogFolder()" title="เปิดโฟลเดอร์ Audit Logs เพื่อตรวจสอบประวัติ">
+        <span>📋 Logs</span>
+      </button>
     </div>
   </header>
 
@@ -1029,6 +1033,11 @@
       <span class="metric-label" data-i18n="metricProtected">🛡️ คุ้มครอง:</span>
       <span class="metric-value" id="statProtected">0</span>
     </div>
+
+    <div class="metric-chip" id="cardDailyQuota" title="โควตาความปลอดภัยสูงสุดไม่เกิน 50 คนในรอบ 24 ชั่วโมง เพื่อป้องกันบัญชีโดนแบนเด็ดขาด">
+      <span class="metric-label">🛡️ โควตา 24h:</span>
+      <span class="metric-value" id="statDailyQuota" style="color:#38bdf8;">0 / 50</span>
+    </div>
   </div>
 
   <!-- 3. MINI ACTION & FILTER BAR -->
@@ -1052,9 +1061,8 @@
     <div class="speed-wrap">
       <span data-i18n="speedLabel">เร็ว:</span>
       <select id="speedMode" class="speed-select">
-        <option value="turbo" selected>⚡ Turbo (0.8-1.2s)</option>
-        <option value="fast">⚡ Fast (1.2-1.8s)</option>
-        <option value="safe">🛡️ Safe (2.0-3.2s)</option>
+        <option value="ultimate_safe" selected>🛡️ Ultimate Safe (35-65s พรางมนุษย์ 100%)</option>
+        <option value="stealth_balanced">⚖️ Stealth Balanced (25-45s ระมัดระวัง)</option>
       </select>
     </div>
 
@@ -1398,6 +1406,8 @@
     let cachedHistory = [];
     let isPinned = false;
     let soundEnabled = localStorage.getItem("zx_sound_enabled") !== "false";
+    let lastShownError = null;
+    let currentDailyCount = 0;
     const domCache = {};
 
     // Helper: update text content ONLY when changed (avoids expensive DOM reflows)
@@ -1473,6 +1483,19 @@
             g.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
             osc.start(now);
             osc.stop(now + 0.08);
+          } else if (type === "error") {
+            // Low sawtooth warning pulse: 240Hz -> 140Hz
+            const osc = audioCtx.createOscillator();
+            const g = audioCtx.createGain();
+            osc.type = "sawtooth";
+            osc.connect(g);
+            g.connect(audioCtx.destination);
+            osc.frequency.setValueAtTime(240, now);
+            osc.frequency.exponentialRampToValueAtTime(140, now + 0.35);
+            g.gain.setValueAtTime(0.08, now);
+            g.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+            osc.start(now);
+            osc.stop(now + 0.35);
           }
         } catch (e) {}
       }, 0);
@@ -1576,6 +1599,19 @@
         playChime("success");
       } else {
         showToast("ไม่สามารถส่งออกได้: " + (res?.error || ""), "error");
+      }
+    }
+
+    async function openLogFolder() {
+      try {
+        const res = await window.pywebview.api.open_log_folder();
+        if (res && res.success) {
+          showToast("เปิดโฟลเดอร์ Logs แล้ว", "success");
+        } else {
+          showToast("ไม่สามารถเปิดโฟลเดอร์ Logs ได้: " + (res?.error || ""), "error");
+        }
+      } catch (e) {
+        showToast("Error opening logs", "error");
       }
     }
 
@@ -1870,18 +1906,38 @@
         return;
       }
 
+      if (currentDailyCount >= 50) {
+        showToast("ครบโควตาความปลอดภัย 50 คนในรอบ 24 ชั่วโมงแล้ว เพื่อป้องกันบัญชีโดนแบนเด็ดขาด", "error");
+        return;
+      }
+
       const speed = document.getElementById("speedMode").value;
       const speedLabels = {
-        turbo: "Turbo (~1s)",
-        fast: "Fast (~1.5s)",
-        safe: "Safe (~2.5s)"
+        ultimate_safe: "🛡️ Ultimate Safe (35-65s)",
+        stealth_balanced: "⚖️ Stealth Balanced (25-45s)",
+        stealth: "🛡️ Ultimate Safe (35-65s)",
+        safe: "🛡️ Ultimate Safe (35-65s)",
+        balanced: "⚖️ Stealth Balanced (25-45s)"
       };
 
+      // Hard safety guard: maximum 15 targets per batch session (or remaining daily quota)
+      const MAX_ONE_CLICK_BATCH = Math.min(15, Math.max(1, 50 - currentDailyCount));
+      let finalTargets = targets;
+      let isCapped = false;
+      if (targets.length > MAX_ONE_CLICK_BATCH) {
+        finalTargets = targets.slice(0, MAX_ONE_CLICK_BATCH);
+        isCapped = true;
+      }
+
       const confirmed = await showModal({
-        title: t("confirmAutoCleanTitle", { count: targets.length }),
+        title: t("confirmAutoCleanTitle", { count: finalTargets.length }),
         subtitle: `${t("speedLabel")} ${speedLabels[speed] || speed}`,
         htmlContent: `
-          <div>${t("confirmAutoCleanBody", { count: targets.length })}</div>
+          <div>${t("confirmAutoCleanBody", { count: finalTargets.length })}</div>
+          ${isCapped ? `
+          <div style="margin-top:6px; font-size:0.71rem; color:#f59e0b; background:rgba(245,158,11,0.1); border:1px solid rgba(245,158,11,0.25); border-radius:5px; padding:6px 8px; line-height:1.4;">
+            🛡️ <strong>ระบบพรางตัวเหมือนมนุษย์ 100%:</strong> เพื่อไม่ให้ Instagram ตรวจจับว่าเป็นบอท ระบบจำกัดการทำรายการไม่เกินรอบละ <strong>${MAX_ONE_CLICK_BATCH} คน</strong> (โควตารายวัน: ${currentDailyCount}/50)
+          </div>` : ''}
           <div style="margin-top:6px; font-size:0.70rem; color:#a5b4fc;">
             ${t("protectedSafetyNotice", { count: protectedSet.size })}
           </div>
@@ -1896,9 +1952,9 @@
       setExecutingState(true);
       document.getElementById("progressSection").style.display = "flex";
       document.getElementById("progressBarFill").style.width = "0%";
-      setIfChanged("progressStats", `0 / ${targets.length}`);
+      setIfChanged("progressStats", `0 / ${finalTargets.length}`);
 
-      await window.pywebview.api.request_unfollow_batch(targets, speed);
+      await window.pywebview.api.request_unfollow_batch(finalTargets, speed);
     }
 
     // Unfollow Operations with Custom Modal
@@ -1936,18 +1992,38 @@
       if (isBusy || selectedSet.size === 0) return;
       const selectedUsernames = Array.from(selectedSet);
 
+      if (currentDailyCount >= 50) {
+        showToast("ครบโควตาความปลอดภัย 50 คนในรอบ 24 ชั่วโมงแล้ว เพื่อป้องกันบัญชีโดนแบนเด็ดขาด", "error");
+        return;
+      }
+
       const speed = document.getElementById("speedMode").value;
       const speedLabels = {
-        turbo: "Turbo (~1s)",
-        fast: "Fast (~1.5s)",
-        safe: "Safe (~2.5s)"
+        ultimate_safe: "🛡️ Ultimate Safe (35-65s)",
+        stealth_balanced: "⚖️ Stealth Balanced (25-45s)",
+        stealth: "🛡️ Ultimate Safe (35-65s)",
+        safe: "🛡️ Ultimate Safe (35-65s)",
+        balanced: "⚖️ Stealth Balanced (25-45s)"
       };
 
+      // Hard safety guard: maximum 15 targets per batch
+      const MAX_SELECTED_BATCH = Math.min(15, Math.max(1, 50 - currentDailyCount));
+      let finalUsernames = selectedUsernames;
+      let isCapped = false;
+      if (selectedUsernames.length > MAX_SELECTED_BATCH) {
+        finalUsernames = selectedUsernames.slice(0, MAX_SELECTED_BATCH);
+        isCapped = true;
+      }
+
       const confirmed = await showModal({
-        title: t("confirmUnfollowSelectedTitle", { count: selectedUsernames.length }),
+        title: t("confirmUnfollowSelectedTitle", { count: finalUsernames.length }),
         subtitle: `${t("speedLabel")} ${speedLabels[speed] || speed}`,
         htmlContent: `
-          <div>${t("confirmUnfollowSelectedBody", { count: selectedUsernames.length })}</div>
+          <div>${t("confirmUnfollowSelectedBody", { count: finalUsernames.length })}</div>
+          ${isCapped ? `
+          <div style="margin-top:6px; font-size:0.71rem; color:#f59e0b; background:rgba(245,158,11,0.1); border:1px solid rgba(245,158,11,0.25); border-radius:5px; padding:6px 8px; line-height:1.4;">
+            🛡️ <strong>ระบบพรางตัวเหมือนมนุษย์ 100%:</strong> จำกัดการทำรายการรอบละไม่เกิน <strong>${MAX_SELECTED_BATCH} คน</strong> (โควตารายวัน: ${currentDailyCount}/50)
+          </div>` : ''}
           <div style="margin-top:5px; font-size:0.70rem; color:#a5b4fc;">
             ${t("protectedSafetyNotice", { count: protectedSet.size })}
           </div>
@@ -1959,7 +2035,7 @@
       if (!confirmed) return;
 
       const targetList = [];
-      for (const uname of selectedUsernames) {
+      for (const uname of finalUsernames) {
         const found = allNonFollowers.find(u => u.username === uname);
         if (found) targetList.push({ id: found.id, username: uname });
       }
@@ -2154,6 +2230,49 @@
           const progDock = document.getElementById("progressSection");
           if (progDock && !st.is_unfollowing) progDock.style.display = "none";
           showToast(t("toastScanError", { error: st.scan_error }), "error");
+        }
+
+        // Global / Security Error Modal Interceptor
+        if (st.error && st.error !== lastShownError) {
+          lastShownError = st.error;
+          setExecutingState(false);
+          setLoading(false);
+          const progDock = document.getElementById("progressSection");
+          if (progDock) progDock.style.display = "none";
+          playChime("error");
+          await showModal({
+            title: "🚨 แจ้งเตือนความปลอดภัย (Security Alert)",
+            subtitle: "ระบบตัดการทำงานฉุกเฉิน",
+            htmlContent: `
+              <div style="color:#fb7185; line-height:1.45; font-size:0.75rem;">
+                <strong>${st.error}</strong>
+              </div>
+              <div style="margin-top:8px; font-size:0.70rem; color:var(--text-secondary); line-height:1.4;">
+                🛡️ ตรวจพบความเสี่ยงจาก Instagram ระบบจึงหยุดส่งคำขอทั้งหมดทันที เพื่อรักษาความปลอดภัยของบัญชีและรหัสผ่านของคุณ กรุณาพักการใช้งานระบบอัตโนมัติอย่างน้อย 24–48 ชั่วโมง
+              </div>
+            `,
+            confirmText: t("modalOk"),
+            confirmClass: "btn-rose",
+            isAlert: true
+          });
+        }
+
+        // Daily Safety Quota Telemetry
+        if (typeof st.daily_count === "number") {
+          currentDailyCount = st.daily_count;
+          const maxQ = st.daily_max || 50;
+          setIfChanged("statDailyQuota", `${st.daily_count} / ${maxQ}`);
+          const quotaChip = document.getElementById("cardDailyQuota");
+          const isMax = st.daily_count >= maxQ;
+          if (quotaChip) {
+            quotaChip.style.borderColor = isMax ? "var(--rose-border)" : "";
+            const valEl = document.getElementById("statDailyQuota");
+            if (valEl) valEl.style.color = isMax ? "#fb7185" : "#38bdf8";
+          }
+          const btnClean = document.getElementById("btnAutoClean");
+          const btnUnf = document.getElementById("btnUnfollowSelected");
+          if (btnClean && isMax && !isBusy) btnClean.disabled = true;
+          if (btnUnf && isMax && !isBusy) btnUnf.disabled = true;
         }
 
         // 4. Unfollowing Progress

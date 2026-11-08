@@ -1,5 +1,5 @@
 ==================================================
-   UnfollowX PRO v0.0.1 — By ZXD44
+   UnfollowX PRO v0.0.4 — By ZXD44
 ==================================================
 
 [🇹🇭 ภาษาไทย - คู่มือการใช้งานหลัก]
@@ -9,9 +9,11 @@
    - กดปุ่ม "🇹🇭 TH / 🇬🇧 EN" ที่แถบด้านบนเพื่อสลับภาษาตามต้องการ
    - กดปุ่ม "สแกน" เพื่อดึงรายชื่อคนไม่ฟอลกลับ (แสดงความคืบหน้า 0% - 100%)
    - กดปุ่ม "🛡️" หน้าชื่อคนสำคัญที่ไม่ต้องการให้โดนลบ (ระบบ Whitelist)
-   - เลือกคนที่ไม่ติดตามกลับ หรือใช้ปุ่ม "1-Click เคลียร์"
-   - เลือกระดับความเร็ว (Turbo ⚡ / Fast 🚀 / Safe 🛡️)
-   - กดปุ่ม "ลบ" เพื่อเริ่มกระบวนการเลิกติดตามอัตโนมัติ
+   - เลือกคนที่ไม่ติดตามกลับ หรือใช้ปุ่ม "1-Click เคลียร์" (จำกัดสูงสุด 15 คนต่อรอบ)
+   - เลือกระดับความเร็ว (Ultimate Safe 🛡️ 35-65s / Stealth Balanced ⚖️ 25-45s)
+   - กดปุ่ม "ลบ" เพื่อเริ่มกระบวนการเลิกติดตามอัตโนมัติ (พักสายตาอัตโนมัติ 1.5-2.5 นาที)
+   - กดปุ่ม "📋 Logs" ที่แถบด้านบนเพื่อเปิดดูบันทึกการทำงานอย่างละเอียด
+   - โควตาความปลอดภัยรายวัน: ไม่เกิน 50 คนในรอบ 24 ชั่วโมง เพื่อป้องกันบัญชีโดนแบนเด็ดขาด
 
 --------------------------------------------------
 
@@ -22,9 +24,11 @@
    - Click "🇹🇭 TH / 🇬🇧 EN" at the top to toggle language anytime.
    - Click "Scan" to fetch non-followers (Live progress 0% - 100%).
    - Click "🛡️" to protect important accounts (Whitelist).
-   - Select targets or click "1-Click Clean".
-   - Choose speed mode (Turbo ⚡ / Fast 🚀 / Safe 🛡️).
-   - Click "Unfollow" to execute safely.
+   - Select targets or click "1-Click Clean" (Max 15 per batch).
+   - Choose speed mode (Ultimate Safe 🛡️ 35-65s / Stealth Balanced ⚖️ 25-45s).
+   - Click "Unfollow" to execute safely (Includes automated 1.5-2.5 min breaks).
+   - Click "📋 Logs" in the top bar to inspect detailed execution audit logs.
+   - Daily Safe Cap: Maximum 50 unfollows per 24 hours to prevent heuristic bot flags.
 
 ==================================================
 * พัฒนาและแจกฟรีโดย ZXD44 / Developed by ZXD44

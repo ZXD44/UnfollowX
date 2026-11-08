@@ -174,20 +174,23 @@ def publish_github_release(ver_str):
         "User-Agent": "ZXD44-Release-Agent"
     }
 
-    release_title = f"UnfollowX PRO v{ver_str} — Release"
-    release_body = f"""# 🚀 UnfollowX PRO v{ver_str}
+    release_title = f"UnfollowX PRO v{ver_str} — Ultimate Safety Release"
+    release_body = f"""# 🚀 UnfollowX PRO v{ver_str} — Ultimate Safety Release
 
-## 🇹🇭 ไฮไลท์การอัปเดต (Release Highlights)
-* 🌐 **Bilingual System**: รองรับทั้งภาษาไทย (หลัก) และภาษาอังกฤษ สลับได้ทันทีบนหน้าจอ
-* ⚡ **Live Telemetry**: แสดงหลอดความคืบหน้าการสแกนแบบเรียลไทม์ `0% - 100%`
-* 🛡️ **Zero Freeze Guarantee**: สถาปัตยกรรมไร้ Deadlock 100% ไม่ค้าง ไม่ติด Not Responding
-* 📌 **Always-on-Top & Audio**: โหมดปักหมุดหน้าต่างบนสุด และเสียงสังเคราะห์แจ้งเตือน
-* 🛡️ **Whitelist & Audit History**: ปกป้องเพื่อนสำคัญ และบันทึกประวัติการเลิกติดตาม
+## 🇹🇭 ไฮไลท์การอัปเดตความปลอดภัยสูงสุด (Release Highlights)
+* 🛡️ **Human Emulation 100%**: ระบบพรางตัวเลียนแบบมนุษย์เต็มรูปแบบ (ดีเลย์ 35–65s สุ่มแบบ Gaussian, เลื่อนดูฟีดอัตโนมัติสร้าง Telemetry, พักสายตา 1.5–2.5 นาที) ป้องกัน Meta เข้าใจผิดว่าเป็นแฮกเกอร์
+* 🚨 **Circuit Breaker & Watchdog**: ตรวจจับสัญญาณอันตราย (HTTP 4xx, Checkpoint, Action Block, URL Redirect) หยุดคำขอฉุกเฉินทันที 100% เพื่อรักษาความปลอดภัยของบัญชี
+* 🔒 **Rolling 24h Safe Cap**: ล็อกโควตาไม่เกิน 15 บัญชีต่อรอบ และล็อกอัตโนมัติเมื่อครบ 50 บัญชีใน 24 ชั่วโมง
+* 📋 **Audit Logging System**: ติดตั้งระบบบันทึก Log ลงไฟล์ `%LOCALAPPDATA%\\ZXD44-IG-Cleaner\\unfollowx_audit.log` พร้อมปุ่ม `📋 Logs` บนหน้าต่างโปรแกรม
+* 🧹 **Purged Legacy Endpoints**: ลบ GraphQL mutation `doc_id` เก่า, Destroy API, และ DOM scraping loop ออกถาวร ใช้เฉพาะ Official Instagram Web Endpoint 100%
+* 🌐 **Bilingual System & Obsidian UI**: สลับภาษาไทย (หลัก) / อังกฤษได้ทันที พร้อมหน้าจอกระจกดำ Obsidian Dark ไร้กระตุก 60FPS
 
 ## 🇬🇧 English Overview
-* 🌐 **Dual Language**: Seamless toggle between Thai (Default) and English.
-* ⚡ **Real-Time Progress**: Live scan streaming from browser context.
-* 🛡️ **Safety Guardrails**: Real browser sessions, zero password logging, and spam-prevention cooldowns.
+* 🛡️ **Human Emulation**: 35–65s Gaussian jitter delays, automated feed scrolling impressions, and 1.5–2.5 min micro-breaks.
+* 🚨 **Circuit Breaker**: Real-time URL and HTTP response watchdog halts instantly on security checkpoints or action blocks.
+* 🔒 **Daily Safety Ceiling**: Strict 15 unfollows per batch session and 50 unfollows per 24 hours lock.
+* 📋 **Execution Audit Logs**: Live second-by-second file logging with in-app 1-click access.
+* 🧹 **Clean Standards**: Completely purged deprecated GraphQL doc_ids and legacy mobile endpoints; strictly compliant with modern Instagram Web standards.
 
 ## 📦 การติดตั้งและดาวน์โหลด (Downloads)
 1. ดาวน์โหลดไฟล์ **`UnfollowX.exe`** ด้านล่างนี้ในส่วน Assets

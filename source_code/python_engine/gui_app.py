@@ -8,6 +8,8 @@ import csv
 import queue
 import threading
 import io
+import logging
+from logging.handlers import RotatingFileHandler
 import webview
 from playwright.sync_api import sync_playwright
 
@@ -20,7 +22,7 @@ if sys.stderr is None:
 try:
     from version import VERSION, APP_NAME, AUTHOR
 except ImportError:
-    VERSION = "0.0.1"
+    VERSION = "0.0.3"
     APP_NAME = "UnfollowX PRO"
     AUTHOR = "ZXD44"
 
@@ -31,6 +33,20 @@ APP_TITLE = f"{APP_NAME} v{APP_VERSION} — By {AUTHOR}"
 APPDATA_DIR = os.path.join(os.environ.get("LOCALAPPDATA", os.path.expanduser("~")), "ZXD44-IG-Cleaner")
 PROFILE_DIR = os.path.join(APPDATA_DIR, "browser_profile")
 os.makedirs(PROFILE_DIR, exist_ok=True)
+
+# 2. Hardened Audit Logging System (Local & Persistent)
+LOG_FILE = os.path.join(APPDATA_DIR, "unfollowx_audit.log")
+logger = logging.getLogger("UnfollowX")
+logger.setLevel(logging.INFO)
+if not logger.handlers:
+    rfh = RotatingFileHandler(LOG_FILE, maxBytes=5 * 1024 * 1024, backupCount=3, encoding="utf-8")
+    rfh.setFormatter(logging.Formatter("[%(asctime)s] [%(levelname)s] %(message)s"))
+    logger.addHandler(rfh)
+
+logger.info("==================================================")
+logger.info("UnfollowX PRO %s Initialized", APP_VERSION)
+logger.info("Execution Log Path: %s", LOG_FILE)
+logger.info("==================================================")
 
 if getattr(sys, "frozen", False):
     RESOURCE_DIR = sys._MEIPASS
@@ -88,6 +104,10 @@ class BrowserWorker:
                     "--start-maximized",
                     "--no-first-run",
                     "--no-default-browser-check",
+                    "--disable-infobars",
+                    "--disable-background-networking",
+                    "--disable-renderer-backgrounding",
+                    "--disable-backgrounding-occluded-windows",
                 ],
                 no_viewport=True,
             )
@@ -95,6 +115,36 @@ class BrowserWorker:
                 kwargs["executable_path"] = chrome_exe
 
             self.browser = self.pw.chromium.launch_persistent_context(**kwargs)
+            try:
+                self.browser.add_init_script("""
+                    // 1. Mask navigator.webdriver
+                    Object.defineProperty(navigator, 'webdriver', {
+                        get: () => undefined
+                    });
+                    // 2. Realistic languages
+                    Object.defineProperty(navigator, 'languages', {
+                        get: () => ['th-TH', 'th', 'en-US', 'en']
+                    });
+                    // 3. Real Chrome Runtime
+                    if (!window.chrome) {
+                        window.chrome = { runtime: {} };
+                    }
+                    // 4. Mock Realistic Plugins
+                    const fakePlugins = [
+                        { name: 'Chrome PDF Plugin', filename: 'internal-pdf-viewer', description: 'Portable Document Format' },
+                        { name: 'Chrome PDF Viewer', filename: 'mhjfbmdgcfjbbpaeojofohoefgiehjai', description: '' },
+                        { name: 'Native Client', filename: 'internal-nacl-plugin', description: '' }
+                    ];
+                    Object.defineProperty(navigator, 'plugins', {
+                        get: () => fakePlugins
+                    });
+                    // 5. Hardware Concurrency & Memory
+                    Object.defineProperty(navigator, 'hardwareConcurrency', { get: () => 8 });
+                    Object.defineProperty(navigator, 'deviceMemory', { get: () => 8 });
+                """)
+            except Exception:
+                pass
+
             self.page = self.browser.pages[0] if self.browser.pages else self.browser.new_page()
 
             try:
@@ -135,11 +185,22 @@ class BrowserWorker:
             except queue.Empty:
                 pass
 
-            # 2. Idle Heartbeat: check login status without blocking UI
+            # 2. Idle Heartbeat: check login status and watch for Checkpoints without blocking UI
             now = time.time()
             if self.is_ready and self.browser and (now - last_cookie_check > 2.0):
                 last_cookie_check = now
                 try:
+                    current_url = self.page.url.lower() if self.page and not self.page.is_closed() else ""
+                    # Security Watchdog: detect if Instagram routed account to checkpoint or suspended state
+                    if any(x in current_url for x in ["/challenge/", "/checkpoint/", "facebook.com", "two_factor", "suspended"]):
+                        if not self.abort_flag:
+                            self.abort_flag = True
+                            self.api.update_state(
+                                error="🚨 ตรวจพบ Instagram Security Checkpoint / Challenge! ระบบหยุดการทำงานทันทีเพื่อป้องกันบัญชี",
+                                is_scanning=False,
+                                is_unfollowing=False
+                            )
+
                     cookies = self.browser.cookies()
                     has_session = any(c.get("name") == "sessionid" for c in cookies)
                     ds_user_id = next((c.get("value") for c in cookies if c.get("name") == "ds_user_id"), None)
@@ -227,10 +288,53 @@ class API:
             "author": AUTHOR if "AUTHOR" in globals() else "ZXD44"
         }
 
+    def get_24h_unfollow_count(self):
+        """Return count of successful unfollow actions in the last 24 hours."""
+        try:
+            h_file = os.path.join(APPDATA_DIR, "unfollow_history.json")
+            if not os.path.exists(h_file):
+                return 0
+            with open(h_file, "r", encoding="utf-8") as f:
+                items = json.load(f)
+            now = time.time()
+            count = 0
+            for it in items:
+                if it.get("status") == "success" and "timestamp" in it:
+                    try:
+                        ts = time.mktime(time.strptime(it["timestamp"], "%Y-%m-%d %H:%M:%S"))
+                        if (now - ts) < 86400:  # 24 hours
+                            count += 1
+                    except Exception:
+                        pass
+            return count
+        except Exception:
+            return 0
+
+    def _simulate_human_browsing(self, worker):
+        """Simulate subtle human feed scrolling to generate real browser telemetry."""
+        try:
+            if not worker.page or worker.page.is_closed():
+                return
+            worker.page.evaluate("""
+                () => {
+                    const scrollAmount = Math.floor(Math.random() * 260) + 140;
+                    window.scrollBy({ top: scrollAmount, behavior: 'smooth' });
+                    setTimeout(() => {
+                        window.scrollBy({ top: -Math.floor(scrollAmount * 0.55), behavior: 'smooth' });
+                    }, 1400);
+                }
+            """)
+            time.sleep(random.uniform(2.5, 4.0))
+        except Exception:
+            pass
+
     def get_app_state(self):
         """Called by UI timer (every ~300ms). Returns instantly with current thread-safe state snapshot."""
         with self._lock:
-            return dict(self._state)
+            snap = dict(self._state)
+            snap["daily_count"] = self.get_24h_unfollow_count()
+            snap["daily_max"] = 50
+            return snap
 
     def get_scan_results(self):
         """Returns the full parsed scan data directly via PyWebView's native JSON serialization without eval()."""
@@ -385,7 +489,12 @@ class API:
                         for (let i = 0; i < maxP; i++) {{
                             const u = `/api/v1/friendships/${{ds}}/${{ep}}/?count=50` + (mx ? `&max_id=${{encodeURIComponent(mx)}}` : '');
                             const r = await fetch(u, {{ headers: {{ 'x-ig-app-id': '936619743392459' }} }});
-                            if (!r.ok) break;
+                            if (!r.ok) {{
+                                if (r.status === 429 || r.status === 400 || r.status === 403) {{
+                                    return {{ error: 'Instagram ติด Rate Limit (หยุดสแกนทันทีเพื่อความปลอดภัยของบัญชี)' }};
+                                }}
+                                break;
+                            }}
                             const j = await r.json();
                             if (j.users && j.users.length) {{
                                 all.push(...j.users);
@@ -410,14 +519,24 @@ class API:
 
                             if (!j.next_max_id) break;
                             mx = j.next_max_id;
-                            await new Promise(res => setTimeout(res, 200));
+                            // Safe humanized delay between pages (1200ms - 2200ms)
+                            const pageDelay = Math.floor(Math.random() * 1000) + 1200;
+                            await new Promise(res => setTimeout(res, pageDelay));
                         }}
                         return all;
                     }};
 
-                    // Sequential execution to avoid Instagram rate limit (429)
-                    const following = await grab('following', 5, 48, followingTarget);
-                    const followers = await grab('followers', 50, 92, followersTarget);
+                    // Sequential execution with safety break to avoid rate limits
+                    const followingRes = await grab('following', 5, 48, followingTarget);
+                    if (followingRes && followingRes.error) return followingRes;
+                    const following = Array.isArray(followingRes) ? followingRes : [];
+
+                    // Safe cooldown pause between following and followers
+                    await new Promise(res => setTimeout(res, 2500 + Math.random() * 1500));
+
+                    const followersRes = await grab('followers', 50, 92, followersTarget);
+                    if (followersRes && followersRes.error) return followersRes;
+                    const followers = Array.isArray(followersRes) ? followersRes : [];
 
                     report(95, totalFetched, totalTarget, 'compare', 'กำลังวิเคราะห์บัญชีที่ไม่ติดตามกลับ (95%)...');
 
@@ -486,7 +605,19 @@ class API:
         self._worker.dispatch_async(_scan_worker)
         return {"status": "scanning_started"}
 
-    def request_unfollow_batch(self, targets, speed_mode="turbo"):
+    def request_unfollow_batch(self, targets, speed_mode="ultimate_safe"):
+        daily_count = self.get_24h_unfollow_count()
+        if daily_count >= 50:
+            return {
+                "status": "daily_limit_reached",
+                "error": "🛡️ บัญชีของคุณเลิกติดตามครบโควตาความปลอดภัยสูงสุด 50 คนในรอบ 24 ชั่วโมงแล้ว ระบบล็อกการทำงานชั่วคราวเพื่อปกป้องบัญชีของคุณ 100%"
+            }
+
+        # Hard safety cap: maximum 15 accounts per batch session to emulate human behavior
+        max_allowed = min(15, max(0, 50 - daily_count))
+        if len(targets) > max_allowed:
+            targets = targets[:max_allowed]
+
         with self._lock:
             if self._state["is_unfollowing"]:
                 return {"status": "already_unfollowing"}
@@ -500,20 +631,38 @@ class API:
             total = len(targets)
 
             try:
+                # 1. Warm-up feed scrolling before starting any action
+                self._simulate_human_browsing(worker)
+
                 for idx, target in enumerate(targets):
                     if worker.abort_flag:
+                        break
+
+                    # Check URL safety before firing request
+                    current_url = worker.page.url.lower() if worker.page and not worker.page.is_closed() else ""
+                    if any(x in current_url for x in ["/challenge/", "/checkpoint/", "facebook.com", "two_factor", "suspended"]):
+                        worker.abort_flag = True
+                        self.update_state(
+                            error="🚨 ตรวจพบ Instagram Challenge/Checkpoint! หยุดการทำงานฉุกเฉินทันทีเพื่อป้องกันบัญชีโดนล็อก",
+                            is_unfollowing=False
+                        )
                         break
 
                     u_id = target.get("id")
                     u_name = target.get("username")
 
-                    # Direct Web/GraphQL In-Session API
+                    # Direct Web/GraphQL In-Session API with threat interceptor
                     fast_res = self._execute_fast_api_unfollow(worker, u_id, u_name)
-                    ok = fast_res.get("success", False)
+                    if fast_res.get("critical_abort", False):
+                        worker.abort_flag = True
+                        threat_msg = fast_res.get("threat_msg", "ตรวจพบสัญญาณ Rate Limit หรือ Checkpoint จาก Instagram")
+                        self.update_state(
+                            error=f"🚨 ตัดการทำงานฉุกเฉิน: {threat_msg} (หยุดคำขอทั้งหมดทันทีเพื่อความปลอดภัยของรหัสผ่านและบัญชี)",
+                            is_unfollowing=False
+                        )
+                        break
 
-                    # DOM fallback if needed
-                    if not ok and fast_res.get("fallback_needed", False):
-                        ok = self._execute_dom_unfollow_fallback(worker, u_name)
+                    ok = fast_res.get("success", False)
 
                     if ok:
                         success_count += 1
@@ -537,13 +686,35 @@ class API:
                     self.update_state(unfollow_progress=progress_info)
 
                     if not worker.abort_flag and (idx + 1 < total):
-                        if speed_mode == "turbo":
-                            delay = random.uniform(0.7, 1.2)
-                        elif speed_mode == "fast":
-                            delay = random.uniform(1.2, 1.8)
-                        else:  # safe
-                            delay = random.uniform(2.0, 3.2)
-                        time.sleep(delay)
+                        mode = str(speed_mode).lower()
+                        if "balanced" in mode:
+                            delay = random.uniform(25.0, 45.0)
+                        else:  # ultimate_safe (default)
+                            delay = random.uniform(35.0, 65.0)
+
+                        # Micro-break every 4 to 6 accounts for 90 - 150 seconds (1.5 - 2.5 minutes)
+                        if (idx + 1) % random.randint(4, 6) == 0:
+                            micro_break = random.uniform(90.0, 150.0)
+                            self.update_state(
+                                scan_progress=f"⏸️ พักเบรกความปลอดภัย ({int(micro_break)} วินาที) จำลองพฤติกรรมมนุษย์กำลังพักสายตา..."
+                            )
+                            slept = 0.0
+                            while slept < micro_break and not worker.abort_flag:
+                                time.sleep(0.5)
+                                slept += 0.5
+
+                        # Midway Human Browsing Simulation to generate real telemetry
+                        half_delay = delay / 2.0
+                        slept = 0.0
+                        while slept < half_delay and not worker.abort_flag:
+                            time.sleep(0.5)
+                            slept += 0.5
+
+                        self._simulate_human_browsing(worker)
+
+                        while slept < delay and not worker.abort_flag:
+                            time.sleep(0.5)
+                            slept += 0.5
 
             finally:
                 summary = {
@@ -576,121 +747,69 @@ class API:
                 'x-requested-with': 'XMLHttpRequest'
             }};
 
-            // 1. GraphQL PolarisUnfollowMutation
-            try {{
-                const body = new URLSearchParams({{
-                    doc_id: '27789106940691111',
-                    variables: JSON.stringify({{
-                        target_user_id: targetId,
-                        container_module: 'profile',
-                        nav_chain: 'PolarisProfilePostsTabRoot:profilePage:1:via_cold_start'
-                    }}),
-                    server_timestamps: 'true'
-                }}).toString();
-
-                const res = await fetch('https://www.instagram.com/api/graphql', {{
-                    method: 'POST',
-                    headers,
-                    credentials: 'include',
-                    body
-                }});
-
-                if (res.ok) {{
-                    const text = await res.text();
-                    try {{
-                        const j = JSON.parse(text.replace(/^for\\s*\\(;;\\);\\s*/, '').trim());
-                        if (j?.data?.user_unfollow_or_remove_follower?.user?.friendship_status?.following === false || j?.status === 'ok') {{
-                            return {{ success: true, method: 'graphql' }};
-                        }}
-                    }} catch(e) {{}}
+            const checkThreat = (status, text) => {{
+                const lower = (text || '').toLowerCase();
+                const isBlocked = status === 429 || status === 400 || status === 401 || status === 403 ||
+                    lower.includes('checkpoint_required') || lower.includes('challenge_required') ||
+                    lower.includes('feedback_required') || lower.includes('spam') ||
+                    lower.includes('please wait a few minutes') || lower.includes('action_blocked') ||
+                    lower.includes('user_has_logged_out') || lower.includes('login_required');
+                if (isBlocked) {{
+                    return {{
+                        critical: true,
+                        msg: lower.includes('checkpoint') ? 'ตรวจพบ Checkpoint ล็อกบัญชี' :
+                             lower.includes('feedback') ? 'ตรวจพบ Action Block' :
+                             lower.includes('wait') ? 'ระบบติด Rate Limit ชั่วคราว' : 'ตรวจพบการจำกัดสิทธิ์จาก Instagram'
+                    }};
                 }}
-            }} catch(e) {{}}
+                return {{ critical: false }};
+            }};
 
-            // 2. Direct Web API
+            // Official Instagram Web Endpoint (100% Standard Web Protocol)
             try {{
                 const res = await fetch(`/api/v1/web/friendships/${{targetId}}/unfollow/`, {{
                     method: 'POST',
                     headers,
                     credentials: 'include'
                 }});
+                const text = await res.text();
+                const threat = checkThreat(res.status, text);
+                if (threat.critical) {{
+                    return {{ success: false, critical_abort: true, threat_msg: threat.msg }};
+                }}
                 if (res.ok) {{
-                    const j = await res.json();
-                    if (j.status === 'ok') return {{ success: true, method: 'web_api' }};
+                    try {{
+                        const j = JSON.parse(text);
+                        if (j.status === 'ok') return {{ success: true, method: 'web_api' }};
+                    }} catch(e) {{}}
                 }}
             }} catch(e) {{}}
 
-            // 3. Destroy endpoint
-            try {{
-                const res = await fetch(`/api/v1/friendships/destroy/${{targetId}}/`, {{
-                    method: 'POST',
-                    headers,
-                    credentials: 'include',
-                    body: new URLSearchParams({{ user_id: targetId }}).toString()
-                }});
-                if (res.ok) {{
-                    const j = await res.json();
-                    if (j.status === 'ok') return {{ success: true, method: 'destroy_api' }};
-                }}
-            }} catch(e) {{}}
-
-            return {{ success: false, fallback_needed: true }};
+            return {{ success: false, critical_abort: false, reason: 'request_failed' }};
         }}
         """
         try:
-            return worker.page.evaluate(script)
+            res = worker.page.evaluate(script)
+            logger.info("Unfollow result for @%s (id: %s): %s", username, user_id, json.dumps(res))
+            return res
         except Exception as e:
-            return {"success": False, "fallback_needed": True, "error": str(e)}
+            err_str = str(e).lower()
+            logger.error("Exception in unfollow for @%s: %s", username, err_str)
+            if any(k in err_str for k in ["navigation", "closed", "crash", "target"]):
+                return {"success": False, "critical_abort": True, "threat_msg": "หน้าต่างเบราว์เซอร์ถูกปิดหรือนำทางออกนอกระบบ"}
+            return {"success": False, "critical_abort": False, "error": str(e)}
 
-    def _execute_dom_unfollow_fallback(self, worker, username):
+    def open_log_folder(self):
+        """Open the directory containing execution and audit logs in Windows Explorer."""
         try:
-            worker.page.goto(f"https://www.instagram.com/{username}/", wait_until="domcontentloaded", timeout=12000)
-            time.sleep(random.uniform(1.0, 1.5))
-
-            selectors_following = [
-                worker.page.get_by_role("button", name="Following"),
-                worker.page.get_by_role("button", name="กำลังติดตาม"),
-                worker.page.get_by_role("button", name="Requested"),
-                worker.page.get_by_role("button", name="ส่งคำขอแล้ว"),
-                worker.page.locator("header button:has-text('Following')"),
-                worker.page.locator("header button:has-text('กำลังติดตาม')"),
-            ]
-            btn = None
-            for loc in selectors_following:
-                if loc.count() > 0 and loc.first.is_visible():
-                    btn = loc.first
-                    break
-
-            if not btn:
-                return True
-
-            btn.click()
-            time.sleep(random.uniform(0.7, 1.2))
-
-            confirm_btn = None
-            for name in ["Unfollow", "เลิกติดตาม", "ยกเลิกการติดตาม"]:
-                c = worker.page.get_by_role("button", name=name).first
-                if c.count() > 0 and c.is_visible():
-                    confirm_btn = c
-                    break
-
-            if not confirm_btn:
-                dialog = worker.page.locator("div[role='dialog']").first
-                if dialog.count() > 0:
-                    buttons = dialog.locator("button").all()
-                    for b in buttons:
-                        txt = (b.text_content() or "").strip().lower()
-                        if txt in ["unfollow", "เลิกติดตาม", "ยกเลิกการติดตาม"]:
-                            confirm_btn = b
-                            break
-
-            if confirm_btn:
-                confirm_btn.click()
-                time.sleep(random.uniform(0.6, 1.0))
-                return True
-
-            return False
-        except Exception:
-            return False
+            if os.path.exists(APPDATA_DIR):
+                os.startfile(APPDATA_DIR)
+                logger.info("Opened log directory in explorer: %s", APPDATA_DIR)
+                return {"success": True, "path": APPDATA_DIR}
+        except Exception as e:
+            logger.error("Failed to open log directory: %s", str(e))
+            return {"success": False, "error": str(e)}
+        return {"success": False}
 
     def export_data(self, data, fmt="json", data_type="non_followers"):
         try:

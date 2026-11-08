@@ -37,24 +37,32 @@ def get_functions(obj):
 
 ## 2. Instagram API & Automation Safety Rules
 
-### 2.1 Rate Limiting & Cooldowns
-Instagram uses aggressive heuristic spam scoring. Violating limits causes instant account checkpoints or action blocks.
+### 2.1 Rate Limiting, Pacing & Human Emulation
+Instagram utilizes aggressive heuristic spam scoring and AI behavior analysis. Violating limits causes instant account locks or security checkpoints.
 - **Scan Phase**:
-  - Max query rate: 1 request every 1.5 - 3.5 seconds.
+  - Max query rate: 1 request every 1.4 - 2.6 seconds.
+  - Cooldown between following & followers lists: 2.5 - 4.0 seconds.
   - Read-only endpoints: `/api/v1/friendships/{id}/following/` and `/followers/`.
-  - Always forward full browser cookies (`sessionid`, `ds_user_id`, `csrftoken`) and headers (`x-ig-app-id: 936619743392459`).
+  - Always forward full browser cookies (`sessionid`, `ds_user_id`, `csrftoken`) and headers (`x-ig-app-id: 936619743392459`, `x-asbd-id: 129477`).
 - **Unfollow Phase**:
-  - Batch size: 10 - 25 unfollows per batch.
-  - Per-action delay: 15 to 35 seconds (randomized with jitter).
-  - Batch pause: 5 to 10 minutes between batches.
-  - Daily cap: Never exceed 150 - 200 unfollows in a 24-hour window.
+  - Batch size: Maximum **15 unfollows per batch session**.
+  - Per-action delay: **35 to 65 seconds** (randomized with human Gaussian jitter).
+  - Micro-break: **1.5 to 2.5 minutes** every 4 to 6 unfollows.
+  - Telemetry emulation: Automated subtle feed scrolling midway between actions to send authentic browser impressions.
+  - Daily cap: Strictly locked at maximum **50 unfollows in a rolling 24-hour window**.
+- **Prohibited Endpoints & Outdated Systems (STRICTLY FORBIDDEN)**:
+  - **NEVER** use hardcoded GraphQL mutation `doc_id` (e.g. `27789106940691111`) or legacy mobile endpoints (`/api/v1/friendships/destroy/`).
+  - **NEVER** use rapid DOM profile scraping fallback loops.
+  - **ONLY** use the official standard web endpoint: `POST /api/v1/web/friendships/{id}/unfollow/`.
 
-### 2.2 Abort Conditions
-The automation worker must immediately halt and notify the user if:
-1. HTTP 429 (Too Many Requests).
-2. HTTP 400 with `checkpoint_required` or `feedback_required`.
-3. Response body contains `"spam": true` or `"message": "user_has_logged_out"`.
-4. Browser page navigates away from `instagram.com` to a challenge URL (`/challenge/`, `/two_factor/`).
+### 2.2 Abort Conditions & Watchdog
+The automation worker must immediately halt and notify the user via modal and warning audio chime if:
+1. HTTP 429 (Too Many Requests), HTTP 400, 401, or 403.
+2. Response contains `checkpoint_required`, `challenge_required`, `feedback_required`, `action_blocked`, `spam`, or `please wait a few minutes`.
+3. Browser page navigates or redirects away from `instagram.com` to a challenge URL (`/challenge/`, `/checkpoint/`, `facebook.com`, `two_factor`, `suspended`).
+
+### 2.3 Audit Logging Mandatory Requirement
+- All execution events, browser lifecycle, rate limit checks, threat interceptions, and action results MUST be logged to `%LOCALAPPDATA%\ZXD44-IG-Cleaner\unfollowx_audit.log` using a rotating file handler (5MB x 3 backups).
 
 ---
 

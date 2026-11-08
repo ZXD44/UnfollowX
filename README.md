@@ -41,6 +41,10 @@
 | :--- | :--- | :--- |
 | 🌐 **Bilingual System** | ระบบ 2 ภาษาในตัว | สลับภาษา **ไทย (หลัก) / อังกฤษ** ได้ทันทีผ่านปุ่มบน Header พร้อมจำค่าถาวร |
 | 🎨 **Impeccable UI** | กระจกดำ Obsidian Dark | Mini Dashboard ขนาดกะทัดรัด สไตล์ [impeccable.style](https://impeccable.style/) ไร้กระตุก 60FPS |
+| 🛡️ **Human Emulation** | พรางตัวเสมือนมนุษย์ 100% | ดีเลย์ 35–65s สุ่มแบบ Gaussian, เลื่อนดูฟีดอัตโนมัติ (Feed Browsing Simulation), พักสายตา 1.5–2.5 นาที ป้องกัน Meta เข้าใจผิดว่าเป็นแฮกเกอร์ |
+| 🚨 **Circuit Breaker** | ระบบตัดไฟฉุกเฉิน | มอนิเตอร์ URL และ Response (400, 401, 403, 429, Checkpoint, Action Block) หยุดคำขอทั้งหมดทันที 100% ป้องกันบัญชีโดนล็อก |
+| 🔒 **Rolling 24h Cap** | ล็อกโควตาความปลอดภัย | จำกัดไม่เกิน 15 บัญชีต่อรอบ และล็อกอัตโนมัติเมื่อครบ 50 บัญชีใน 24 ชั่วโมง เพื่อความปลอดภัยของรหัสผ่าน |
+| 📋 **Audit Logging** | บันทึกประวัติและ Log ละเอียด | เก็บบันทึกการทำงานทุกวินาทีลงไฟล์ `%LOCALAPPDATA%\ZXD44-IG-Cleaner\unfollowx_audit.log` พร้อมปุ่มเปิดดูจาก UI |
 | ⚡ **Live Telemetry** | เปอร์เซ็นต์สแกนสด `0-100%` | ส่งต่อความคืบหน้าตรงจาก Browser Context สู่หน้าจอ ไม่ต้องกะเวลาเอง |
 | 🛡️ **Anti-Freeze Tech** | ป้องกัน Not Responding 100% | แก้ปัญหา WinForms `.NET` Deadlock ด้วย Async State Polling และ Win32 API Isolation |
 | 📌 **Always-on-Top** | ปักหมุดหน้าต่างบนสุด | สลับทำงานอื่นพร้อมเฝ้าดูความคืบหน้าได้ตลอดเวลา ไม่ต้องสลับหน้าต่างไปมา |
@@ -56,12 +60,16 @@
 graph LR
     UI["🖥️ Obsidian UI<br/>(gui_template.html)"]
     Bridge["⚡ PyWebView API Bridge<br/>(gui_app.py)"]
-    Engine["🤖 Playwright Engine<br/>(Chromium Background)"]
-    IG["📸 Instagram Official API<br/>(Friendship / GraphQL)"]
+    Engine["🤖 Playwright Engine<br/>(Stealth Chromium Context)"]
+    Safe["🛡️ Human Emulation & Watchdog<br/>(Telemetry + Circuit Breaker)"]
+    IG["📸 Instagram Official Web API<br/>(Standard POST /friendships/.../unfollow/)"]
+    Log["📋 Persistent Audit Logs<br/>(unfollowx_audit.log)"]
 
     UI <-->|"JSON-RPC / State Pull"| Bridge
     Bridge <-->|"Async Threading"| Engine
-    Engine <-->|"In-Session Authenticated Requests"| IG
+    Engine --> Safe
+    Safe <-->|"Authenticated Web Requests"| IG
+    Bridge --> Log
 ```
 
 ---
@@ -112,9 +120,8 @@ python set_version.py 0.0.2 --build
 
 | โหมดความเร็ว | ระยะเวลาหน่วงต่อบัญชี | ความปลอดภัย | คำแนะนำในการใช้งาน |
 | :---: | :---: | :---: | :--- |
-| ⚡ **Turbo** | 0.8 - 1.2 วินาที | ปานกลาง | เหมาะสำหรับบัญชีเก่าประวัติดี หรือเลิกติดตามไม่เกิน 30 คนต่อรอบ |
-| 🚀 **Fast** | 1.2 - 1.8 วินาที | สูง | โหมดมาตรฐาน แนะนำสำหรับการใช้งานทั่วไป |
-| 🛡️ **Safe** | 2.0 - 3.2 วินาที | ปลอดภัยสูงสุด | เหมาะสำหรับบัญชีใหม่ หรือเลิกติดตามจำนวนมาก (ป้องกัน Action Block 100%) |
+| 🛡️ **Ultimate Safe** (ค่าเริ่มต้น) | 35 - 65 วินาที + Gaussian Jitter | ปลอดภัยสูงสุด 100% | จำลองพฤติกรรมมนุษย์ พักสายตาอัตโนมัติ 1.5–2.5 นาทีทุก 4–6 คน เลื่อนดูฟีดสร้าง Telemetry ป้องกันถูกระงับบัญชี |
+| ⚖️ **Stealth Balanced** | 25 - 45 วินาที | สูงมาก | สำหรับรอบที่ต้องการความกระชับ แต่ยังคงความปลอดภัยระดับสูง พักสายตาทุก 5–7 คน |
 
 ---
 
@@ -149,7 +156,7 @@ UnfollowX/
 ## 🛡️ ข้อควรระวังและความปลอดภัย (Safety Rules)
 
 * **ไม่เก็บรหัสผ่าน**: โปรแกรมไม่เคยถามหรือบันทึกรหัสผ่าน Instagram ใดๆ การล็อกอินกระทำผ่านเบราว์เซอร์จริงโดยตรง
-* **ขีดจำกัดที่แนะนำ**: เพื่อป้องกันการติด Action Block จาก Instagram ไม่ควรเลิกติดตามเกิน **100-150 บัญชีต่อวัน**
+* **ขีดจำกัดความปลอดภัยรายวัน**: ระบบจำกัดการเลิกติดตามไม่เกิน **15 บัญชีต่อรอบ** และล็อกอัตโนมัติเมื่อครบ **50 บัญชีในรอบ 24 ชั่วโมง** เพื่อรักษาความปลอดภัยของบัญชีเด็ดขาด
 * **การเว้นระยะ**: ควรพักการทำงานอย่างน้อย 1-2 ชั่วโมงหลังจากการเลิกติดตามแต่ละชุด
 
 ---
@@ -157,7 +164,7 @@ UnfollowX/
 
 # 🇬🇧 English (Complete Guide)
 
-> Intelligent, high-performance desktop utility engineered to audit Instagram relationships, identify non-followers with live percentage telemetry, and safely automate unfollow batches through real browser sessions.
+> Intelligent, high-performance desktop utility engineered to audit Instagram relationships, identify non-followers with live percentage telemetry, and safely automate unfollow batches through real browser sessions with human emulation.
 
 ## 📖 Table of Contents
 * [Pro Highlights & Features](#-pro-highlights--features-1)
@@ -174,6 +181,10 @@ UnfollowX/
 | :--- | :--- | :--- |
 | 🌐 **Bilingual System** | Built-in Dual Language | Toggle between **Thai (Default) / English** on-the-fly with persistent `localStorage` memory. |
 | 🎨 **Impeccable UI** | Obsidian Dark Interface | Compact mini dashboard adhering to [impeccable.style](https://impeccable.style/) principles. 60FPS smooth rendering. |
+| 🛡️ **Human Emulation** | 100% Indistinguishable Timing | 35–65s Gaussian jitter delays, automated feed scrolling telemetry, and 1.5–2.5 minute micro-breaks. |
+| 🚨 **Circuit Breaker** | Real-Time Emergency Stop | URL & Response watchdog halts instantly upon 4xx, checkpoint, or action block triggers. |
+| 🔒 **Rolling 24h Cap** | Daily Safety Quota | Maximum 15 unfollows per batch session and hard 50 unfollows per 24 hours lock. |
+| 📋 **Audit Logging** | Persistent Rotating Logs | Live second-by-second execution logging at `%LOCALAPPDATA%\ZXD44-IG-Cleaner\unfollowx_audit.log`. |
 | ⚡ **Live Telemetry** | Real-Time Scan Progress `0-100%` | Progress percentage streamed directly from browser execution context to the UI. |
 | 🛡️ **Anti-Freeze Tech** | 100% Freeze Prevention | Resolves WinForms `.NET` Deadlocks via pull-based asynchronous state polling & Win32 API isolation. |
 | 📌 **Always-on-Top** | Window Pinning | Float the application above all other windows to monitor background progress effortlessly. |
@@ -212,16 +223,15 @@ python source_code/python_engine/gui_app.py
 
 | Speed Mode | Delay Per Target | Safety Level | Recommended Usage |
 | :---: | :---: | :---: | :--- |
-| ⚡ **Turbo** | 0.8 - 1.2 seconds | Moderate | Suitable for established accounts or small batches (≤ 30 targets). |
-| 🚀 **Fast** | 1.2 - 1.8 seconds | High | Standard recommended mode for routine cleanups. |
-| 🛡️ **Safe** | 2.0 - 3.2 seconds | Maximum | Ideal for newer accounts or larger batches (prevents Action Blocks). |
+| 🛡️ **Ultimate Safe** (Default) | 35 - 65 seconds + Gaussian Jitter | 100% Maximum Safety | Full human emulation, feed browsing simulation, and 1.5–2.5 min micro-breaks. Recommended for all accounts. |
+| ⚖️ **Stealth Balanced** | 25 - 45 seconds | High | Optimized pacing for routine cleanups with 1-2 min micro-breaks every 5–7 accounts. |
 
 ---
 
 ## 🛡️ Security & Responsible Automation
 
 * **Zero Password Collection**: UnfollowX never prompts for or stores your credentials. Authentication is handled directly inside the real Chromium browser session.
-* **Daily Action Guardrails**: To comply with Instagram's anti-spam heuristics, avoid unfollowing more than **100-150 accounts per 24-hour cycle**.
+* **Daily Action Guardrails**: Strictly limits operations to **15 accounts per batch** and locks automatically at **50 accounts per 24-hour cycle** to prevent heuristic spam flags.
 * **Cooldown Periods**: Always allow 1-2 hours of cooldown between multiple batches.
 
 ---

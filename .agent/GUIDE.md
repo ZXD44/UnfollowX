@@ -79,9 +79,10 @@ Copy-Item "dist\UnfollowX.exe" "..\..\UnfollowX.exe" -Force
   - Low warning pulse on errors or block warnings.
   - Zero external MP3/WAV files required.
 
-### 3.3 Audit History (📜 Log)
+### 3.3 Audit History & Persistent Execution Logs (📋 Logs)
 - View past unfollow actions directly in the app.
-- Clear log data at any time via the "Clear Log" action.
+- Check real-time execution logs by clicking **"📋 Logs"** in the top header, which opens `%LOCALAPPDATA%\ZXD44-IG-Cleaner\`.
+- Inspect `unfollowx_audit.log` for timestamps, stealth hooks, watchdog events, and API response codes.
 
 ---
 
@@ -94,14 +95,12 @@ Copy-Item "dist\UnfollowX.exe" "..\..\UnfollowX.exe" -Force
 ### Issue 2: Action Blocked / Challenge Required on Instagram
 - **Cause**: Unfollowing too fast or exceeding Instagram's heuristic spam thresholds.
 - **Remedy**:
-  1. Stop operations immediately.
-  2. Increase delay in settings to 25-45 seconds.
-  3. Reduce batch size to 10-15.
-  4. Wait 24-48 hours before resuming.
+  1. UnfollowX v0.0.4's Circuit Breaker halts immediately upon detection.
+  2. Inspect `%LOCALAPPDATA%\ZXD44-IG-Cleaner\unfollowx_audit.log` to see the exact trigger.
+  3. If account is locked, **use the Instagram Mobile App on 4G/5G** to verify email/SMS and reset password (do not use desktop web to avoid the Facebook 500 error).
+  4. Wait 24-48 hours before resuming any automation to allow trust scores to normalize.
+  5. Use only **Ultimate Safe Mode (35-65s)** with batches of ≤ 15 accounts.
 
-### Issue 3: Scan stuck at 0%
-- **Cause**: Instagram session expired or redirected to `/challenge/`.
-- **Remedy**:
-  1. Click "Open Instagram Login".
-  2. Complete the checkpoint or log in again.
-  3. Restart the scan.
+### Issue 3: Daily Quota Locked (50/50)
+- **Cause**: The application reached its hard safety limit of 50 unfollows in a rolling 24-hour window.
+- **Remedy**: Wait until earlier actions exit the 24-hour window. This is a deliberate safety mechanism to prevent Instagram bot bans.
