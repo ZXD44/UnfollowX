@@ -73,7 +73,8 @@ The automation worker must immediately halt and notify the user via modal and wa
   - Expose a 1-click **Manual Mode** button to enter the workspace immediately.
   - Allow users to manually type/paste targets or review queue items.
   - Every row in the user list must offer a **"🌐 View Profile"** action to navigate the real Chrome browser to that target's profile so the user can unfollow manually without triggering API rate limits.
-  - The standalone daemon `watch_cooldown.py` must use gentle, humanized polling intervals (≥ 10 minutes) to probe cooldown recovery and report non-followers immediately upon clearance.
+  - The standalone daemon `scripts/watch_cooldown.py` must use adaptive polling intervals (90 to 120 seconds) to probe cooldown recovery and report non-followers immediately upon clearance.
+  - The instant diff utility `scripts/instant_diff.py` provides 100% offline, zero-network diffing for Instagram Data Export ZIP/JSON files.
 
 ---
 

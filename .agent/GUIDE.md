@@ -38,20 +38,32 @@ python gui_app.py
 ```
 
 ### 2.2 Version Management & 1-Command Build
-The project provides a single-source-of-truth version management tool `set_version.py`:
+The project provides a single-source-of-truth version management tool `scripts/set_version.py`:
 
 ```powershell
 # Check current version
-python set_version.py
+python scripts/set_version.py
 
 # Update version across all config files (version.py, version_info.txt, docs)
-python set_version.py 0.0.2
+python scripts/set_version.py 0.0.9
 
 # Update version AND compile new UnfollowX.exe in one command
-python set_version.py 0.0.2 --build
+python scripts/set_version.py 0.0.9 --build
 ```
 
-### 2.3 Manual PyInstaller Build (Optional)
+### 2.3 Automation & Utility Scripts (`scripts/`)
+- **Cooldown Watcher**:
+  ```powershell
+  python scripts/watch_cooldown.py
+  ```
+  Monitors Instagram friendship endpoint cooldown every 90 seconds. Once lifted, performs a full diff and writes `NON_FOLLOWERS_FOUND.txt` to Desktop.
+- **Instant Data Export Diff**:
+  ```powershell
+  python scripts/instant_diff.py "path_to_instagram_export.zip"
+  ```
+  Compares followers vs following directly from Instagram JSON export in 0.01 seconds without triggering API rate limits.
+
+### 2.4 Manual PyInstaller Build (Optional)
 If compiling manually without `set_version.py`:
 ```powershell
 # 1. Navigate to engine directory

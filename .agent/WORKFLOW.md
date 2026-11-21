@@ -10,7 +10,7 @@ This document establishes the official standard operating procedures (SOPs), wor
 graph TD
     A["1. Planning & Safety Check<br/>(Review RULES.md)"] --> B["2. Implementation<br/>(Bilingual UI + Backend)"]
     B --> C["3. Local Smoke Test<br/>(Verify IsHung = False)"]
-    C --> D["4. Version Bump & Spec<br/>(python set_version.py X.X.X)"]
+    C --> D["4. Version Bump & Spec<br/>(python scripts/set_version.py X.X.X)"]
     D --> E["5. PyInstaller Compilation<br/>(Compile UnfollowX.exe)"]
     E --> F["6. Documentation Sync<br/>(README.md & .agent/)"]
     F --> G["7. Git Commit & Release<br/>(Tag & GitHub Release Asset)"]
@@ -25,7 +25,7 @@ graph TD
 When exposing a new Python method to JavaScript via PyWebView:
 
 1. **Safety Inspection**:
-   - Check [RULES.md](file:///C:/Users/ZirconX/Desktop/Ads%20Dis/ZirconX-IG-Cleaner-Pro-v3.0/.agent/RULES.md) Section 1.
+   - Check [RULES.md](file:///C:/Users/ZirconX/Documents/UnfollowX/.agent/RULES.md) Section 1.
    - **MANDATORY**: Any internal attribute, helper function, or non-RPC object on `class API` **MUST** begin with an underscore `_` (e.g. `_worker`, `_window`, `_cache`).
    - Never expose an attribute returning a WinForms object, or PyWebView will enter infinite recursion and freeze Windows.
 2. **Implementation in `gui_app.py`**:
@@ -86,17 +86,17 @@ If the window hangs or shows `(Not Responding)`:
 
 ### SOP 4: Bumping Version, Rebuilding & Publishing Release
 
-The project uses a complete 1-command automation pipeline [set_version.py](file:///C:/Users/ZirconX/Desktop/Ads%20Dis/ZirconX-IG-Cleaner-Pro-v3.0/set_version.py) that handles everything from bump to compilation, git push, and GitHub Release asset upload:
+The project uses a complete 1-command automation pipeline [scripts/set_version.py](file:///C:/Users/ZirconX/Documents/UnfollowX/scripts/set_version.py) that handles everything from bump to compilation, git push, and GitHub Release asset upload:
 
 ```powershell
 # Complete 1-Command Automated Pipeline (Bump + Build + Push + GitHub Release + Asset Upload):
-python set_version.py 0.0.2 --build --release
+python scripts/set_version.py 0.0.9 --build --release
 ```
 
 **What this single command executes end-to-end:**
 1. **Version Synchronization**: Updates `version.py`, `version_info.txt`, `HOW_TO_USE.txt`, and `.agent/README.md`.
 2. **EXE Compilation**: Compiles `UnfollowX.exe` with Windows PE metadata and copies to root.
-3. **Git Commit & Tag**: Commits under `ZXD44 <zxd44@users.noreply.github.com>` and tags `v0.0.2`.
+3. **Git Commit & Tag**: Commits under `ZXD44 <zxd44@users.noreply.github.com>` and tags `v0.0.9`.
 4. **Push to GitHub**: Pushes commit and tag to `https://github.com/ZXD44/UnfollowX.git`.
 5. **Publish GitHub Release**: Calls GitHub API to create/update release on `https://github.com/ZXD44/UnfollowX/releases` with beautiful bilingual release notes.
 6. **Upload Binary Asset**: Uploads `UnfollowX.exe` directly to the release assets.

@@ -1,9 +1,9 @@
-# 🚀 UnfollowX PRO v0.0.8 — By ZXD44
+# 🚀 UnfollowX PRO v0.0.9 — By ZXD44
 
 > **เครื่องมือตรวจสอบและเลิกติดตามผู้ที่ไม่ติดตามกลับบน Instagram อัตโนมัติ ปลอดภัย 100% ด้วย Python Engine + Playwright + PyWebView**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](../LICENSE)
-[![Version](https://img.shields.io/badge/Version-0.0.8-purple.svg)](python_engine/version.py)
+[![Version](https://img.shields.io/badge/Version-0.0.9-purple.svg)](python_engine/version.py)
 [![Author](https://img.shields.io/badge/Creator-ZXD44-f43f5e.svg)](https://github.com/ZXD44)
 [![GitHub](https://img.shields.io/badge/GitHub-ZXD44%2FUnfollowX-indigo.svg)](https://github.com/ZXD44/UnfollowX)
 
@@ -15,13 +15,20 @@
 UnfollowX/
 ├── UnfollowX.exe                      # 🚀 โปรแกรมหลักพร้อมใช้งานทันที (Standalone Windows Executable)
 ├── HOW_TO_USE.txt                     # 📖 คู่มือวิธีใช้งานฉบับย่อสำหรับผู้ใช้ทั่วไป
-├── set_version.py                     # ⚡ เครื่องมือจัดการเวอร์ชันและสั่ง Build อัตโนมัติใน 1 คำสั่ง
-├── watch_cooldown.py                  # 🛰️ สคริปต์ตรวจจับ Cooldown เบื้องหลังอัตโนมัติ
+├── README.md                          # 📖 คู่มือหลักโปรเจกต์ (ไทย & อังกฤษ)
+├── LICENSE                            # MIT License
 ├── .gitignore                         # ไฟล์ตัดขยะและแคชออกจากการเก็บไฟล์
+├── scripts/                           # 🛠️ โฟลเดอร์สคริปต์เสริมและเครื่องมืออัตโนมัติ
+│   ├── README.md                      # เอกสารคู่มือการใช้งานสคริปต์
+│   ├── watch_cooldown.py              # 🛰️ สคริปต์เฝ้าระวัง Cooldown อัตโนมัติ (ทุก 90s)
+│   ├── instant_diff.py                # ⚡ เครื่องมือเทียบไฟล์ Data Export ZIP/JSON ใน 0.01s
+│   ├── check_candidates.py            # ตรวจสอบสถานะการติดตามของบัญชีเป้าหมาย
+│   └── set_version.py                 # เครื่องมือจัดการเวอร์ชันและสั่ง Build อัตโนมัติใน 1 คำสั่ง
 ├── .agent/                            # 🤖 เอกสารเชิงลึกสำหรับ Agent และ Developers
 │   ├── README.md                      # สารบัญเอกสาร
 │   ├── RULES.md                       # กฎเหล็กด้านความปลอดภัย (JS Bridge, Threading, Rate Limits)
 │   ├── ARCHITECTURE.md                # แผนผังสถาปัตยกรรมระบบ, Workflows, Schemas
+│   ├── WORKFLOW.md                    # ขั้นตอนการทำงานและ SOPs
 │   └── GUIDE.md                       # คู่มือการพัฒนา, การทดสอบ, และการแก้ปัญหา
 └── source_code/                       # 💻 โค้ดต้นฉบับทั้งหมด
     ├── LICENSE                        # MIT License
@@ -55,10 +62,10 @@ python source_code\python_engine\gui_app.py
 ```
 
 ### 3. การอัปเดตเวอร์ชันและ Build EXE ใหม่
-ใช้เครื่องมือ `set_version.py` ที่โฟลเดอร์ root ได้ทันที:
+ใช้เครื่องมือ `scripts/set_version.py` ได้ทันที:
 ```powershell
 # ซิงค์เวอร์ชันทุกไฟล์ และสั่ง Compile เป็น UnfollowX.exe อัตโนมัติ:
-python set_version.py 0.0.8 --build
+python scripts/set_version.py 0.0.9 --build
 ```
 *ระบบจะอัปเดตทั้งโค้ด, metadata, หน้า UI, และเอกสาร พร้อมคอมไพล์และวางไฟล์ `UnfollowX.exe` ไว้ที่โฟลเดอร์หลักให้โดยอัตโนมัติ*
 
@@ -71,4 +78,5 @@ python set_version.py 0.0.8 --build
 3. **Sequential In-Session API**: ดึง Following และ Followers แบบเรียงลำดับพร้อม Progress % แบบเรียลไทม์
 4. **Adaptive Rate Limiting & Cooldown**: Unfollow ผ่าน `friendships/destroy` + verify `friendships/show`, Gaussian delay 35–65s, micro-break ทุก 4–6 คน, หยุดอัตโนมัติเมื่อ fail ติดกัน 3 ครั้ง
 5. **Manual Mode & 1-Click Profile Jump**: จัดการรายชื่อด้วยตนเอง เพิ่มและตรวจสอบ Username โดยตรง และคลิกเปิดหน้าโปรไฟล์ในเบราว์เซอร์จริงเพื่อกดยกเลิกการติดตามเองได้ 1-Click ทันที แม้ติด Cooldown สแกน
-6. **Automated Cooldown Watcher Daemon**: สคริปต์ `watch_cooldown.py` เฝ้าตรวจจับ Cooldown 302/Spam ในเบื้องหลัง เมื่อปลดล็อกจะสแกนและสรุปรายชื่อลงไฟล์บน Desktop พร้อมยิง Toast Notification ทันที
+6. **Automated Cooldown Watcher Daemon**: สคริปต์ `scripts/watch_cooldown.py` เฝ้าตรวจจับ Cooldown 302/Spam ในเบื้องหลัง เมื่อปลดล็อกจะสแกนและสรุปรายชื่อลงไฟล์บน Desktop พร้อมยิง Toast Notification ทันที
+7. **Instant Data Export Diff**: สคริปต์ `scripts/instant_diff.py` เทียบไฟล์ข้อมูลจาก Instagram Export ใน 0.01 วินาที 100% Offline ปลอดภัย ไม่เสี่ยงโดนบล็อก

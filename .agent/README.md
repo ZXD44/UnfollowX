@@ -13,7 +13,10 @@ Welcome to the internal system and agentic documentation directory for **Unfollo
 - [GUIDE.md](file:///C:/Users/ZirconX/Documents/UnfollowX/.agent/GUIDE.md): คู่มือการทดสอบ, การดีบั๊ก, และการแก้ปัญหา.
 
 ## Key Subsystems & Utilities
-- **`watch_cooldown.py`**: Background daemon monitoring Instagram 302/spam cooldown and generating `NON_FOLLOWERS_FOUND.txt`.
+- **`scripts/watch_cooldown.py`**: Background daemon monitoring Instagram 302/spam cooldown (every 90s) and generating `NON_FOLLOWERS_FOUND.txt`.
+- **`scripts/instant_diff.py`**: Instant diff tool comparing Instagram Data Export ZIP/JSON (`following.json` vs `followers_1.json`) in 0.01s.
+- **`scripts/check_candidates.py`**: Verification script checking follow & followback status for target accounts.
+- **`scripts/set_version.py`**: Single Source of Truth version manager & build tool.
 - **`storage_manager.py`**: SQLite persistent queue, audit history, and diff scan snapshot storage (`unfollowx.db`).
 - **`safety_engine.py`**: Adaptive trust scoring, rate limiting, and circuit breaker heuristics.
 - **`notifier.py`**: Windows native toast notification integration via PowerShell WinForms.
