@@ -95,7 +95,7 @@ Copy-Item "dist\UnfollowX.exe" "..\..\UnfollowX.exe" -Force
 ### Issue 2: Action Blocked / Challenge Required on Instagram
 - **Cause**: Unfollowing too fast or exceeding Instagram's heuristic spam thresholds.
 - **Remedy**:
-  1. UnfollowX v0.0.4's Circuit Breaker halts immediately upon detection.
+  1. UnfollowX v0.0.5's Circuit Breaker halts immediately upon detection.
   2. Inspect `%LOCALAPPDATA%\ZXD44-IG-Cleaner\unfollowx_audit.log` to see the exact trigger.
   3. If account is locked, **use the Instagram Mobile App on 4G/5G** to verify email/SMS and reset password (do not use desktop web to avoid the Facebook 500 error).
   4. Wait 24-48 hours before resuming any automation to allow trust scores to normalize.
@@ -104,3 +104,15 @@ Copy-Item "dist\UnfollowX.exe" "..\..\UnfollowX.exe" -Force
 ### Issue 3: Daily Quota Locked (50/50)
 - **Cause**: The application reached its hard safety limit of 50 unfollows in a rolling 24-hour window.
 - **Remedy**: Wait until earlier actions exit the 24-hour window. This is a deliberate safety mechanism to prevent Instagram bot bans.
+
+### Issue 4: Action Cooldown (302 Redirect / "spam": true)
+- **Cause**: Instagram temporarily throttled the friendship listing endpoint (`/api/v1/friendships/...`) due to rapid recent scan or unfollow actions.
+- **Behavior**:
+  - Web requests return HTTP 302 Found (redirecting to `/`).
+  - Mobile requests return HTTP 400 with `{"message":"","spam":true,"status":"fail"}`.
+  - The profile header displays counts normally, but the following modal shows: *"Once you follow people, you'll see them here."*
+- **Remedy**:
+  1. **Do not spam scan attempts**: This prolongs Meta's cooldown timer.
+  2. **Use Manual Mode**: Click **"📝 ข้ามไปจัดการรายชื่อเอง (Manual Mode)"** or **"➕ เพิ่มชื่อเอง"** in UnfollowX to enter the workspace immediately.
+  3. **Direct Profile 1-Click Jump**: In the table or manual modal, click **"🌐 ดูโปรไฟล์"** to open Chrome at that target's profile to unfollow manually without triggering API rate limits.
+  4. **Automated Background Watcher**: Run `python watch_cooldown.py` (or let the background daemon run). It probes every 10 minutes, and the second Instagram clears the block, it will scan all non-followers, write them to `NON_FOLLOWERS_FOUND.txt` on Desktop, and trigger a Windows notification.

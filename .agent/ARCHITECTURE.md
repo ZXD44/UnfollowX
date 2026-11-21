@@ -38,7 +38,7 @@ graph TD
     subgraph Network_Layer ["Instagram Web API"]
         IG_Auth["Session & Cookie Detection"]
         IG_Query["Friendship API (/following, /followers)"]
-        IG_Mutate["Official Web Unfollow (POST /web/friendships/.../unfollow/)"]
+        IG_Mutate["Official Web Unfollow (POST /api/v1/friendships/destroy/... + verify show)"]
         PW --> IG_Auth
         PW --> IG_Query
         PW --> IG_Mutate
@@ -62,20 +62,38 @@ graph TD
 
 ### 2.1 PyWebView Host (`gui_app.py`)
 - **Engine**: Microsoft Edge WebView2 (via `pythonnet` / WinForms) or MSHTML fallback.
-- **Window Specs**: Default dimensions 980×680px, minimum 800×560px, centered on launch.
+- **Window Specs**: Default dimensions 980×640px, minimum 780×520px, centered on launch.
+- **UI Flow (v0.0.6+)**: Guided 3-step rail — Login → Scan → Clean. Sidebar shows hero non-follower count + 24h quota meter; main pane shows gate screens or the account list.
 - **Always-on-Top Control**: Directly interfaces with Win32 `user32.dll` via `ctypes.windll.user32.SetWindowPos` to avoid WinForms thread synchronization exceptions.
 - **RPC Exposure**: `class API` acts as the single boundary between JavaScript and Python.
-  - Public methods: `open_login()`, `start_scan()`, `stop_scan()`, `start_unfollow()`, `stop_unfollow()`, `toggle_always_on_top()`, `get_whitelist()`, `add_whitelist()`, `remove_whitelist()`, `get_audit_history()`, `clear_audit_history()`.
+  - Public methods: `open_browser_window()`, `request_scan()`, `request_unfollow_batch()`, `stop_unfollow()`, `toggle_always_on_top()`, `get_app_state()`, `get_queue_list()`, `clear_queue()`, `resume_pending_queue()`, `set_warmup_mode()`, `open_profile_in_browser()`, `manual_add_targets()`, `get_history()`, `clear_history()`, `open_log_folder()`, `export_data()`.
   - Internal attributes: Prefixed with `_` to prevent PyWebView `get_functions` from traversing into `.NET` / `threading` objects.
 
-### 2.2 Playwright Automation Engine (`AutomationWorker`)
-- **Execution Mode**: Runs in a dedicated background daemon thread.
-- **User Data Directory**: `.profile_data/ig_user_data` ensures persistent login sessions across restarts without requiring credential entry.
+### 2.2 Playwright Automation Engine (`BrowserWorker`)
+- **Execution Mode**: Dedicated background daemon thread receiving async task closures through a thread-safe Queue.
+- **User Data Directory**: `%LOCALAPPDATA%\ZXD44-IG-Cleaner\browser_profile` preserves authenticated Instagram sessions permanently.
 - **Stealth Configurations**:
-  - `navigator.webdriver` set to `undefined`.
-  - Realistic User-Agent: Chrome 122+ Windows desktop.
-  - Natural viewport: 1280×800.
-  - Randomized click delays and mouse trajectory simulation.
+  - `navigator.webdriver` masked to `undefined`.
+  - Realistic User-Agent: Chrome on Windows desktop.
+  - Simulated human scrolling impressions and Gaussian timing delays.
+
+### 2.3 SQLite Storage & Persistent Queue (`storage_manager.py`)
+- **Database**: `%LOCALAPPDATA%\ZXD44-IG-Cleaner\unfollowx.db`
+- **Tables**:
+  - `unfollow_queue`: Persistent target queue with attempt counters and failure states.
+  - `unfollow_history`: Immutable action log recording target ID, username, method (`friendships_destroy`, `web_friendships_unfollow`, `ui_profile`), and timestamps.
+  - `scan_snapshots`: Follower and following lists for diff tracking across sessions.
+  - `safety_metrics`: Rolling cooldown and trust score values.
+
+### 2.4 Safety Engine & Trust Scoring (`safety_engine.py`)
+- Evaluates threat severity across HTTP responses (401, 403, 429, 302, `checkpoint_required`, `spam: true`).
+- Dynamically throttles daily quotas based on account warmup state (Warmup: 15/day, Normal: 50/day).
+- Enforces exponential backoff and mandatory cooldown timers.
+
+### 2.5 Cooldown Watcher Daemon (`watch_cooldown.py`)
+- Runs as a lightweight standalone background watcher.
+- Probes `/api/v1/friendships/{id}/following/?count=12` every 10 minutes without invasive load.
+- When Instagram clears the 302/spam cooldown: runs a complete diff scan, writes `NON_FOLLOWERS_FOUND.txt` to Desktop and Workspace, and fires a Windows toast notification.
 
 ---
 
@@ -133,11 +151,15 @@ sequenceDiagram
         alt Target in Whitelist
             Worker->>UI: Log "Skipped (Whitelisted)"
         else Target Unfollowable
-            Worker->>IG: POST /api/v1/web/friendships/{id}/unfollow/
-            IG-->>Worker: HTTP 200 {status: "ok"}
-            Worker->>Audit: Append record {id, username, timestamp, status}
-            Worker->>UI: eval_js: onUnfollowProgress(index, total, user_id)
-            Worker->>Worker: Sleep (randomized delay 15-35s)
+            Worker->>IG: POST /api/v1/friendships/destroy/{id}/
+            alt API failed
+                Worker->>IG: POST /web/friendships/{id}/unfollow/ or UI profile click
+            end
+            Worker->>IG: GET /api/v1/friendships/show/{id}/ (verify following=false)
+            IG-->>Worker: confirmed unfollowed
+            Worker->>Audit: Append record {id, username, timestamp, status, method}
+            Worker->>UI: state pull unfollow_progress
+            Worker->>Worker: Gaussian delay 35-65s + micro-breaks
         end
     end
 

@@ -50,10 +50,13 @@ Instagram utilizes aggressive heuristic spam scoring and AI behavior analysis. V
   - Micro-break: **1.5 to 2.5 minutes** every 4 to 6 unfollows.
   - Telemetry emulation: Automated subtle feed scrolling midway between actions to send authentic browser impressions.
   - Daily cap: Strictly locked at maximum **50 unfollows in a rolling 24-hour window**.
-- **Prohibited Endpoints & Outdated Systems (STRICTLY FORBIDDEN)**:
-  - **NEVER** use hardcoded GraphQL mutation `doc_id` (e.g. `27789106940691111`) or legacy mobile endpoints (`/api/v1/friendships/destroy/`).
-  - **NEVER** use rapid DOM profile scraping fallback loops.
-  - **ONLY** use the official standard web endpoint: `POST /api/v1/web/friendships/{id}/unfollow/`.
+- **Unfollow Endpoints (current Instagram web protocol)**:
+  - **Primary**: `POST /api/v1/friendships/destroy/{id}/` with body `user_id` + headers (`x-csrftoken`, `x-ig-app-id`, `x-instagram-ajax`, `x-asbd-id`, `x-requested-with`).
+  - **Fallback**: `POST /web/friendships/{id}/unfollow/`, then legacy `POST /api/v1/web/friendships/{id}/unfollow/`.
+  - **Last resort**: single human-path UI unfollow on the profile page (Following → Unfollow), never rapid DOM loops.
+  - **Mandatory verify**: `GET /api/v1/friendships/show/{id}/` must report `following === false` before counting success.
+  - **NEVER** use hardcoded GraphQL mutation `doc_id` values.
+  - Do **not** treat every HTTP 400 as a critical abort — only 401/403/429 and body markers (`checkpoint_required`, `challenge_required`, `feedback_required`, `action_blocked`, `spam`).
 
 ### 2.2 Abort Conditions & Watchdog
 The automation worker must immediately halt and notify the user via modal and warning audio chime if:
@@ -63,6 +66,14 @@ The automation worker must immediately halt and notify the user via modal and wa
 
 ### 2.3 Audit Logging Mandatory Requirement
 - All execution events, browser lifecycle, rate limit checks, threat interceptions, and action results MUST be logged to `%LOCALAPPDATA%\ZXD44-IG-Cleaner\unfollowx_audit.log` using a rotating file handler (5MB x 3 backups).
+
+### 2.4 Manual Mode & Cooldown Graceful Degradation
+- When friendship scanning encounters HTTP 302 redirects or `{"message":"","spam":true,"status":"fail"}`:
+  - Do NOT permanently trap the user in a gate error screen.
+  - Expose a 1-click **Manual Mode** button to enter the workspace immediately.
+  - Allow users to manually type/paste targets or review queue items.
+  - Every row in the user list must offer a **"🌐 View Profile"** action to navigate the real Chrome browser to that target's profile so the user can unfollow manually without triggering API rate limits.
+  - The standalone daemon `watch_cooldown.py` must use gentle, humanized polling intervals (≥ 10 minutes) to probe cooldown recovery and report non-followers immediately upon clearance.
 
 ---
 

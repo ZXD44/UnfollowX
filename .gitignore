@@ -21,3 +21,6 @@ whitelist.json
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# AgentX Air-Gap Lock
+*agentx*

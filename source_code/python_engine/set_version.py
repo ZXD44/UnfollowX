@@ -174,23 +174,23 @@ def publish_github_release(ver_str):
         "User-Agent": "ZXD44-Release-Agent"
     }
 
-    release_title = f"UnfollowX PRO v{ver_str} — Ultimate Safety Release"
-    release_body = f"""# 🚀 UnfollowX PRO v{ver_str} — Ultimate Safety Release
+    release_title = f"UnfollowX PRO v{ver_str} — Manual Mode & Cooldown Watcher Release"
+    release_body = f"""# 🚀 UnfollowX PRO v{ver_str} — Manual Mode & Cooldown Watcher Release
 
-## 🇹🇭 ไฮไลท์การอัปเดตความปลอดภัยสูงสุด (Release Highlights)
-* 🛡️ **Human Emulation 100%**: ระบบพรางตัวเลียนแบบมนุษย์เต็มรูปแบบ (ดีเลย์ 35–65s สุ่มแบบ Gaussian, เลื่อนดูฟีดอัตโนมัติสร้าง Telemetry, พักสายตา 1.5–2.5 นาที) ป้องกัน Meta เข้าใจผิดว่าเป็นแฮกเกอร์
-* 🚨 **Circuit Breaker & Watchdog**: ตรวจจับสัญญาณอันตราย (HTTP 4xx, Checkpoint, Action Block, URL Redirect) หยุดคำขอฉุกเฉินทันที 100% เพื่อรักษาความปลอดภัยของบัญชี
-* 🔒 **Rolling 24h Safe Cap**: ล็อกโควตาไม่เกิน 15 บัญชีต่อรอบ และล็อกอัตโนมัติเมื่อครบ 50 บัญชีใน 24 ชั่วโมง
-* 📋 **Audit Logging System**: ติดตั้งระบบบันทึก Log ลงไฟล์ `%LOCALAPPDATA%\\ZXD44-IG-Cleaner\\unfollowx_audit.log` พร้อมปุ่ม `📋 Logs` บนหน้าต่างโปรแกรม
-* 🧹 **Purged Legacy Endpoints**: ลบ GraphQL mutation `doc_id` เก่า, Destroy API, และ DOM scraping loop ออกถาวร ใช้เฉพาะ Official Instagram Web Endpoint 100%
-* 🌐 **Bilingual System & Obsidian UI**: สลับภาษาไทย (หลัก) / อังกฤษได้ทันที พร้อมหน้าจอกระจกดำ Obsidian Dark ไร้กระตุก 60FPS
+## 🇹🇭 ไฮไลท์การอัปเดตเวอร์ชัน {ver_str} (Release Highlights)
+* 📝 **Manual Target Management**: โหมดจัดการรายชื่อด้วยตนเอง เพิ่ม Username ได้โดยตรง พร้อมปุ่ม **"🌐 ดูโปรไฟล์"** เพื่อเปิดหน้าโปรไฟล์ใน Chrome กดยกเลิกการติดตามเอง 1-Click ทันที แม้ติด Cooldown สแกน
+* 🛰️ **Automated Cooldown Watcher**: สคริปต์แบ็กกราวด์ `watch_cooldown.py` เฝ้าตรวจจับเมื่อ Instagram ปลดล็อก Cooldown จะสแกนและสร้างไฟล์สรุป `NON_FOLLOWERS_FOUND.txt` บน Desktop พร้อมยิง Windows Toast Notification ทันที
+* 🐞 **Critical SyntaxError Fix**: แก้ไขข้อผิดพลาด `SyntaxError: Invalid or unexpected token` ใน JavaScript `page.evaluate()` ผ่านการจัด Escape Sequences สำหรับ Newline อย่างสมบูรณ์
+* 💾 **SQLite Persistent Storage**: คิวงานแบบ Local SQLite (`storage_manager.py`) จัดเก็บ Snapshot และประวัติการทำงานถาวร ไม่สูญหายเมื่อปิดแอป
+* 🔔 **Native Windows Notifications**: ระบบแจ้งเตือน Desktop Toast ผ่าน PowerShell WinForms (`notifier.py`)
+* 🛡️ **Human Emulation 100%**: ระบบพรางตัวเลียนแบบมนุษย์เต็มรูปแบบ (ดีเลย์ 35–65s สุ่มแบบ Gaussian, เลื่อนดูฟีดอัตโนมัติสร้าง Telemetry, พักสายตา 1.5–2.5 นาที)
 
 ## 🇬🇧 English Overview
-* 🛡️ **Human Emulation**: 35–65s Gaussian jitter delays, automated feed scrolling impressions, and 1.5–2.5 min micro-breaks.
-* 🚨 **Circuit Breaker**: Real-time URL and HTTP response watchdog halts instantly on security checkpoints or action blocks.
-* 🔒 **Daily Safety Ceiling**: Strict 15 unfollows per batch session and 50 unfollows per 24 hours lock.
-* 📋 **Execution Audit Logs**: Live second-by-second file logging with in-app 1-click access.
-* 🧹 **Clean Standards**: Completely purged deprecated GraphQL doc_ids and legacy mobile endpoints; strictly compliant with modern Instagram Web standards.
+* 📝 **Manual Target Mode**: Manually manage targets, bypass scan cooldowns, and open Chrome directly to unfollow with 1-click.
+* 🛰️ **Cooldown Watcher Daemon**: Automated `watch_cooldown.py` background monitor probing Instagram cooldowns, auto-diffing non-followers to `NON_FOLLOWERS_FOUND.txt` on Desktop with native Windows notifications.
+* 🐞 **Syntax Fix**: Resolved unescaped newlines in evaluate script tokens.
+* 💾 **SQLite Persistence**: Complete persistent queue, snapshot diffs, and execution audit trails.
+* 🔔 **Desktop Toasts**: Native Windows balloon/toast notifications.
 
 ## 📦 การติดตั้งและดาวน์โหลด (Downloads)
 1. ดาวน์โหลดไฟล์ **`UnfollowX.exe`** ด้านล่างนี้ในส่วน Assets

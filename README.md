@@ -41,6 +41,10 @@
 | :--- | :--- | :--- |
 | 🌐 **Bilingual System** | ระบบ 2 ภาษาในตัว | สลับภาษา **ไทย (หลัก) / อังกฤษ** ได้ทันทีผ่านปุ่มบน Header พร้อมจำค่าถาวร |
 | 🎨 **Impeccable UI** | กระจกดำ Obsidian Dark | Mini Dashboard ขนาดกะทัดรัด สไตล์ [impeccable.style](https://impeccable.style/) ไร้กระตุก 60FPS |
+| 📝 **Manual Target Mode** | จัดการรายชื่อด้วยตนเอง | เพิ่ม Username เองได้โดยตรง, คลิก **"🌐 ดูโปรไฟล์"** เพื่อเปิดหน้าต่าง Chrome ไปยกเลิกเอง 1-Click ทันที แม้ติด Cooldown สแกน |
+| 🛰️ **Cooldown Watcher** | ระบบเฝ้าตรวจจับ Cooldown | รันสคริปต์ `watch_cooldown.py` ในเบื้องหลัง ตรวจจับเมื่อ Instagram ปลดล็อก Cooldown จะสแกนและสรุปรายชื่อบน Desktop พร้อมแจ้งเตือนทันที |
+| 💾 **SQLite Queue & State** | ฐานข้อมูล Persistent Queue | คิวงานแบบ Local SQLite (`storage_manager.py`) จัดเก็บ Snapshot คำนวณ Diff และสถิติความปลอดภัยแม่นยำ |
+| 🔔 **Desktop Toast** | แจ้งเตือนผ่าน Windows Notification | ยิงการแจ้งเตือน Balloon / Toast บนเดสก์ท็อปโดยตรงเมื่อสแกนหรือทำงานเสร็จ (`notifier.py`) |
 | 🛡️ **Human Emulation** | พรางตัวเสมือนมนุษย์ 100% | ดีเลย์ 35–65s สุ่มแบบ Gaussian, เลื่อนดูฟีดอัตโนมัติ (Feed Browsing Simulation), พักสายตา 1.5–2.5 นาที ป้องกัน Meta เข้าใจผิดว่าเป็นแฮกเกอร์ |
 | 🚨 **Circuit Breaker** | ระบบตัดไฟฉุกเฉิน | มอนิเตอร์ URL และ Response (400, 401, 403, 429, Checkpoint, Action Block) หยุดคำขอทั้งหมดทันที 100% ป้องกันบัญชีโดนล็อก |
 | 🔒 **Rolling 24h Cap** | ล็อกโควตาความปลอดภัย | จำกัดไม่เกิน 15 บัญชีต่อรอบ และล็อกอัตโนมัติเมื่อครบ 50 บัญชีใน 24 ชั่วโมง เพื่อความปลอดภัยของรหัสผ่าน |
@@ -62,7 +66,7 @@ graph LR
     Bridge["⚡ PyWebView API Bridge<br/>(gui_app.py)"]
     Engine["🤖 Playwright Engine<br/>(Stealth Chromium Context)"]
     Safe["🛡️ Human Emulation & Watchdog<br/>(Telemetry + Circuit Breaker)"]
-    IG["📸 Instagram Official Web API<br/>(Standard POST /friendships/.../unfollow/)"]
+    IG["📸 Instagram Official Web API<br/>(POST /friendships/destroy/ + verify show)"]
     Log["📋 Persistent Audit Logs<br/>(unfollowx_audit.log)"]
 
     UI <-->|"JSON-RPC / State Pull"| Bridge
@@ -133,6 +137,7 @@ UnfollowX/
 ├── README.md                          # 📖 เอกสารแนะนำโปรเจกต์หลัก (ไทย & อังกฤษ รวมในไฟล์เดียว)
 ├── HOW_TO_USE.txt                     # 📖 คู่มือการใช้งานสำหรับผู้ใช้ทั่วไป
 ├── set_version.py                     # ⚡ เครื่องมือจัดการเวอร์ชันและคอมไพล์อัตโนมัติ
+├── watch_cooldown.py                  # 🛰️ สคริปต์ตรวจจับ Cooldown เบื้องหลังอัตโนมัติ
 ├── .gitignore                         # กำหนดไฟล์ที่ไม่ต้อง push ขึ้น Git
 ├── .agent/                            # 🤖 กฎเกณฑ์เชิงลึกสำหรับ AI Agent & Developers
 │   ├── README.md                      # สารบัญคู่มือ
@@ -144,6 +149,9 @@ UnfollowX/
     └── python_engine/
         ├── gui_app.py                 # Core Controller (Playwright + PyWebView)
         ├── gui_template.html          # Obsidian Dark Minimalist Interface (i18n engine)
+        ├── storage_manager.py         # SQLite Persistent Queue & Snapshot Manager
+        ├── safety_engine.py           # Adaptive Trust Score & Rate Limiting Engine
+        ├── notifier.py                # Native Windows Toast Notification Helper
         ├── version.py                 # Single Source of Truth สำหรับเวอร์ชัน
         ├── version_info.txt           # Windows Executable File Metadata
         ├── set_version.py             # Script ซิงค์เวอร์ชันของ Engine
@@ -181,6 +189,10 @@ UnfollowX/
 | :--- | :--- | :--- |
 | 🌐 **Bilingual System** | Built-in Dual Language | Toggle between **Thai (Default) / English** on-the-fly with persistent `localStorage` memory. |
 | 🎨 **Impeccable UI** | Obsidian Dark Interface | Compact mini dashboard adhering to [impeccable.style](https://impeccable.style/) principles. 60FPS smooth rendering. |
+| 📝 **Manual Target Mode** | Direct Username & Profile Jump | Add targets manually, click **"🌐 View Profile"** to open Chrome and unfollow manually 1-Click even during scan cooldowns. |
+| 🛰️ **Cooldown Watcher** | Background Cooldown Monitor | Runs `watch_cooldown.py` in the background to automatically detect cooldown expiration, scan non-followers, and alert on Desktop. |
+| 💾 **SQLite Queue & State** | Persistent Local Storage | SQLite-backed database (`storage_manager.py`) preserving unfollow queues, execution history, and diff snapshots across restarts. |
+| 🔔 **Desktop Toast** | Native Windows Notifications | Fires native Windows toast/balloon notifications upon scan and batch completion (`notifier.py`). |
 | 🛡️ **Human Emulation** | 100% Indistinguishable Timing | 35–65s Gaussian jitter delays, automated feed scrolling telemetry, and 1.5–2.5 minute micro-breaks. |
 | 🚨 **Circuit Breaker** | Real-Time Emergency Stop | URL & Response watchdog halts instantly upon 4xx, checkpoint, or action block triggers. |
 | 🔒 **Rolling 24h Cap** | Daily Safety Quota | Maximum 15 unfollows per batch session and hard 50 unfollows per 24 hours lock. |

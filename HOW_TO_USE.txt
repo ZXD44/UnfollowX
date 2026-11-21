@@ -1,5 +1,5 @@
 ==================================================
-   UnfollowX PRO v0.0.4 — By ZXD44
+   UnfollowX PRO v0.0.9 — By ZXD44
 ==================================================
 
 [🇹🇭 ภาษาไทย - คู่มือการใช้งานหลัก]
@@ -14,6 +14,7 @@
    - กดปุ่ม "ลบ" เพื่อเริ่มกระบวนการเลิกติดตามอัตโนมัติ (พักสายตาอัตโนมัติ 1.5-2.5 นาที)
    - กดปุ่ม "📋 Logs" ที่แถบด้านบนเพื่อเปิดดูบันทึกการทำงานอย่างละเอียด
    - โควตาความปลอดภัยรายวัน: ไม่เกิน 50 คนในรอบ 24 ชั่วโมง เพื่อป้องกันบัญชีโดนแบนเด็ดขาด
+   - จัดการรายชื่อเอง (Manual): หากติด Cooldown สแกน สามารถกด "จัดการรายชื่อด้วยตนเอง" เพื่อเปิดดูโปรไฟล์ใน Chrome หรือเพิ่ม Username เพื่อกดยกเลิกเอง 1-Click ได้ทันที
 
 --------------------------------------------------
 
@@ -29,6 +30,7 @@
    - Click "Unfollow" to execute safely (Includes automated 1.5-2.5 min breaks).
    - Click "📋 Logs" in the top bar to inspect detailed execution audit logs.
    - Daily Safe Cap: Maximum 50 unfollows per 24 hours to prevent heuristic bot flags.
+   - Manual Mode: Click "Manual Mode" or "View Profile" to jump directly to Instagram in Chrome to unfollow manually 1-Click even during scan cooldowns.
 
 ==================================================
 * พัฒนาและแจกฟรีโดย ZXD44 / Developed by ZXD44

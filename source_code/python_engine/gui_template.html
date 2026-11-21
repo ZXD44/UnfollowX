@@ -3,1396 +3,1350 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>UnfollowX PRO v0.0.1 — By ZXD44</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <title>UnfollowX PRO</title>
   <style>
-    /* -------------------------------------------------------------
-       IMPECCABLE ULTRA-COMPACT TOKENS
-       High contrast, GPU-accelerated, micro-ergonomics
-       ------------------------------------------------------------- */
     :root {
-      --bg-base: #080a0f;
-      --bg-surface: #0f121a;
-      --bg-elevated: #151924;
-      --bg-hover: #1b202e;
-      --bg-active: #21283a;
-
-      --border-subtle: rgba(255, 255, 255, 0.05);
-      --border-muted: rgba(255, 255, 255, 0.09);
-      --border-strong: rgba(255, 255, 255, 0.16);
-
-      --text-primary: #f8fafc;
-      --text-secondary: #94a3b8;
-      --text-muted: #64748b;
-      --text-dim: #475569;
-
-      /* Semantic Accents */
-      --emerald: #10b981;
-      --emerald-hover: #059669;
-      --emerald-subtle: rgba(16, 185, 129, 0.12);
-      --emerald-border: rgba(16, 185, 129, 0.28);
-
-      --rose: #f43f5e;
-      --rose-hover: #e11d48;
-      --rose-subtle: rgba(244, 63, 94, 0.12);
-      --rose-border: rgba(244, 63, 94, 0.28);
-
-      --indigo: #6366f1;
-      --indigo-subtle: rgba(99, 102, 241, 0.12);
-      --indigo-border: rgba(99, 102, 241, 0.28);
-
-      --amber: #f59e0b;
-      --amber-subtle: rgba(245, 158, 11, 0.12);
-      --amber-border: rgba(245, 158, 11, 0.28);
-
-      --radius-sm: 5px;
-      --radius-md: 7px;
-      --radius-pill: 9999px;
-
-      --fast-ease: 120ms cubic-bezier(0.16, 1, 0.3, 1);
+      --ink-0: #0a0a0c;
+      --ink-1: #121216;
+      --ink-2: #18181f;
+      --ink-3: #22222b;
+      --ink-4: #2f2f3d;
+      --line: rgba(255, 255, 255, 0.08);
+      --line-strong: rgba(255, 255, 255, 0.16);
+      --text: #ffffff;
+      --text-2: #a8a8b8;
+      --text-3: #6c6c80;
+      
+      /* Instagram Signature Neon Gradient & Vibrant Accents */
+      --ig-grad: linear-gradient(135deg, #833ab4 0%, #fd1d1d 50%, #fcb045 100%);
+      --ig-grad-subtle: linear-gradient(135deg, rgba(131,58,180,0.18) 0%, rgba(253,29,29,0.18) 50%, rgba(252,176,69,0.18) 100%);
+      --ig-glow: 0 4px 24px -2px rgba(253, 29, 29, 0.35);
+      
+      --coral: #ff3366;
+      --coral-2: #e02456;
+      --coral-soft: rgba(255, 51, 102, 0.14);
+      --coral-line: rgba(255, 51, 102, 0.32);
+      
+      --sage: #00e699;
+      --sage-soft: rgba(0, 230, 153, 0.14);
+      --sage-line: rgba(0, 230, 153, 0.32);
+      
+      --sand: #ffb703;
+      --sand-soft: rgba(255, 183, 3, 0.14);
+      --sand-line: rgba(255, 183, 3, 0.32);
+      
+      --sky: #00c3ff;
+      --sky-soft: rgba(0, 195, 255, 0.14);
+      --sky-line: rgba(0, 195, 255, 0.32);
+      
+      --r: 10px;
+      --ease: 200ms cubic-bezier(0.16, 1, 0.3, 1);
+      --font: -apple-system, BlinkMacSystemFont, "Segoe UI Variable Text", "Segoe UI", Roboto, "Noto Sans Thai", Helvetica, Arial, sans-serif;
+      --mono: "JetBrains Mono", "Cascadia Code", "Cascadia Mono", monospace;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Plus Jakarta Sans', 'Noto Sans Thai', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      user-select: none;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
     body {
-      background-color: var(--bg-base);
-      color: var(--text-primary);
-      height: 100vh;
+      background:
+        radial-gradient(1000px 500px at 0% -10%, rgba(131, 58, 180, 0.18), transparent 60%),
+        radial-gradient(850px 450px at 100% 0%, rgba(253, 29, 29, 0.14), transparent 55%),
+        radial-gradient(700px 400px at 50% 110%, rgba(252, 176, 69, 0.08), transparent 60%),
+        var(--ink-0);
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 13px;
+      line-height: 1.45;
       display: flex;
       flex-direction: column;
       overflow: hidden;
-      font-size: 12px;
-      line-height: 1.35;
+      user-select: none;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* Hardware accelerated slim scrollbar */
-    ::-webkit-scrollbar {
-      width: 5px;
-      height: 5px;
-    }
-    ::-webkit-scrollbar-track {
-      background: transparent;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: rgba(255, 255, 255, 0.12);
-      border-radius: var(--radius-pill);
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: rgba(255, 255, 255, 0.25);
-    }
+    button, input, select { font: inherit; color: inherit; }
+    button { cursor: pointer; border: 0; background: none; }
+    a { color: inherit; }
 
-    /* -------------------------------------------------------------
-       MINI HEADER (Height: 38px)
-       ------------------------------------------------------------- */
-    header {
-      height: 38px;
-      padding: 0 10px;
-      display: flex;
-      justify-content: space-between;
+    ::-webkit-scrollbar { width: 7px; height: 7px; }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 99px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.25); }
+
+    /* —— Header —— */
+    .topbar {
+      height: 54px;
+      padding: 0 18px;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
       align-items: center;
-      background: var(--bg-surface);
-      border-bottom: 1px solid var(--border-subtle);
+      gap: 12px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(14, 14, 18, 0.78);
+      backdrop-filter: blur(20px) saturate(180%);
       flex-shrink: 0;
-      z-index: 50;
+      z-index: 20;
     }
-
-    .brand-wrap {
+    .brand {
       display: flex;
       align-items: center;
-      gap: 7px;
+      gap: 10px;
+      justify-self: start;
     }
-
-    .brand-icon {
-      width: 20px;
-      height: 20px;
-      border-radius: 5px;
-      background: linear-gradient(135deg, #f43f5e, #8b5cf6);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 1px 6px rgba(244, 63, 94, 0.3);
-      flex-shrink: 0;
+    .mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      background: var(--ig-grad);
+      display: grid;
+      place-items: center;
+      box-shadow: 0 4px 16px rgba(253, 29, 29, 0.35), inset 0 1px 0 rgba(255,255,255,0.3);
+      transition: transform var(--ease);
     }
-
-    .brand-icon svg {
-      width: 12px;
-      height: 12px;
-      fill: #ffffff;
-    }
-
-    .brand-title {
-      font-size: 0.80rem;
-      font-weight: 700;
-      letter-spacing: -0.2px;
-      color: #ffffff;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .brand-title .accent-x {
-      color: #f43f5e;
-    }
-
-    .brand-badge {
-      font-size: 0.60rem;
-      font-weight: 700;
-      background: var(--indigo-subtle);
-      color: #a5b4fc;
-      border: 1px solid var(--indigo-border);
-      padding: 0 5px;
-      border-radius: var(--radius-pill);
-      letter-spacing: 0.2px;
-      line-height: 14px;
-    }
-
-    .header-center {
+    .mark:hover { transform: scale(1.05) rotate(3deg); }
+    .mark svg { width: 18px; height: 18px; color: #fff; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.3)); }
+    .brand h1 {
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
       display: flex;
       align-items: center;
     }
-
-    .status-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      background: var(--emerald-subtle);
-      border: 1px solid var(--emerald-border);
-      color: #34d399;
-      padding: 2px 8px;
-      border-radius: var(--radius-pill);
-      font-size: 0.68rem;
-      font-weight: 600;
-      max-width: 220px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+    .brand h1 span.accent {
+      background: var(--ig-grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-left: 1px;
     }
-
-    .status-pill.connecting {
-      background: var(--amber-subtle);
-      border-color: var(--amber-border);
-      color: #fbbf24;
-    }
-
-    .status-pill.error {
-      background: var(--rose-subtle);
-      border-color: var(--rose-border);
-      color: #fb7185;
-    }
-
-    .status-dot {
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      background: #10b981;
-      box-shadow: 0 0 5px #10b981;
-      flex-shrink: 0;
-      animation: pulse 2s infinite ease-in-out;
-    }
-
-    .status-pill.connecting .status-dot {
-      background: #f59e0b;
-      box-shadow: 0 0 5px #f59e0b;
-    }
-
-    .status-pill.error .status-dot {
-      background: #f43f5e;
-      box-shadow: 0 0 5px #f43f5e;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.45; transform: scale(0.9); }
-    }
-
-    .header-actions {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    /* -------------------------------------------------------------
-       MINI BUTTONS
-       ------------------------------------------------------------- */
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 5px;
-      padding: 0 8px;
-      font-size: 0.72rem;
-      font-weight: 600;
-      border-radius: var(--radius-md);
-      border: 1px solid transparent;
-      cursor: pointer;
-      outline: none;
-      transition: background-color var(--fast-ease), border-color var(--fast-ease), transform var(--fast-ease);
-      white-space: nowrap;
-      height: 24px;
-    }
-
-    .btn:active:not(:disabled) {
-      transform: scale(0.96);
-    }
-
-    .btn:focus-visible {
-      box-shadow: 0 0 0 2px var(--bg-base), 0 0 0 3px var(--emerald);
-    }
-
-    .btn-ghost {
-      background: transparent;
-      color: var(--text-secondary);
-      border-color: var(--border-subtle);
-    }
-
-    .btn-ghost:hover:not(:disabled) {
-      background: var(--bg-hover);
-      color: var(--text-primary);
-      border-color: var(--border-muted);
-    }
-
-    .btn-ghost.pinned {
-      background: var(--indigo-subtle);
-      border-color: var(--indigo);
-      color: #a5b4fc;
-      box-shadow: 0 0 6px rgba(99, 102, 241, 0.3);
-    }
-
-    .btn-emerald {
-      background: var(--emerald);
-      color: #ffffff;
-      box-shadow: 0 1px 8px rgba(16, 185, 129, 0.3);
-    }
-
-    .btn-emerald:hover:not(:disabled) {
-      background: var(--emerald-hover);
-      box-shadow: 0 2px 10px rgba(16, 185, 129, 0.45);
-    }
-
-    .btn-rose {
-      background: var(--rose);
-      color: #ffffff;
-      box-shadow: 0 1px 8px rgba(244, 63, 94, 0.3);
-    }
-
-    .btn-rose:hover:not(:disabled) {
-      background: var(--rose-hover);
-      box-shadow: 0 2px 10px rgba(244, 63, 94, 0.45);
-    }
-
-    .btn-amber {
-      background: var(--amber);
-      color: #ffffff;
-    }
-
-    .btn-amber:hover:not(:disabled) {
-      background: #d97706;
-    }
-
-    .btn:disabled {
-      opacity: 0.4;
-      cursor: not-allowed;
-      transform: none !important;
-      box-shadow: none !important;
-    }
-
-    /* -------------------------------------------------------------
-       MINI METRICS RIBBON (Height: 30px)
-       ------------------------------------------------------------- */
-    .metrics-ribbon {
-      background: var(--bg-base);
-      border-bottom: 1px solid var(--border-subtle);
-      padding: 4px 10px;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      overflow-x: auto;
-      flex-shrink: 0;
-    }
-
-    .metric-chip {
-      background: var(--bg-surface);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-sm);
+    .ver {
+      margin-left: 8px;
+      font-size: 10.5px;
       padding: 2px 7px;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      cursor: pointer;
-      transition: background-color var(--fast-ease), border-color var(--fast-ease);
-      flex-shrink: 0;
-      height: 22px;
-    }
-
-    .metric-chip:hover {
-      background: var(--bg-hover);
-      border-color: var(--border-muted);
-    }
-
-    .metric-chip.active {
-      border-color: var(--border-strong);
-      background: var(--bg-elevated);
-    }
-
-    .metric-chip.alert-chip {
-      background: var(--rose-subtle);
-      border-color: var(--rose-border);
-    }
-
-    .metric-chip.alert-chip .metric-value {
-      color: #fb7185;
-    }
-
-    .metric-chip.alert-chip.active {
-      border-color: var(--rose);
-      box-shadow: 0 0 8px rgba(244, 63, 94, 0.2);
-    }
-
-    .metric-chip.shield-chip {
-      background: var(--indigo-subtle);
-      border-color: var(--indigo-border);
-    }
-
-    .metric-chip.shield-chip .metric-value {
-      color: #a5b4fc;
-    }
-
-    .metric-label {
-      font-size: 0.65rem;
-      font-weight: 500;
-      color: var(--text-secondary);
-    }
-
-    .metric-value {
-      font-size: 0.74rem;
+      border-radius: 99px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-2);
       font-weight: 700;
-      color: var(--text-primary);
       font-variant-numeric: tabular-nums;
     }
 
-    /* -------------------------------------------------------------
-       MINI ACTION & FILTER TOOLBAR (Height: 36px)
-       ------------------------------------------------------------- */
-    .action-bar {
-      padding: 4px 10px;
-      background: var(--bg-surface);
-      border-bottom: 1px solid var(--border-subtle);
+    .steps {
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      gap: 4px;
+      background: rgba(24, 24, 31, 0.85);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 4px;
+      backdrop-filter: blur(10px);
+    }
+    .step {
+      display: flex;
+      align-items: center;
       gap: 6px;
-      flex-shrink: 0;
+      padding: 6px 14px;
+      border-radius: 999px;
+      color: var(--text-3);
+      font-size: 12px;
+      font-weight: 600;
+      transition: background var(--ease), color var(--ease), transform var(--ease);
+    }
+    .step .n {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 10px;
+      border: 1px solid var(--line-strong);
+      font-variant-numeric: tabular-nums;
+    }
+    .step.active {
+      background: var(--ink-3);
+      color: var(--text);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+    }
+    .step.active .n {
+      background: var(--ig-grad);
+      border-color: transparent;
+      color: #fff;
+      font-weight: 800;
+    }
+    .step.done { color: var(--sage); }
+    .step.done .n {
+      background: var(--sage-soft);
+      border-color: var(--sage-line);
+      color: var(--sage);
     }
 
-    .search-wrap {
+    .tools {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      justify-self: end;
+    }
+    .icon-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      color: var(--text-2);
+      display: grid;
+      place-items: center;
+      transition: background var(--ease), color var(--ease);
+    }
+    .icon-btn:hover { background: var(--ink-2); color: var(--text); }
+    .icon-btn.on { background: var(--sand-soft); color: var(--sand); }
+    .icon-btn svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* —— Body —— */
+    .shell {
+      flex: 1;
+      min-height: 0;
+      display: grid;
+      grid-template-columns: 290px 1fr;
+    }
+
+    .side {
+      border-right: 1px solid var(--line);
+      background: rgba(18, 18, 22, 0.75);
+      backdrop-filter: blur(15px);
+      padding: 18px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      overflow: auto;
+    }
+
+    .status-card {
+      background: rgba(24, 24, 31, 0.7);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    }
+    .status-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .live-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--sand);
+      box-shadow: 0 0 0 0 rgba(255,183,3,0.5);
+      animation: pulse 1.8s infinite;
+    }
+    .live-dot.ok {
+      background: var(--sage);
+      box-shadow: 0 0 0 0 rgba(0,230,153,0.45);
+    }
+    .live-dot.bad { background: var(--coral); animation: none; }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(255,183,3,0.45); }
+      70% { box-shadow: 0 0 0 8px rgba(255,183,3,0); }
+      100% { box-shadow: 0 0 0 0 rgba(255,183,3,0); }
+    }
+    .status-label { font-size: 12px; color: var(--text-2); font-weight: 600; }
+    .status-msg { font-size: 12px; color: var(--text-3); line-height: 1.45; }
+
+    .hero-count {
       position: relative;
-      width: 150px;
-      flex-shrink: 0;
+      background: var(--ig-grad-subtle), rgba(24, 24, 31, 0.85);
+      border: 1px solid rgba(255, 51, 102, 0.35);
+      border-radius: 16px;
+      padding: 20px 16px;
+      text-align: center;
+      box-shadow: var(--ig-glow), inset 0 1px 0 rgba(255,255,255,0.1);
+      overflow: hidden;
     }
-
-    .search-input {
-      width: 100%;
-      height: 24px;
-      background: rgba(0, 0, 0, 0.35);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-md);
-      padding: 0 20px 0 24px;
-      font-size: 0.72rem;
-      color: var(--text-primary);
-      outline: none;
-      transition: border-color var(--fast-ease);
-    }
-
-    .search-input:focus {
-      border-color: var(--emerald);
-    }
-
-    .search-icon {
+    .hero-count::before {
+      content: '';
       position: absolute;
-      left: 7px;
+      top: 0; left: 0; right: 0; height: 2px;
+      background: var(--ig-grad);
+    }
+    .hero-count .kicker {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.65);
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+    .hero-count .num {
+      font-size: 52px;
+      font-weight: 850;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+      background: linear-gradient(180deg, #ffffff 40%, rgba(255,255,255,0.7) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.4));
+    }
+    .hero-count .sub {
+      margin-top: 8px;
+      color: var(--text-2);
+      font-size: 12px;
+    }
+
+    .quota {
+      background: rgba(24, 24, 31, 0.7);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 13px 14px;
+    }
+    .quota-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 8px;
+      font-size: 12px;
+      color: var(--text-2);
+      font-weight: 600;
+    }
+    .quota-head b {
+      color: var(--sky);
+      font-variant-numeric: tabular-nums;
+      font-weight: 750;
+    }
+    .quota-track {
+      height: 6px;
+      border-radius: 99px;
+      background: var(--ink-4);
+      overflow: hidden;
+    }
+    .quota-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--sky), #b388ff);
+      border-radius: 99px;
+      transition: width 240ms ease;
+    }
+    .quota-fill.hot { background: var(--ig-grad); }
+    .quota-note { margin-top: 8px; font-size: 11px; color: var(--text-3); }
+
+    .stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .stat {
+      background: rgba(24, 24, 31, 0.7);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 10px 12px;
+      transition: transform var(--ease), border-color var(--ease);
+    }
+    .stat:hover {
+      border-color: var(--line-strong);
+      transform: translateY(-1px);
+    }
+    .stat .l { font-size: 11px; color: var(--text-3); margin-bottom: 4px; font-weight: 500; }
+    .stat .v {
+      font-size: 17px;
+      font-weight: 750;
+      font-variant-numeric: tabular-nums;
+      color: var(--text);
+    }
+
+    .side-actions { display: flex; flex-direction: column; gap: 8px; margin-top: auto; }
+
+    .btn {
+      height: 38px;
+      padding: 0 15px;
+      border-radius: 10px;
+      font-weight: 650;
+      font-size: 13px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: transform var(--ease), background var(--ease), border-color var(--ease), box-shadow var(--ease), opacity var(--ease);
+      border: 1px solid transparent;
+      white-space: nowrap;
+    }
+    .btn:active { transform: translateY(1px) scale(0.98); }
+    .btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; box-shadow: none; }
+    .btn svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .btn-primary {
+      background: var(--ig-grad);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(253, 29, 29, 0.32);
+    }
+    .btn-primary:hover:not(:disabled) {
+      box-shadow: 0 6px 20px rgba(253, 29, 29, 0.45);
+      filter: brightness(1.08);
+    }
+    .btn-soft {
+      background: rgba(34, 34, 43, 0.85);
+      border-color: var(--line-strong);
+      color: var(--text);
+    }
+    .btn-soft:hover:not(:disabled) { background: var(--ink-4); border-color: rgba(255,255,255,0.25); }
+    .btn-danger {
+      background: var(--coral-soft);
+      border-color: var(--coral-line);
+      color: #ff8ca3;
+    }
+    .btn-danger:hover:not(:disabled) { background: rgba(255,51,102,0.25); color: #fff; }
+    .btn-warn {
+      background: var(--sand-soft);
+      border-color: var(--sand-line);
+      color: #ffd166;
+    }
+    .btn-block { width: 100%; }
+    .btn-sm { height: 32px; padding: 0 12px; font-size: 12px; border-radius: 9px; }
+
+    /* —— Main —— */
+    .main {
+      min-width: 0;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      background: rgba(10, 10, 12, 0.45);
+    }
+
+    .gate {
+      flex: 1;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 32px;
+    }
+    .gate.show { display: flex; }
+    .gate-card {
+      width: min(440px, 100%);
+      background: rgba(24, 24, 31, 0.85);
+      border: 1px solid var(--line-strong);
+      border-radius: 20px;
+      padding: 32px 26px;
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1);
+      backdrop-filter: blur(20px);
+    }
+    .gate-card h2 {
+      font-size: 21px;
+      font-weight: 750;
+      letter-spacing: -0.02em;
+      margin: 14px 0 8px;
+    }
+    .gate-card p {
+      color: var(--text-2);
+      font-size: 13px;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+    .gate-desc {
+      margin-bottom: 20px;
+    }
+    .gate-desc p {
+      color: var(--text-2);
+      font-size: 13px;
+      line-height: 1.65;
+      margin-bottom: 12px;
+    }
+    .gate-tips {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px 14px;
+      text-align: left;
+      font-size: 12px;
+      line-height: 1.65;
+      color: var(--text-2);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .scan-error-card {
+      margin-top: 14px;
+      padding: 14px;
+      background: rgba(255, 51, 102, 0.09);
+      border: 1px solid rgba(255, 51, 102, 0.3);
+      border-radius: 12px;
+      text-align: left;
+    }
+    .scan-error-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      font-size: 13px;
+      color: #ff8ca3;
+      margin-bottom: 8px;
+    }
+    .scan-error-content {
+      font-size: 12px;
+      line-height: 1.65;
+      color: var(--text-2);
+      white-space: pre-line;
+      word-break: break-word;
+    }
+    .gate-icon {
+      width: 58px;
+      height: 58px;
+      margin: 0 auto;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      background: var(--ig-grad);
+      color: #fff;
+      box-shadow: var(--ig-glow);
+    }
+    .gate-icon svg { width: 28px; height: 28px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+    .workspace { display: none; flex-direction: column; min-height: 0; flex: 1; }
+    .workspace.show { display: flex; }
+
+    .toolbar {
+      padding: 12px 18px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      border-bottom: 1px solid var(--line);
+      background: rgba(18, 18, 22, 0.6);
+      backdrop-filter: blur(12px);
+      flex-shrink: 0;
+      flex-wrap: wrap;
+    }
+    .search {
+      position: relative;
+      flex: 1;
+      min-width: 170px;
+    }
+    .search svg {
+      position: absolute;
+      left: 12px;
       top: 50%;
       transform: translateY(-50%);
-      color: var(--text-muted);
-      width: 11px;
-      height: 11px;
+      width: 15px;
+      height: 15px;
+      stroke: var(--text-3);
+      fill: none;
+      stroke-width: 2;
       pointer-events: none;
     }
-
-    .search-clear {
+    .search input {
+      width: 100%;
+      height: 36px;
+      padding: 0 34px 0 36px;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      background: rgba(24, 24, 31, 0.8);
+      color: var(--text);
+      outline: none;
+      transition: border-color var(--ease), background var(--ease);
+    }
+    .search input:focus {
+      border-color: rgba(253, 29, 29, 0.5);
+      background: rgba(34, 34, 43, 0.9);
+      box-shadow: 0 0 0 2px rgba(253, 29, 29, 0.15);
+    }
+    .search .clear {
       position: absolute;
-      right: 6px;
+      right: 8px;
       top: 50%;
       transform: translateY(-50%);
-      color: var(--text-muted);
-      cursor: pointer;
-      font-size: 0.68rem;
-      display: none;
-      background: none;
-      border: none;
-    }
-
-    .filter-tabs {
-      display: inline-flex;
-      background: rgba(0, 0, 0, 0.35);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-md);
-      padding: 2px;
-      gap: 1px;
-    }
-
-    .filter-tab {
-      background: transparent;
-      border: none;
-      color: var(--text-secondary);
-      padding: 2px 7px;
-      border-radius: 4px;
-      font-size: 0.68rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background-color var(--fast-ease), color var(--fast-ease);
-      white-space: nowrap;
+      width: 20px;
       height: 20px;
+      border-radius: 6px;
+      color: var(--text-3);
+      display: none;
+      place-items: center;
+      font-size: 12px;
     }
+    .search .clear.show { display: grid; }
 
-    .filter-tab:hover {
-      color: var(--text-primary);
+    .tabs {
+      display: flex;
+      gap: 4px;
+      background: rgba(24, 24, 31, 0.8);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 3px;
     }
-
-    .filter-tab.active {
-      background: var(--bg-elevated);
-      color: var(--text-primary);
-    }
-
-    .speed-wrap {
-      display: inline-flex;
-      align-items: center;
-      gap: 3px;
-      background: rgba(0, 0, 0, 0.35);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-md);
-      padding: 0 6px;
-      height: 24px;
-      font-size: 0.68rem;
-      color: var(--text-muted);
-    }
-
-    .speed-select {
-      background: transparent;
-      border: none;
-      color: var(--text-primary);
-      font-size: 0.68rem;
+    .tab {
+      height: 30px;
+      padding: 0 12px;
+      border-radius: 9px;
+      font-size: 12px;
       font-weight: 600;
-      outline: none;
-      cursor: pointer;
+      color: var(--text-3);
+      transition: all var(--ease);
+    }
+    .tab:hover { color: var(--text-2); }
+    .tab.active {
+      background: var(--ink-3);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
     }
 
-    .speed-select option {
-      background: var(--bg-surface);
-      color: var(--text-primary);
-    }
-
-    .main-ctas {
+    .batch {
       display: flex;
       align-items: center;
-      gap: 5px;
+      gap: 6px;
+      color: var(--text-3);
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .batch select {
+      height: 36px;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      background: rgba(24, 24, 31, 0.8);
+      padding: 0 10px;
+      color: var(--text);
+      outline: none;
+    }
+
+    .cta-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
       margin-left: auto;
     }
 
-    /* -------------------------------------------------------------
-       SLIM PROGRESS DOCK
-       ------------------------------------------------------------- */
-    .progress-dock {
-      background: var(--bg-elevated);
-      border-bottom: 1px solid var(--emerald-border);
-      padding: 4px 10px;
+    .progress {
       display: none;
+      padding: 12px 18px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(24, 24, 31, 0.9);
+      gap: 12px;
       align-items: center;
-      gap: 10px;
       flex-shrink: 0;
-      height: 24px;
     }
-
-    .progress-info {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      min-width: 140px;
-    }
-
+    .progress.show { display: flex; }
+    .progress-meta { flex: 1; min-width: 0; }
     .progress-title {
-      font-size: 0.68rem;
-      font-weight: 600;
-      color: var(--text-primary);
+      font-size: 12.5px;
+      font-weight: 650;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      max-width: 240px;
     }
-
-    .progress-numbers {
-      font-size: 0.65rem;
-      color: var(--text-secondary);
+    .progress-sub {
+      margin-top: 2px;
+      font-size: 11px;
+      color: var(--text-3);
       font-variant-numeric: tabular-nums;
     }
-
     .progress-track {
-      flex: 1;
-      height: 5px;
-      background: rgba(255, 255, 255, 0.08);
-      border-radius: var(--radius-pill);
+      width: 150px;
+      height: 7px;
+      border-radius: 99px;
+      background: var(--ink-4);
       overflow: hidden;
+      flex-shrink: 0;
     }
-
     .progress-fill {
       height: 100%;
       width: 0%;
-      background: linear-gradient(90deg, #10b981, #06b6d4, #f43f5e);
-      border-radius: var(--radius-pill);
-      transition: width 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      background: var(--ig-grad);
+      transition: width 200ms ease;
     }
 
-    /* -------------------------------------------------------------
-       HIGH PERFORMANCE USER TABLE
-       Virtual scroll, CSS containment, content-visibility
-       ------------------------------------------------------------- */
-    .table-dock {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      min-height: 0;
-      background: var(--bg-base);
-      position: relative;
-    }
-
-    .table-head {
+    .list-head, .row {
       display: grid;
-      grid-template-columns: 30px 1fr 110px 115px;
-      padding: 4px 10px;
-      background: rgba(0, 0, 0, 0.45);
-      border-bottom: 1px solid var(--border-subtle);
-      font-size: 0.64rem;
-      font-weight: 700;
-      color: var(--text-muted);
+      grid-template-columns: 40px minmax(0, 1fr) 120px 156px;
+      gap: 8px;
+      align-items: center;
+      padding: 0 18px;
+    }
+    .list-head {
+      height: 36px;
+      color: var(--text-3);
+      font-size: 11px;
+      font-weight: 750;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
-      letter-spacing: 0.4px;
-      align-items: center;
+      border-bottom: 1px solid var(--line);
+      background: rgba(14, 14, 18, 0.4);
       flex-shrink: 0;
-      height: 24px;
     }
-
-    .user-viewport {
+    .list-body {
       flex: 1;
-      overflow-y: auto;
+      overflow: auto;
       min-height: 0;
-      contain: strict;
-      will-change: scroll-position;
-      transform: translateZ(0);
-      -webkit-overflow-scrolling: touch;
     }
-
-    .user-row {
-      display: grid;
-      grid-template-columns: 30px 1fr 110px 115px;
-      padding: 4px 10px;
-      align-items: center;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.025);
-      contain: content;
-      content-visibility: auto;
-      contain-intrinsic-size: 34px;
-      height: 34px;
+    .row {
+      height: 56px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      transition: background var(--ease), transform var(--ease);
     }
-
-    .user-row:hover {
-      background: rgba(255, 255, 255, 0.03);
+    .row:hover { background: rgba(255,255,255,0.035); }
+    .row.gone {
+      opacity: 0.35;
+      text-decoration: line-through;
+      text-decoration-color: var(--coral);
     }
+    .row.protected { background: rgba(0, 230, 153, 0.05); }
 
-    .user-row.unfollowed {
-      opacity: 0.3;
-      background: var(--emerald-subtle);
-      pointer-events: none;
-    }
-
-    .user-row.protected {
-      background: rgba(99, 102, 241, 0.04);
-    }
-
-    .checkbox {
-      width: 14px;
-      height: 14px;
-      accent-color: var(--emerald);
+    .check {
+      width: 16px;
+      height: 16px;
+      accent-color: #fd1d1d;
       cursor: pointer;
-      border-radius: 3px;
     }
 
-    .user-cell {
+    .user {
       display: flex;
       align-items: center;
-      gap: 7px;
+      gap: 12px;
       min-width: 0;
     }
-
-    .avatar {
-      width: 22px;
-      height: 22px;
+    /* Instagram Gradient Ring Avatar */
+    .avatar-wrap {
+      position: relative;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
-      background: var(--bg-hover);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.65rem;
-      font-weight: 700;
-      color: var(--text-secondary);
-      border: 1px solid var(--border-subtle);
+      padding: 2px;
+      background: var(--ig-grad);
       flex-shrink: 0;
-      overflow: hidden;
+      display: grid;
+      place-items: center;
+    }
+    .avatar {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
       object-fit: cover;
+      background: var(--ink-2);
+      border: 1.5px solid var(--ink-0);
+      flex-shrink: 0;
     }
-
-    .user-meta {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      min-width: 0;
+    .avatar.ph {
+      display: grid;
+      place-items: center;
+      font-size: 12px;
+      font-weight: 750;
+      color: var(--text-2);
+    }
+    .user-meta { min-width: 0; }
+    .user-meta .name {
+      font-weight: 700;
+      font-size: 13.5px;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
       overflow: hidden;
+      text-overflow: ellipsis;
     }
-
-    .user-handle {
-      font-size: 0.76rem;
-      font-weight: 600;
-      color: var(--text-primary);
-      text-decoration: none;
+    .user-meta .full {
+      font-size: 11.5px;
+      color: var(--text-3);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
 
-    .user-handle:hover {
-      color: #38bdf8;
-      text-decoration: underline;
-    }
-
-    .user-fullname {
-      font-size: 0.66rem;
-      color: var(--text-muted);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .badge-pill {
+    .chips { display: flex; gap: 4px; flex-wrap: wrap; }
+    .chip {
+      height: 22px;
+      padding: 0 8px;
+      border-radius: 999px;
+      font-size: 10.5px;
+      font-weight: 700;
       display: inline-flex;
       align-items: center;
-      font-size: 0.60rem;
-      font-weight: 600;
-      padding: 0 4px;
-      border-radius: 3px;
-      line-height: 14px;
+      border: 1px solid var(--line);
+      color: var(--text-2);
+      background: rgba(24, 24, 31, 0.8);
     }
+    .chip.ver { color: var(--sky); border-color: var(--sky-line); background: var(--sky-soft); }
+    .chip.priv { color: var(--sand); border-color: var(--sand-line); background: var(--sand-soft); }
+    .chip.ok { color: var(--sage); border-color: var(--sage-line); background: var(--sage-soft); }
 
-    .badge-verified {
-      background: rgba(56, 189, 248, 0.12);
-      color: #38bdf8;
-      border: 1px solid rgba(56, 189, 248, 0.25);
-    }
+    .row-actions { display: flex; justify-content: flex-end; gap: 6px; }
 
-    .badge-private {
-      background: var(--amber-subtle);
-      color: #fbbf24;
-      border: 1px solid var(--amber-border);
-    }
-
-    .badge-protected {
-      background: var(--indigo-subtle);
-      color: #a5b4fc;
-      border: 1px solid var(--indigo-border);
-    }
-
-    .row-actions {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      gap: 4px;
-    }
-
-    .btn-shield {
-      width: 22px;
-      height: 22px;
-      border-radius: 4px;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid var(--border-subtle);
-      color: var(--text-muted);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 0.68rem;
-    }
-
-    .btn-shield:hover {
-      background: rgba(255, 255, 255, 0.08);
-      color: var(--text-primary);
-    }
-
-    .btn-shield.active {
-      background: var(--indigo-subtle);
-      border-color: var(--indigo);
-      color: #a5b4fc;
-    }
-
-    .btn-unfollow-row {
-      height: 22px;
-      padding: 0 7px;
-      border-radius: 4px;
-      font-size: 0.66rem;
-      font-weight: 600;
-      background: var(--rose-subtle);
-      border: 1px solid var(--rose-border);
-      color: #fb7185;
-      cursor: pointer;
-      transition: background-color var(--fast-ease);
-    }
-
-    .btn-unfollow-row:hover {
-      background: var(--rose);
-      color: #ffffff;
-    }
-
-    /* Empty & Loading States */
-    .empty-state {
-      padding: 40px 14px;
+    .empty {
+      height: 100%;
+      min-height: 240px;
+      display: grid;
+      place-items: center;
       text-align: center;
-      color: var(--text-muted);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      color: var(--text-3);
+      padding: 32px;
       gap: 8px;
     }
-
+    .empty strong { color: var(--text-2); font-size: 14.5px; }
     .spinner {
-      width: 20px;
-      height: 20px;
-      border: 2px solid rgba(255, 255, 255, 0.1);
-      border-top-color: var(--emerald);
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
-      animation: spin 0.6s linear infinite;
+      border: 2.5px solid var(--line-strong);
+      border-top-color: #fd1d1d;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 10px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .foot {
+      height: 30px;
+      padding: 0 18px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--text-3);
+      font-size: 11px;
+      flex-shrink: 0;
+      background: rgba(14, 14, 18, 0.92);
+      backdrop-filter: blur(10px);
     }
 
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    /* -------------------------------------------------------------
-       MINI MODAL (340px)
-       ------------------------------------------------------------- */
-    .modal-overlay {
+    /* —— Modal / Toast / Menu —— */
+    .overlay {
       position: fixed;
       inset: 0;
-      background: rgba(4, 6, 10, 0.8);
-      backdrop-filter: blur(6px);
-      z-index: 1000;
+      background: rgba(4, 4, 6, 0.75);
+      backdrop-filter: blur(8px);
       display: none;
       align-items: center;
       justify-content: center;
-      padding: 12px;
-      contain: strict;
+      z-index: 100;
+      padding: 16px;
     }
-
-    .modal-overlay.open {
-      display: flex;
+    .overlay.open { display: flex; }
+    .modal {
+      width: min(420px, 100%);
+      background: rgba(24, 24, 31, 0.95);
+      border: 1px solid var(--line-strong);
+      border-radius: 18px;
+      box-shadow: 0 30px 70px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.1);
+      overflow: hidden;
+      backdrop-filter: blur(20px);
     }
-
-    .modal-box {
-      background: var(--bg-surface);
-      border: 1px solid var(--border-strong);
-      border-radius: var(--radius-md);
-      width: 100%;
-      max-width: 340px;
-      padding: 14px 16px;
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+    .modal-h {
+      padding: 18px 18px 0;
       display: flex;
-      flex-direction: column;
-      gap: 10px;
+      gap: 12px;
+      align-items: flex-start;
     }
-
-    .modal-head {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .modal-icon-badge {
-      width: 28px;
-      height: 28px;
-      border-radius: 7px;
-      background: var(--rose-subtle);
-      border: 1px solid var(--rose-border);
-      color: #fb7185;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .modal-h .ico {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      background: var(--sand-soft);
+      color: var(--sand);
       flex-shrink: 0;
+      font-weight: 800;
     }
-
-    .modal-icon-badge.success {
-      background: var(--emerald-subtle);
-      border-color: var(--emerald-border);
-      color: #34d399;
-    }
-
-    .modal-title {
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: #ffffff;
-      line-height: 1.2;
-    }
-
-    .modal-subtitle {
-      font-size: 0.70rem;
-      color: var(--text-secondary);
-    }
-
-    .modal-content {
-      font-size: 0.75rem;
-      color: var(--text-secondary);
-      background: rgba(0, 0, 0, 0.25);
-      border: 1px solid var(--border-subtle);
-      padding: 8px 10px;
-      border-radius: var(--radius-sm);
-      line-height: 1.4;
-    }
-
-    .modal-foot {
+    .modal-h .ico.danger { background: var(--coral-soft); color: var(--coral); }
+    .modal-h .ico.ok { background: var(--sage-soft); color: var(--sage); }
+    .modal-h h3 { font-size: 16px; letter-spacing: -0.01em; font-weight: 750; }
+    .modal-h p { font-size: 12px; color: var(--text-3); margin-top: 2px; }
+    .modal-b { padding: 14px 18px 0; color: var(--text-2); font-size: 13px; line-height: 1.5; }
+    .modal-f {
+      padding: 16px 18px 18px;
       display: flex;
       justify-content: flex-end;
-      gap: 6px;
+      gap: 8px;
     }
 
-    /* -------------------------------------------------------------
-       MINI TOASTS
-       ------------------------------------------------------------- */
-    .toast-deck {
+    .menu {
+      position: absolute;
+      right: 18px;
+      top: 52px;
+      width: 220px;
+      background: rgba(24, 24, 31, 0.95);
+      border: 1px solid var(--line-strong);
+      border-radius: 14px;
+      padding: 6px;
+      display: none;
+      z-index: 40;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+      backdrop-filter: blur(20px);
+    }
+    .menu.open { display: block; }
+    .menu button {
+      width: 100%;
+      height: 34px;
+      border-radius: 9px;
+      padding: 0 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--text-2);
+      font-size: 12px;
+      font-weight: 600;
+      transition: background var(--ease), color var(--ease);
+    }
+    .menu button:hover { background: var(--ink-3); color: var(--text); }
+    .menu .sep { height: 1px; background: var(--line); margin: 4px 6px; }
+    .menu label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 34px;
+      padding: 0 12px;
+      color: var(--text-2);
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .menu select {
+      height: 28px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: var(--ink-2);
+      color: var(--text);
+      padding: 0 8px;
+      max-width: 120px;
+    }
+
+    .toast-wrap {
       position: fixed;
-      bottom: 10px;
-      right: 10px;
-      z-index: 1200;
+      left: 50%;
+      bottom: 44px;
+      transform: translateX(-50%);
+      z-index: 120;
       display: flex;
       flex-direction: column;
-      gap: 5px;
+      gap: 8px;
       pointer-events: none;
     }
-
-    .toast-pill {
-      background: var(--bg-elevated);
-      border: 1px solid var(--border-strong);
-      color: var(--text-primary);
-      padding: 5px 10px;
-      border-radius: var(--radius-sm);
-      font-size: 0.70rem;
-      font-weight: 500;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      pointer-events: auto;
+    .toast {
+      background: rgba(24, 24, 31, 0.92);
+      border: 1px solid var(--line-strong);
+      color: var(--text);
+      padding: 9px 16px;
+      border-radius: 999px;
+      font-size: 12.5px;
+      font-weight: 650;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.45);
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 160ms ease, transform 160ms ease;
+      backdrop-filter: blur(15px);
     }
+    .toast.show { opacity: 1; transform: translateY(0); }
+    .toast.ok { border-color: var(--sage-line); color: #80ffcc; }
+    .toast.err { border-color: var(--coral-line); color: #ff99aa; }
 
-    .toast-pill.success {
-      border-color: var(--emerald-border);
-      color: #34d399;
-    }
-
-    .toast-pill.error {
-      border-color: var(--rose-border);
-      color: #fb7185;
-    }
-
-    /* -------------------------------------------------------------
-       MINI FOOTER (Height: 22px)
-       ------------------------------------------------------------- */
-    footer {
-      height: 22px;
-      padding: 0 10px;
-      background: var(--bg-surface);
-      border-top: 1px solid var(--border-subtle);
+    .hist-list { max-height: 280px; overflow: auto; margin-top: 8px; border: 1px solid var(--line); border-radius: 12px; }
+    .hist-row {
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      font-size: 0.62rem;
-      color: var(--text-muted);
-      flex-shrink: 0;
+      gap: 10px;
+      padding: 9px 12px;
+      border-bottom: 1px solid var(--line);
+      font-size: 12px;
     }
+    .hist-row:last-child { border-bottom: 0; }
+    .hist-row .u { font-weight: 650; }
+    .hist-row .t { color: var(--text-3); font-variant-numeric: tabular-nums; }
 
-    /* Responsive Breakpoints */
-    @media (max-width: 720px) {
-      .table-head, .user-row {
-        grid-template-columns: 28px 1fr 80px 105px;
-      }
-      .search-wrap {
-        width: 120px;
-      }
+    @media (max-width: 820px) {
+      .shell { grid-template-columns: 1fr; }
+      .side { display: none; }
+      .list-head, .row { grid-template-columns: 32px minmax(0,1fr) 120px; }
+      .list-head > :nth-child(3), .row > .chips { display: none; }
+      .topbar { grid-template-columns: 1fr auto; }
+      .steps { display: none; }
     }
   </style>
 </head>
 <body>
-
-  <!-- 1. COMPACT HEADER -->
-  <header>
-    <div class="brand-wrap">
-      <div class="brand-icon">
-        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+  <header class="topbar">
+    <div class="brand">
+      <div class="mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24">
+          <rect x="2" y="2" width="20" height="20" rx="5.5" stroke="currentColor" stroke-width="2" fill="none" />
+          <circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="2" fill="none" />
+          <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" />
+        </svg>
       </div>
-      <div class="brand-title">
-        <span>Unfollow<span class="accent-x">X</span></span>
-        <span class="brand-badge">PRO v0.0.1</span>
-      </div>
+      <h1>Unfollow<span class="accent">X</span><span class="ver" id="verBadge">v0.0.6</span></h1>
     </div>
 
-    <div class="header-center">
-      <div class="status-pill" id="appStatus">
-        <div class="status-dot"></div>
-        <span id="statusText">กำลังเชื่อมต่อ Chrome...</span>
-      </div>
-    </div>
+    <nav class="steps" aria-label="Workflow">
+      <div class="step" id="step1"><span class="n">1</span><span data-i18n="stepLogin">เข้าสู่ระบบ</span></div>
+      <div class="step" id="step2"><span class="n">2</span><span data-i18n="stepScan">สแกน</span></div>
+      <div class="step" id="step3"><span class="n">3</span><span data-i18n="stepClean">เคลียร์</span></div>
+    </nav>
 
-    <div class="header-actions">
-      <!-- 📌 Always-On-Top Toggle -->
-      <button class="btn btn-ghost" id="btnPinWindow" onclick="togglePinWindow()" title="ปักหมุดให้หน้าต่างลอยอยู่บนสุดตลอดเวลา">
-        <span id="pinIcon">📌</span>
+    <div class="tools">
+      <button class="icon-btn" id="btnPin" onclick="togglePinWindow()" title="Pin">
+        <svg viewBox="0 0 24 24"><path d="M12 17v5M9 3l6 2-2 7 4 2-8 4-1-5-5-1z"/></svg>
       </button>
-
-      <!-- 🔊 Sound Toggle -->
-      <button class="btn btn-ghost" id="btnSoundToggle" onclick="toggleSound()" title="เปิด/ปิดเสียงแจ้งเตือน">
-        <span id="soundIcon">🔊</span>
+      <button class="icon-btn" id="btnSound" onclick="toggleSound()" title="Sound">
+        <svg viewBox="0 0 24 24"><path d="M11 5L6 9H3v6h3l5 4V5zM16 9a4 4 0 010 6M18.5 7a7 7 0 010 10"/></svg>
       </button>
-
-      <!-- 📜 Audit History Log -->
-      <button class="btn btn-ghost" id="btnHistory" onclick="openHistoryModal()" title="ดูประวัติการเลิกติดตามย้อนหลัง">
-        <span>📜 <span data-i18n="btnHistory">ประวัติ</span></span>
-      </button>
-
-      <!-- 🌐 Language Switcher (TH / EN) -->
-      <button class="btn btn-ghost" id="btnLangToggle" onclick="toggleLanguage()" title="เปลี่ยนภาษา / Switch Language (TH / EN)">
-        <span id="langText">🇹🇭 TH</span>
-      </button>
-
-      <button class="btn btn-ghost" onclick="openChromeBrowser()" title="เปิดเบราว์เซอร์ Chrome">
-        <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-        <span>Chrome</span>
-      </button>
-
-      <button class="btn btn-ghost" id="btnScan" onclick="triggerScan()" title="เริ่มสแกนบัญชีใหม่">
-        <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
-        <span data-i18n="btnScan">สแกน</span>
-      </button>
-
-      <button class="btn btn-ghost" onclick="exportData('csv')" title="ส่งออก CSV">
-        <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-        <span>CSV</span>
-      </button>
-
-      <button class="btn btn-ghost" onclick="openLogFolder()" title="เปิดโฟลเดอร์ Audit Logs เพื่อตรวจสอบประวัติ">
-        <span>📋 Logs</span>
+      <button class="icon-btn" id="btnMore" onclick="toggleMenu()" title="More">
+        <svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="19" cy="12" r="1.5" fill="currentColor" stroke="none"/></svg>
       </button>
     </div>
   </header>
 
-  <!-- 2. MINI METRICS RIBBON -->
-  <div class="metrics-ribbon">
-    <div class="metric-chip" onclick="setFilter('all')">
-      <span class="metric-label" data-i18n="metricFollowing">กำลังติดตาม:</span>
-      <span class="metric-value" id="statFollowing">0</span>
-    </div>
-
-    <div class="metric-chip" onclick="setFilter('all')">
-      <span class="metric-label" data-i18n="metricFollowers">ผู้ติดตาม:</span>
-      <span class="metric-value" id="statFollowers">0</span>
-    </div>
-
-    <div class="metric-chip" onclick="setFilter('all')">
-      <span class="metric-label" data-i18n="metricMutual">ติดตามกัน:</span>
-      <span class="metric-value" id="statMutual">0</span>
-    </div>
-
-    <div class="metric-chip alert-chip active" id="cardNonFollowers" onclick="setFilter('non_followers')">
-      <span class="metric-label" data-i18n="metricNonFollowers">ไม่ฟอลกลับ:</span>
-      <span class="metric-value" id="statNonFollowers">0</span>
-    </div>
-
-    <div class="metric-chip shield-chip" onclick="setFilter('protected')">
-      <span class="metric-label" data-i18n="metricProtected">🛡️ คุ้มครอง:</span>
-      <span class="metric-value" id="statProtected">0</span>
-    </div>
-
-    <div class="metric-chip" id="cardDailyQuota" title="โควตาความปลอดภัยสูงสุดไม่เกิน 50 คนในรอบ 24 ชั่วโมง เพื่อป้องกันบัญชีโดนแบนเด็ดขาด">
-      <span class="metric-label">🛡️ โควตา 24h:</span>
-      <span class="metric-value" id="statDailyQuota" style="color:#38bdf8;">0 / 50</span>
-    </div>
-  </div>
-
-  <!-- 3. MINI ACTION & FILTER BAR -->
-  <div class="action-bar">
-    <!-- Search Box -->
-    <div class="search-wrap">
-      <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-      <input type="text" id="searchInput" class="search-input" data-i18n-placeholder="searchPlaceholder" placeholder="ค้นหา username...">
-      <button id="searchClearBtn" class="search-clear" onclick="clearSearch()">✕</button>
-    </div>
-
-    <!-- Filter Pills -->
-    <div class="filter-tabs">
-      <button class="filter-tab active" data-filter="non_followers" data-i18n="tabNonFollowers" onclick="setFilter('non_followers')">ไม่ฟอลกลับ</button>
-      <button class="filter-tab" data-filter="verified" data-i18n="tabVerified" onclick="setFilter('verified')">ติ๊กถูก</button>
-      <button class="filter-tab" data-filter="private" data-i18n="tabPrivate" onclick="setFilter('private')">ส่วนตัว</button>
-      <button class="filter-tab" data-filter="protected" data-i18n="tabProtected" onclick="setFilter('protected')">คุ้มครอง</button>
-    </div>
-
-    <!-- Speed Mode Dropdown -->
-    <div class="speed-wrap">
-      <span data-i18n="speedLabel">เร็ว:</span>
-      <select id="speedMode" class="speed-select">
-        <option value="ultimate_safe" selected>🛡️ Ultimate Safe (35-65s พรางมนุษย์ 100%)</option>
-        <option value="stealth_balanced">⚖️ Stealth Balanced (25-45s ระมัดระวัง)</option>
+  <div class="menu" id="moreMenu">
+    <button onclick="toggleLanguage()"><span data-i18n="menuLang">ภาษา</span><span id="langText">TH</span></button>
+    <button onclick="openHistoryModal(); closeMenu()"><span data-i18n="btnHistory">ประวัติ</span></button>
+    <button onclick="exportData('csv'); closeMenu()"><span data-i18n="menuExport">ส่งออก CSV</span></button>
+    <button onclick="openLogFolder(); closeMenu()"><span data-i18n="menuLogs">เปิดโฟลเดอร์ Log</span></button>
+    <div class="sep"></div>
+    <label>
+      <span data-i18n="speedLabel">ความเร็ว</span>
+      <select id="speedMode">
+        <option value="turbo_fast" selected>⚡ Turbo 3–7s</option>
+        <option value="fast">🚀 Fast 8–16s</option>
+        <option value="stealth_balanced">⚖️ Balanced 18–32s</option>
+        <option value="ultimate_safe">🛡️ Safe 30–50s</option>
       </select>
-    </div>
-
-    <!-- Main Execution Actions -->
-    <div class="main-ctas">
-      <button class="btn btn-emerald" id="btnAutoClean" onclick="startOneClickAutoClean()">
-        <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-        <span data-i18n="btnAutoClean">1-Click เคลียร์</span>
-      </button>
-
-      <button class="btn btn-rose" id="btnUnfollowSelected" onclick="unfollowSelected()" disabled>
-        <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-        <span><span data-i18n="btnUnfollowSelected">ลบ</span> (<span id="selectedCount">0</span>)</span>
-      </button>
-
-      <button class="btn btn-amber" id="btnStop" onclick="stopUnfollow()" style="display: none;">
-        <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 10a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z"></path></svg>
-        <span data-i18n="btnStop">หยุด</span>
-      </button>
-    </div>
+    </label>
   </div>
 
-  <!-- 4. SLIM LIVE PROGRESS DOCK -->
-  <div class="progress-dock" id="progressSection">
-    <div class="progress-info">
-      <div class="progress-title" id="progressText">กำลังประมวลผล...</div>
-      <div class="progress-numbers" id="progressStats">0 / 0</div>
-    </div>
-    <div class="progress-track">
-      <div class="progress-fill" id="progressBarFill"></div>
-    </div>
-  </div>
-
-  <!-- 5. COMPACT USER TABLE -->
-  <div class="table-dock">
-    <div class="table-head">
-      <div><input type="checkbox" class="checkbox" id="selectAll" onchange="toggleSelectAll(this)" title="เลือกทั้งหมด"></div>
-      <div data-i18n="colUser">ผู้ใช้ (Username & Full Name)</div>
-      <div data-i18n="colStatus">สถานะบัญชี</div>
-      <div style="text-align: right;" data-i18n="colManage">จัดการ</div>
-    </div>
-
-    <div class="user-viewport" id="userList">
-      <div class="empty-state">
-        <div class="spinner"></div>
-        <div style="font-weight: 600; color: #fff;">กำลังเชื่อมต่อระบบอัตโนมัติ...</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 6. MINI CONFIRMATION MODAL DIALOG -->
-  <div class="modal-overlay" id="customModal">
-    <div class="modal-box" id="modalCard">
-      <div class="modal-head">
-        <div class="modal-icon-badge" id="modalIconWrap">
-          <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+  <div class="shell">
+    <aside class="side">
+      <div class="status-card">
+        <div class="status-row">
+          <div class="live-dot" id="liveDot"></div>
+          <div class="status-label" id="statusLabel" data-i18n="statusConnecting">กำลังเชื่อมต่อ...</div>
         </div>
-        <div>
-          <div class="modal-title" id="modalTitle">ยืนยันการทำรายการ</div>
-          <div class="modal-subtitle" id="modalSub">โปรดตรวจสอบรายละเอียดก่อนยืนยัน</div>
+        <div class="status-msg" id="statusMsg">—</div>
+      </div>
+
+      <div class="hero-count">
+        <div class="kicker" data-i18n="metricNonFollowers">ไม่ฟอลกลับ</div>
+        <div class="num" id="statNonFollowers">0</div>
+        <div class="sub" id="heroSub" data-i18n="heroSubIdle">รอสแกนบัญชี</div>
+      </div>
+
+      <div class="quota">
+        <div class="quota-head">
+          <span data-i18n="quotaLabel">โควตา 24 ชม.</span>
+          <b id="statDailyQuota">0 / 50</b>
         </div>
+        <div class="quota-track"><div class="quota-fill" id="quotaFill"></div></div>
+        <div class="quota-note" data-i18n="quotaNote">จำกัด 50 คน/วัน · แบทช์ละไม่เกินที่ตั้งไว้</div>
       </div>
 
-      <div class="modal-content" id="modalBody">
-        เนื้อหารายละเอียด...
+      <div class="stats">
+        <div class="stat"><div class="l" data-i18n="metricFollowing">กำลังติดตาม</div><div class="v" id="statFollowing">0</div></div>
+        <div class="stat"><div class="l" data-i18n="metricFollowers">ผู้ติดตาม</div><div class="v" id="statFollowers">0</div></div>
+        <div class="stat"><div class="l" data-i18n="metricMutual">ติดตามกัน</div><div class="v" id="statMutual">0</div></div>
+        <div class="stat"><div class="l" data-i18n="metricProtected">คุ้มครอง</div><div class="v" id="statProtected">0</div></div>
       </div>
 
-      <div class="modal-foot" id="modalActions">
-        <button class="btn btn-ghost" id="modalCancelBtn" data-i18n="modalCancel" onclick="closeModal(false)">ยกเลิก</button>
-        <button class="btn btn-rose" id="modalConfirmBtn" data-i18n="modalConfirm" onclick="closeModal(true)">ยืนยัน</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- 7. MINI AUDIT HISTORY MODAL DIALOG -->
-  <div class="modal-overlay" id="historyModal">
-    <div class="modal-box" style="max-width: 440px; max-height: 85vh; display: flex; flex-direction: column;">
-      <div class="modal-head" style="justify-content: space-between;">
-        <div style="display: flex; align-items: center; gap: 8px;">
-          <div class="modal-icon-badge success" style="width: 24px; height: 24px;">
-            📜
-          </div>
-          <div>
-            <div class="modal-title" style="font-size: 0.82rem;" data-i18n="historyTitle">ประวัติการเลิกติดตาม (Audit Log)</div>
-            <div class="modal-subtitle" style="font-size: 0.66rem;"><span data-i18n="historySub">รายการที่ระบบทำงานสำเร็จ</span> (<span id="historyCount">0</span> <span data-i18n="historyItemsUnit">รายการ</span>)</div>
-          </div>
-        </div>
-        <button class="btn btn-ghost" onclick="closeHistoryModal()" style="height: 20px; padding: 0 5px;">✕</button>
-      </div>
-
-      <div style="display: flex; gap: 6px; align-items: center;">
-        <input type="text" id="historySearchInput" class="search-input" style="height: 24px; font-size: 0.70rem;" data-i18n-placeholder="historySearchPlaceholder" placeholder="ค้นหาประวัติ @username...">
-      </div>
-
-      <div class="user-viewport" id="historyListContainer" style="max-height: 300px; min-height: 160px; border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); background: rgba(0,0,0,0.3);">
-        <!-- History items render here -->
-      </div>
-
-      <div class="modal-foot" style="justify-content: space-between; align-items: center;">
-        <button class="btn btn-ghost" onclick="clearHistoryLog()" style="color: #fb7185; font-size: 0.68rem;" data-i18n="historyClear" title="ล้างประวัติทั้งหมด">
-          ล้างประวัติ
+      <div class="side-actions">
+        <button class="btn btn-soft btn-block" id="btnOpenChrome" onclick="openChromeBrowser()">
+          <svg viewBox="0 0 24 24"><path d="M14 4h6v6M10 14L20 4M20 14v5a1 1 0 01-1 1H5a1 1 0 01-1-1V5a1 1 0 011-1h5"/></svg>
+          <span data-i18n="btnChrome">เปิด Instagram</span>
         </button>
-        <div style="display: flex; gap: 6px;">
-          <button class="btn btn-ghost" onclick="exportHistoryCSV()" style="font-size: 0.68rem;" data-i18n="historyExport">
-            ส่งออก CSV
-          </button>
-          <button class="btn btn-emerald" onclick="closeHistoryModal()" style="font-size: 0.68rem;" data-i18n="modalClose">
-            ปิด
+        <button class="btn btn-soft btn-block" id="btnScan" onclick="triggerScan()">
+          <svg viewBox="0 0 24 24"><path d="M4 4v6h6M20 20v-6h-6M20 9A8 8 0 006.3 6.3M4 15a8 8 0 0013.7 2.7"/></svg>
+          <span data-i18n="btnScan">สแกนใหม่</span>
+        </button>
+        <button class="btn btn-soft btn-block" id="btnManualAddSide" onclick="openManualAddModal()" style="margin-top:6px">
+          <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+          <span>เพิ่มชื่อเอง (Manual)</span>
+        </button>
+      </div>
+    </aside>
+
+    <section class="main">
+      <!-- Gate: login -->
+      <div class="gate show" id="gateLogin">
+        <div class="gate-card">
+          <div class="gate-icon">
+            <svg viewBox="0 0 24 24">
+              <rect x="2" y="2" width="20" height="20" rx="5.5" stroke="currentColor" stroke-width="2" fill="none" />
+              <circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="2" fill="none" />
+              <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" />
+            </svg>
+          </div>
+          <h2 data-i18n="gateLoginTitle">เข้าสู่ระบบ Instagram</h2>
+          <div class="gate-desc">
+            <p data-i18n="gateLoginBody">เปิด Chrome ที่ระบบเตรียมไว้ แล้วล็อกอินด้วยบัญชีของคุณ ไม่มีการเก็บรหัสผ่าน</p>
+            <div class="gate-tips">
+              <div>🔒 ปลอดภัยสูงสุด: ทำงานผ่านเบราว์เซอร์จริง ไม่เก็บรหัสผ่านลงระบบใดๆ</div>
+              <div>⚡ หลังจากล็อกอินสำเร็จ ระบบจะเชื่อมต่อและเริ่มทำงานอัตโนมัติทันที</div>
+            </div>
+          </div>
+          <button class="btn btn-primary btn-block" onclick="openChromeBrowser()">
+            <span data-i18n="btnChrome">เปิด Instagram</span>
           </button>
         </div>
       </div>
-    </div>
+
+      <!-- Gate: scanning -->
+      <div class="gate" id="gateScan">
+        <div class="gate-card">
+          <div class="spinner" id="gateScanSpinner"></div>
+          <h2 data-i18n="gateScanTitle">กำลังสแกนรายชื่อ</h2>
+          <div id="gateScanMsg" class="gate-msg">กำลังตรวจสอบข้อมูลบัญชี...</div>
+          <div id="gateScanErrorBox" class="scan-error-card" style="display:none">
+            <div class="scan-error-header">
+              <span class="scan-error-icon">⚠️</span>
+              <span class="scan-error-title" id="gateScanErrorTitle">เกิดข้อจำกัดในการสแกน</span>
+            </div>
+            <div class="scan-error-content" id="gateScanErrorText"></div>
+            <button class="btn btn-primary btn-block" onclick="enterWorkspaceManual()" style="margin-top:12px;background:#2563eb;color:#fff">
+              <span>📝 ข้ามไปจัดการรายชื่อเอง (Manual Mode)</span>
+            </button>
+          </div>
+          <button class="btn btn-soft btn-block" id="btnScanRetry" onclick="triggerScan()" style="display:none;margin-top:12px">
+            <span data-i18n="btnScan">สแกนใหม่</span>
+          </button>
+          <button class="btn btn-soft btn-block" id="btnScanManualAlt" onclick="enterWorkspaceManual()" style="display:none;margin-top:8px">
+            <span>➕ ข้ามไปจัดการรายชื่อเอง</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Workspace -->
+      <div class="workspace" id="workspace">
+        <div class="toolbar">
+          <div class="search">
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3-3"/></svg>
+            <input id="searchInput" type="text" data-i18n-placeholder="searchPlaceholder" placeholder="ค้นหา username...">
+            <button class="clear" id="searchClearBtn" onclick="clearSearch()">✕</button>
+          </div>
+
+          <div class="tabs">
+            <button class="tab active" data-filter="non_followers" onclick="setFilter('non_followers')" data-i18n="tabNonFollowers">ไม่ฟอลกลับ</button>
+            <button class="tab" data-filter="lost" onclick="setFilter('lost')" data-i18n="tabLostFollowers">เพิ่งอันฟอลเรา</button>
+            <button class="tab" data-filter="protected" onclick="setFilter('protected')" data-i18n="tabProtected">คุ้มครอง</button>
+            <button class="tab" data-filter="verified" onclick="setFilter('verified')" data-i18n="tabVerified">Verified</button>
+            <button class="tab" data-filter="private" onclick="setFilter('private')" data-i18n="tabPrivate">Private</button>
+          </div>
+
+          <div class="batch">
+            <span data-i18n="batchLabel">แบทช์</span>
+            <select id="batchSize">
+              <option value="5">5</option>
+              <option value="10" selected>10</option>
+              <option value="15">15</option>
+            </select>
+          </div>
+
+          <div class="cta-row">
+            <button class="btn btn-soft btn-sm" onclick="openManualAddModal()" title="เพิ่มและตรวจสอบรายชื่อด้วยตนเอง">
+              <span>➕ เพิ่มชื่อเอง</span>
+            </button>
+            <button class="btn btn-soft btn-sm" id="btnAutoClean" onclick="startOneClickAutoClean()">
+              <span data-i18n="btnAutoClean">เคลียร์อัตโนมัติ</span>
+            </button>
+            <button class="btn btn-danger btn-sm" id="btnUnfollowSelected" onclick="unfollowSelected()" disabled>
+              <span data-i18n="btnUnfollowSelected">เลิกติดตาม</span>
+              (<span id="selectedCount">0</span>)
+            </button>
+            <button class="btn btn-warn btn-sm" id="btnStop" onclick="stopUnfollow()" style="display:none">
+              <span data-i18n="btnStop">หยุด</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="progress" id="progressSection">
+          <div class="progress-meta">
+            <div class="progress-title" id="progressText">—</div>
+            <div class="progress-sub" id="progressStats">0 / 0</div>
+          </div>
+          <div class="progress-track"><div class="progress-fill" id="progressBarFill"></div></div>
+        </div>
+
+        <div class="list-head">
+          <div><input type="checkbox" class="check" id="selectAll" onchange="toggleSelectAll(this)"></div>
+          <div data-i18n="colUser">ผู้ใช้</div>
+          <div data-i18n="colStatus">สถานะ</div>
+          <div style="text-align:right" data-i18n="colManage">จัดการ</div>
+        </div>
+        <div class="list-body" id="userList">
+          <div class="empty"><strong data-i18n="emptyClean">ยังไม่มีรายชื่อ</strong></div>
+        </div>
+      </div>
+    </section>
   </div>
 
-  <!-- 8. TOAST NOTIFICATIONS -->
-  <div class="toast-deck" id="toastContainer"></div>
-
-  <!-- 9. MICRO FOOTER -->
-  <footer>
-    <div>⚡ <strong>UnfollowX</strong> Pro Engine by ZXD44</div>
-    <div>In-Session High-Speed Worker</div>
+  <footer class="foot">
+    <span id="footLeft">UnfollowX · By ZXD44</span>
+    <span data-i18n="footSafe">เซสชันเบราว์เซอร์จริง · ไม่เก็บรหัสผ่าน · จำกัดความเร็วอัตโนมัติ</span>
   </footer>
 
-  <!-- SCRIPT LOGIC (OPTIMIZED WITH ALWAYS-ON-TOP, AUDIO CHIMES & AUDIT HISTORY) -->
+  <div class="overlay" id="customModal">
+    <div class="modal">
+      <div class="modal-h">
+        <div class="ico" id="modalIconWrap">!</div>
+        <div>
+          <h3 id="modalTitle">ยืนยัน</h3>
+          <p id="modalSub"></p>
+        </div>
+      </div>
+      <div class="modal-b" id="modalBody"></div>
+      <div class="modal-f">
+        <button class="btn btn-soft btn-sm" id="modalCancelBtn" onclick="closeModal(false)" data-i18n="modalCancel">ยกเลิก</button>
+        <button class="btn btn-primary btn-sm" id="modalConfirmBtn" onclick="closeModal(true)" data-i18n="modalConfirm">ยืนยัน</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="overlay" id="historyModal">
+    <div class="modal" style="width:min(460px,100%)">
+      <div class="modal-h">
+        <div class="ico ok">✓</div>
+        <div>
+          <h3 data-i18n="historyTitle">ประวัติการเลิกติดตาม</h3>
+          <p><span id="historyCount">0</span> <span data-i18n="historyItemsUnit">รายการ</span></p>
+        </div>
+      </div>
+      <div class="modal-b">
+        <input id="historySearchInput" type="text" data-i18n-placeholder="historySearchPlaceholder" placeholder="ค้นหา..."
+          style="width:100%;height:34px;border-radius:9px;border:1px solid var(--line);background:var(--ink-2);padding:0 10px;outline:none">
+        <div class="hist-list" id="historyListContainer"></div>
+      </div>
+      <div class="modal-f">
+        <button class="btn btn-soft btn-sm" onclick="clearHistoryLog()" data-i18n="historyClear">ล้างประวัติ</button>
+        <button class="btn btn-soft btn-sm" onclick="exportHistoryCSV()" data-i18n="historyExport">ส่งออก CSV</button>
+        <button class="btn btn-primary btn-sm" onclick="closeHistoryModal()" data-i18n="modalClose">ปิด</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Manual Add / Target Management Modal -->
+  <div class="overlay" id="manualAddModal">
+    <div class="modal" style="width:min(480px,100%)">
+      <div class="modal-h">
+        <div class="ico" style="background:rgba(59,130,246,0.15);color:#60a5fa">➕</div>
+        <div>
+          <h3>จัดการรายชื่อด้วยตนเอง (Manual Target)</h3>
+          <p>ระบุ Username ที่ต้องการเปิดโปรไฟล์หรือเพิ่มลงตาราง</p>
+        </div>
+      </div>
+      <div class="modal-b">
+        <div style="font-size:12px;color:var(--text-3);margin-bottom:8px">
+          พิมพ์หรือวาง Instagram Username (ใส่ @ หรือไม่ก็ได้ คั่นด้วยลูกน้ำหรือขึ้นบรรทัดใหม่):
+        </div>
+        <textarea id="manualUsernamesInput" rows="4" placeholder="เช่น qailqary&#10;user2&#10;user3"
+          style="width:100%;border-radius:10px;border:1px solid var(--line);background:var(--ink-2);padding:10px;color:var(--text-1);outline:none;font-family:inherit;font-size:13px;resize:vertical"></textarea>
+        <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn btn-soft btn-sm" onclick="openManualProfileDirect()" style="flex:1" title="เปิดหน้า Instagram ในเบราว์เซอร์เพื่อกดยกเลิกการติดตามด้วยตนเอง">
+            <span>🌐 เปิดดูโปรไฟล์ใน Chrome ทันที</span>
+          </button>
+        </div>
+      </div>
+      <div class="modal-f">
+        <button class="btn btn-soft btn-sm" onclick="closeManualAddModal()">ยกเลิก</button>
+        <button class="btn btn-primary btn-sm" onclick="submitManualAdd()" style="background:#2563eb;color:#fff">
+          <span>🔍 ตรวจสอบ & นำเข้าตาราง</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-wrap" id="toastWrap"></div>
+
   <script>
-    // -------------------------------------------------------------
-    // BILINGUAL I18N ENGINE (Default: Thai / ภาษาไทยเป็นหลัก)
-    // -------------------------------------------------------------
     const I18N = {
       th: {
-        appTitle: "UnfollowX PRO",
-        btnHistory: "ประวัติ",
-        btnScan: "สแกน",
-        btnPin: "ปักหมุดหน้าต่างบนสุด",
-        btnSound: "เปิด/ปิดเสียงแจ้งเตือน",
-        langToggle: "🇹🇭 TH",
-        langTitle: "สลับเป็น English",
-        metricFollowing: "กำลังติดตาม:",
-        metricFollowers: "ผู้ติดตาม:",
-        metricMutual: "ติดตามกัน:",
-        metricNonFollowers: "ไม่ฟอลกลับ:",
-        metricProtected: "🛡️ คุ้มครอง:",
+        stepLogin: "เข้าสู่ระบบ", stepScan: "สแกน", stepClean: "เคลียร์",
+        statusConnecting: "กำลังเชื่อมต่อ...", statusWaitingLogin: "รอเข้าสู่ระบบ",
+        statusReady: "พร้อมใช้งาน", statusScanning: "กำลังสแกน", statusUnfollowing: "กำลังเลิกติดตาม",
+        metricNonFollowers: "ไม่ฟอลกลับ", metricFollowing: "กำลังติดตาม", metricFollowers: "ผู้ติดตาม",
+        metricMutual: "ติดตามกัน", metricProtected: "คุ้มครอง",
+        heroSubIdle: "รอสแกนบัญชี", heroSubReady: "บัญชีที่ไม่ติดตามกลับ",
+        quotaLabel: "โควตา 24 ชม.", quotaNote: "จำกัด 50 คน/วัน · แบทช์ละไม่เกินที่ตั้งไว้",
+        btnChrome: "เปิด Instagram", btnScan: "สแกนใหม่", btnHistory: "ประวัติ",
+        menuLang: "ภาษา", menuExport: "ส่งออก CSV", menuLogs: "เปิดโฟลเดอร์ Log",
+        speedLabel: "ความเร็ว", batchLabel: "แบทช์",
+        gateLoginTitle: "เข้าสู่ระบบ Instagram",
+        gateLoginBody: "เปิด Chrome ที่ระบบเตรียมไว้ แล้วล็อกอินด้วยบัญชีของคุณ ไม่มีการเก็บรหัสผ่าน",
+        gateScanTitle: "กำลังสแกนรายชื่อ",
         searchPlaceholder: "ค้นหา username...",
-        tabNonFollowers: "ไม่ฟอลกลับ",
-        tabVerified: "ติ๊กถูก",
-        tabPrivate: "ส่วนตัว",
-        tabProtected: "คุ้มครอง",
-        speedLabel: "เร็ว:",
-        btnAutoClean: "1-Click เคลียร์",
-        btnUnfollowSelected: "ลบ",
-        btnStop: "หยุด",
-        colUser: "ผู้ใช้ (Username & Full Name)",
-        colStatus: "สถานะบัญชี",
-        colManage: "จัดการ",
-        emptyConnecting: "กำลังเชื่อมต่อระบบอัตโนมัติ...",
-        emptyClean: "ไม่มีรายชื่อผู้ใช้ที่ตรงเงื่อนไข",
-        emptyCleanSub: "บัญชีสะอาดเรียบร้อย หรือไม่พบคำค้นหา",
-        showMoreBtn: "แสดงเพิ่มอีก {next} คน (เหลืออีก {remaining} คน)",
-        btnProtect: "คุ้มครอง",
-        btnUnprotect: "ยกเลิกคุ้มครอง",
-        btnUnfollowRow: "เลิกติดตาม",
-        statusConnecting: "กำลังเชื่อมต่อ Chrome...",
-        statusWaitingLogin: "รอเข้าสู่ระบบใน Chrome...",
-        statusReady: "พร้อมใช้งาน (เข้าสู่ระบบแล้ว)",
-        statusScanning: "กำลังสแกน...",
-        statusUnfollowing: "กำลังเลิกติดตาม...",
-        modalCancel: "ยกเลิก",
-        modalConfirm: "ยืนยัน",
-        modalClose: "ปิด",
-        historyTitle: "ประวัติการเลิกติดตาม (Audit Log)",
-        historySub: "รายการที่ระบบทำงานสำเร็จ",
-        historyItemsUnit: "รายการ",
-        historySearchPlaceholder: "ค้นหาประวัติ @username...",
-        historyClear: "ล้างประวัติ",
-        historyExport: "ส่งออก CSV",
-        historyEmpty: "ยังไม่มีประวัติการเลิกติดตาม",
+        tabNonFollowers: "ไม่ฟอลกลับ", tabLostFollowers: "เพิ่งอันฟอลเรา", tabProtected: "คุ้มครอง", tabVerified: "Verified", tabPrivate: "Private",
+        btnAutoClean: "เคลียร์อัตโนมัติ", btnUnfollowSelected: "เลิกติดตาม", btnStop: "หยุด",
+        colUser: "ผู้ใช้", colStatus: "สถานะ", colManage: "จัดการ",
+        emptyClean: "ไม่มีรายชื่อตามตัวกรอง", emptyCleanSub: "ลองเปลี่ยนแท็บหรือคำค้นหา",
+        emptyConnecting: "กำลังเชื่อมต่อ...",
+        btnProtect: "คุ้มครอง", btnUnprotect: "ยกเลิก", btnUnfollowRow: "เลิกติดตาม",
+        modalCancel: "ยกเลิก", modalConfirm: "ยืนยัน", modalClose: "ปิด", modalOk: "ตกลง",
+        historyTitle: "ประวัติการเลิกติดตาม", historyItemsUnit: "รายการ",
+        historySearchPlaceholder: "ค้นหา @username...", historyClear: "ล้างประวัติ", historyExport: "ส่งออก CSV",
+        historyEmpty: "ยังไม่มีประวัติ",
         confirmUnfollowSingleTitle: "ยืนยันเลิกติดตาม",
-        confirmUnfollowSingleBody: "ต้องการเลิกติดตาม <strong>@{username}</strong> ({fullName})?",
-        confirmUnfollowSelectedTitle: "ยืนยันเลิกติดตาม ({count} คน)",
-        confirmUnfollowSelectedBody: "ระบบจะทำการเลิกติดตามทั้งหมด <strong>{count} คน</strong> ที่เลือกไว้",
-        confirmAutoCleanTitle: "1-Click เคลียร์อัตโนมัติ ({count} คน)",
-        confirmAutoCleanBody: "ระบบจะทำการเลิกติดตามคนที่ไม่ฟอลกลับ <strong>{count} คน</strong> ให้คุณอัตโนมัติ",
-        protectedSafetyNotice: "🛡️ บัญชีที่คุ้มครอง ({count} คน) จะปลอดภัย 100%",
-        confirmClearHistory: "คุณแน่ใจหรือไม่ว่าต้องการล้างประวัติทั้งหมด?",
-        toastLangSwitched: "เปลี่ยนภาษาเป็น: ภาษาไทย",
-        toastScanStart: "กำลังเริ่มต้นการสแกน...",
-        toastScanSuccess: "สแกนสำเร็จ: พบคนไม่ฟอลกลับ {count} คน",
-        toastScanError: "เกิดข้อผิดพลาดในการสแกน: {error}",
-        toastHistoryCleared: "ล้างประวัติเรียบร้อยแล้ว",
-        toastExportSuccess: "ส่งออกไฟล์เรียบร้อยแล้ว: {path}",
-        toastChromeOpened: "เปิดหน้าต่าง Chrome แล้ว",
-        toastProtectAdded: "เพิ่ม @{username} เข้าสู่รายการคุ้มครองแล้ว",
-        toastProtectRemoved: "ยกเลิกคุ้มครอง @{username} แล้ว",
-        toastSoundOn: "เปิดเสียงแจ้งเตือนแล้ว",
-        toastSoundOff: "ปิดเสียงแจ้งเตือนแล้ว",
-        toastPinOn: "ปักหมุดหน้าต่างบนสุด (Always-on-Top: ON)",
-        toastPinOff: "ยกเลิกปักหมุดหน้าต่าง (Always-on-Top: OFF)",
-        finishedTitle: "เสร็จสิ้นเรียบร้อย!",
-        finishedSub: "ทำรายการครบทุกบัญชีแล้ว",
-        abortedTitle: "หยุดการทำงานแล้ว",
-        abortedSub: "คุณสั่งหยุดการทำงานก่อนกำหนด",
-        statSuccess: "สำเร็จ",
-        statFailed: "ผิดพลาด / ข้าม",
-        modalOk: "ตกลง"
+        confirmUnfollowSingleBody: "เลิกติดตาม <strong>@{username}</strong> ({fullName})?",
+        confirmUnfollowSelectedTitle: "เลิกติดตาม {count} คน",
+        confirmUnfollowSelectedBody: "จะเลิกติดตาม <strong>{count} คน</strong> ที่เลือก · ใช้เวลาประมาณ <strong>{eta}</strong>",
+        confirmAutoCleanTitle: "เคลียร์อัตโนมัติ {count} คน",
+        confirmAutoCleanBody: "เลิกติดตามคนที่ไม่ฟอลกลับ <strong>{count} คน</strong> · ประมาณ <strong>{eta}</strong>",
+        protectedSafetyNotice: "บัญชีที่คุ้มครอง ({count}) จะถูกข้าม",
+        confirmClearHistory: "ล้างประวัติทั้งหมด?",
+        toastLangSwitched: "เปลี่ยนเป็นภาษาไทย",
+        toastScanStart: "เริ่มสแกน...",
+        toastScanSuccess: "สแกนสำเร็จ: ไม่ฟอลกลับ {count} คน",
+        toastScanError: "สแกนล้มเหลว: {error}",
+        toastHistoryCleared: "ล้างประวัติแล้ว",
+        toastExportSuccess: "ส่งออกแล้ว: {path}",
+        toastChromeOpened: "เปิด Chrome แล้ว",
+        toastProtectAdded: "คุ้มครอง @{username}",
+        toastProtectRemoved: "ยกเลิกคุ้มครอง @{username}",
+        toastSoundOn: "เปิดเสียง", toastSoundOff: "ปิดเสียง",
+        toastPinOn: "ปักหมุดหน้าต่าง", toastPinOff: "ยกเลิกปักหมุด",
+        finishedTitle: "เสร็จแล้ว", finishedSub: "สรุปรอบนี้",
+        abortedTitle: "หยุดแล้ว", abortedSub: "หยุดก่อนครบ",
+        statSuccess: "สำเร็จ", statFailed: "ไม่สำเร็จ",
+        footSafe: "เซสชันเบราว์เซอร์จริง · ไม่เก็บรหัสผ่าน · จำกัดความเร็วอัตโนมัติ",
+        etaMin: "{m} นาที", etaSec: "{s} วินาที",
+        chipProtected: "คุ้มครอง"
       },
       en: {
-        appTitle: "UnfollowX PRO",
-        btnHistory: "History",
-        btnScan: "Scan",
-        btnPin: "Pin Window on top",
-        btnSound: "Toggle alert sounds",
-        langToggle: "🇬🇧 EN",
-        langTitle: "Switch to ภาษาไทย",
-        metricFollowing: "Following:",
-        metricFollowers: "Followers:",
-        metricMutual: "Mutual:",
-        metricNonFollowers: "Not Following:",
-        metricProtected: "🛡️ Protected:",
+        stepLogin: "Login", stepScan: "Scan", stepClean: "Clean",
+        statusConnecting: "Connecting...", statusWaitingLogin: "Waiting for login",
+        statusReady: "Ready", statusScanning: "Scanning", statusUnfollowing: "Unfollowing",
+        metricNonFollowers: "Not following back", metricFollowing: "Following", metricFollowers: "Followers",
+        metricMutual: "Mutual", metricProtected: "Protected",
+        heroSubIdle: "Waiting for scan", heroSubReady: "Accounts not following you back",
+        quotaLabel: "24h quota", quotaNote: "Max 50 / day · batch capped by selector",
+        btnChrome: "Open Instagram", btnScan: "Rescan", btnHistory: "History",
+        menuLang: "Language", menuExport: "Export CSV", menuLogs: "Open log folder",
+        speedLabel: "Speed", batchLabel: "Batch",
+        gateLoginTitle: "Sign in to Instagram",
+        gateLoginBody: "Open the prepared Chrome window and log in. Passwords are never stored.",
+        gateScanTitle: "Scanning your lists",
         searchPlaceholder: "Search username...",
-        tabNonFollowers: "Not Following",
-        tabVerified: "Verified",
-        tabPrivate: "Private",
-        tabProtected: "Protected",
-        speedLabel: "Speed:",
-        btnAutoClean: "1-Click Clean",
-        btnUnfollowSelected: "Unfollow",
-        btnStop: "Stop",
-        colUser: "User (Username & Full Name)",
-        colStatus: "Account Status",
-        colManage: "Actions",
-        emptyConnecting: "Connecting to automation worker...",
-        emptyClean: "No users match current criteria",
-        emptyCleanSub: "All caught up or search query returned no results",
-        showMoreBtn: "Show {next} more ({remaining} remaining)",
-        btnProtect: "Protect",
-        btnUnprotect: "Unprotect",
-        btnUnfollowRow: "Unfollow",
-        statusConnecting: "Connecting to Chrome...",
-        statusWaitingLogin: "Waiting for Instagram login in Chrome...",
-        statusReady: "Ready (Logged in)",
-        statusScanning: "Scanning...",
-        statusUnfollowing: "Unfollowing...",
-        modalCancel: "Cancel",
-        modalConfirm: "Confirm",
-        modalClose: "Close",
-        historyTitle: "Unfollow History (Audit Log)",
-        historySub: "Successfully completed actions",
-        historyItemsUnit: "records",
-        historySearchPlaceholder: "Search history @username...",
-        historyClear: "Clear History",
-        historyExport: "Export CSV",
-        historyEmpty: "No unfollow history recorded yet",
-        confirmUnfollowSingleTitle: "Confirm Unfollow",
-        confirmUnfollowSingleBody: "Do you want to unfollow <strong>@{username}</strong> ({fullName})?",
-        confirmUnfollowSelectedTitle: "Confirm Unfollow ({count} users)",
-        confirmUnfollowSelectedBody: "The system will unfollow <strong>{count} selected account(s)</strong>.",
-        confirmAutoCleanTitle: "1-Click Auto Clean ({count} users)",
-        confirmAutoCleanBody: "The system will automatically unfollow <strong>{count} non-followers</strong> for you.",
-        protectedSafetyNotice: "🛡️ Protected accounts ({count}) are 100% safe",
-        confirmClearHistory: "Are you sure you want to clear all history?",
-        toastLangSwitched: "Language switched to: English",
-        toastScanStart: "Starting account scan...",
-        toastScanSuccess: "Scan complete: found {count} non-followers",
-        toastScanError: "Scan error: {error}",
-        toastHistoryCleared: "History log cleared",
-        toastExportSuccess: "Export completed: {path}",
-        toastChromeOpened: "Chrome browser window opened",
-        toastProtectAdded: "Added @{username} to protected list",
-        toastProtectRemoved: "Removed @{username} from protected list",
-        toastSoundOn: "Sound enabled",
-        toastSoundOff: "Sound muted",
-        toastPinOn: "Window pinned (Always-on-Top: ON)",
-        toastPinOff: "Window unpinned (Always-on-Top: OFF)",
-        finishedTitle: "Completed Successfully!",
-        finishedSub: "All accounts processed",
-        abortedTitle: "Stopped",
-        abortedSub: "Operation was aborted by user",
-        statSuccess: "Success",
-        statFailed: "Failed / Skipped",
-        modalOk: "OK"
+        tabNonFollowers: "Non-followers", tabLostFollowers: "Lost followers", tabProtected: "Protected", tabVerified: "Verified", tabPrivate: "Private",
+        btnAutoClean: "Auto clean", btnUnfollowSelected: "Unfollow", btnStop: "Stop",
+        colUser: "User", colStatus: "Status", colManage: "Actions",
+        emptyClean: "No matching accounts", emptyCleanSub: "Try another filter or search",
+        emptyConnecting: "Connecting...",
+        btnProtect: "Protect", btnUnprotect: "Unprotect", btnUnfollowRow: "Unfollow",
+        modalCancel: "Cancel", modalConfirm: "Confirm", modalClose: "Close", modalOk: "OK",
+        historyTitle: "Unfollow history", historyItemsUnit: "records",
+        historySearchPlaceholder: "Search @username...", historyClear: "Clear", historyExport: "Export CSV",
+        historyEmpty: "No history yet",
+        confirmUnfollowSingleTitle: "Confirm unfollow",
+        confirmUnfollowSingleBody: "Unfollow <strong>@{username}</strong> ({fullName})?",
+        confirmUnfollowSelectedTitle: "Unfollow {count}",
+        confirmUnfollowSelectedBody: "Unfollow <strong>{count}</strong> selected · about <strong>{eta}</strong>",
+        confirmAutoCleanTitle: "Auto clean {count}",
+        confirmAutoCleanBody: "Unfollow <strong>{count}</strong> non-followers · about <strong>{eta}</strong>",
+        protectedSafetyNotice: "Protected accounts ({count}) are skipped",
+        confirmClearHistory: "Clear all history?",
+        toastLangSwitched: "Switched to English",
+        toastScanStart: "Starting scan...",
+        toastScanSuccess: "Scan done: {count} non-followers",
+        toastScanError: "Scan failed: {error}",
+        toastHistoryCleared: "History cleared",
+        toastExportSuccess: "Exported: {path}",
+        toastChromeOpened: "Chrome opened",
+        toastProtectAdded: "Protected @{username}",
+        toastProtectRemoved: "Unprotected @{username}",
+        toastSoundOn: "Sound on", toastSoundOff: "Sound off",
+        toastPinOn: "Window pinned", toastPinOff: "Pin removed",
+        finishedTitle: "Done", finishedSub: "Batch summary",
+        abortedTitle: "Stopped", abortedSub: "Stopped early",
+        statSuccess: "Success", statFailed: "Failed",
+        footSafe: "Real browser session · no passwords stored · paced automatically",
+        etaMin: "{m} min", etaSec: "{s} sec",
+        chipProtected: "Protected"
       }
     };
 
     let currentLang = localStorage.getItem("unfollowx_lang") || "th";
-
-    function t(key, params = {}) {
-      const dict = I18N[currentLang] || I18N.th;
-      let str = dict[key] !== undefined ? dict[key] : (I18N.th[key] !== undefined ? I18N.th[key] : key);
-      for (const [k, v] of Object.entries(params)) {
-        str = str.replace(new RegExp(`\\{${k}\\}`, "g"), v);
-      }
-      return str;
-    }
-
-    function setLanguage(lang) {
-      currentLang = (lang === "en") ? "en" : "th";
-      localStorage.setItem("unfollowx_lang", currentLang);
-      document.documentElement.lang = currentLang;
-
-      // Update static nodes with data-i18n
-      document.querySelectorAll("[data-i18n]").forEach(el => {
-        const k = el.getAttribute("data-i18n");
-        if (k) el.innerText = t(k);
-      });
-
-      // Update placeholders
-      document.querySelectorAll("[data-i18n-placeholder]").forEach(el => {
-        const k = el.getAttribute("data-i18n-placeholder");
-        if (k) el.placeholder = t(k);
-      });
-
-      // Update language toggle button label
-      const langText = document.getElementById("langText");
-      if (langText) langText.innerText = t("langToggle");
-      const btnLang = document.getElementById("btnLangToggle");
-      if (btnLang) btnLang.title = t("langTitle");
-
-      // Refresh list to update action button labels & badges
-      renderCurrentList(false);
-      updateSelectedUI();
-    }
-
-    function toggleLanguage() {
-      const next = currentLang === "th" ? "en" : "th";
-      setLanguage(next);
-      playChime("click");
-      showToast(t("toastLangSwitched"));
-    }
-
     let allNonFollowers = [];
+    let allLostFollowers = [];
     let currentFilter = "non_followers";
     let selectedSet = new Set();
     let protectedSet = new Set(JSON.parse(localStorage.getItem("zx_protected_users") || "[]"));
@@ -1407,10 +1361,18 @@
     let isPinned = false;
     let soundEnabled = localStorage.getItem("zx_sound_enabled") !== "false";
     let lastShownError = null;
+    let lastShownScanError = null;
     let currentDailyCount = 0;
+    let uiPhase = "login";
     const domCache = {};
 
-    // Helper: update text content ONLY when changed (avoids expensive DOM reflows)
+    function t(key, params = {}) {
+      const dict = I18N[currentLang] || I18N.th;
+      let str = dict[key] !== undefined ? dict[key] : (I18N.th[key] || key);
+      for (const [k, v] of Object.entries(params)) str = str.replace(new RegExp(`\\{${k}\\}`, "g"), v);
+      return str;
+    }
+
     function setIfChanged(id, val) {
       if (domCache[id] !== val) {
         domCache[id] = val;
@@ -1419,270 +1381,420 @@
       }
     }
 
-    // -------------------------------------------------------------
-    // AUDIO SYNTHESIZER (Pure Web Audio API, Zero dependencies)
-    // -------------------------------------------------------------
-    function toggleSound() {
-      soundEnabled = !soundEnabled;
-      localStorage.setItem("zx_sound_enabled", soundEnabled);
-      document.getElementById("soundIcon").innerText = soundEnabled ? "🔊" : "🔇";
-      showToast(soundEnabled ? t("toastSoundOn") : t("toastSoundOff"));
-      if (soundEnabled) playChime("click");
+    function setLanguage(lang) {
+      currentLang = lang === "en" ? "en" : "th";
+      localStorage.setItem("unfollowx_lang", currentLang);
+      document.documentElement.lang = currentLang;
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const k = el.getAttribute("data-i18n");
+        if (k) el.innerText = t(k);
+      });
+      document.querySelectorAll("[data-i18n-placeholder]").forEach(el => {
+        const k = el.getAttribute("data-i18n-placeholder");
+        if (k) el.placeholder = t(k);
+      });
+      const langText = document.getElementById("langText");
+      if (langText) langText.innerText = currentLang.toUpperCase();
+      renderCurrentList(false);
+      updateSelectedUI();
+    }
+
+    function toggleLanguage() {
+      setLanguage(currentLang === "th" ? "en" : "th");
+      playChime("click");
+      showToast(t("toastLangSwitched"));
+      closeMenu();
+    }
+
+    function estimateEta(count) {
+      const speed = (document.getElementById("speedMode") || {}).value || "ultimate_safe";
+      const avg = speed.includes("balanced") ? 35 : 50;
+      const breaks = Math.floor(Math.max(0, count - 1) / 5) * 120;
+      const sec = Math.round(count * avg + breaks);
+      if (sec < 60) return t("etaSec", { s: sec });
+      return t("etaMin", { m: Math.max(1, Math.round(sec / 60)) });
+    }
+
+    function getBatchCap() {
+      const n = parseInt((document.getElementById("batchSize") || {}).value || "10", 10);
+      const left = Math.max(0, 50 - currentDailyCount);
+      return Math.min(Math.max(1, n || 10), 15, Math.max(1, left || 1));
+    }
+
+    function setPhase(phase) {
+      uiPhase = phase;
+      const map = { login: 1, scan: 2, clean: 3 };
+      const active = map[phase] || 1;
+      [1, 2, 3].forEach(i => {
+        const el = document.getElementById("step" + i);
+        if (!el) return;
+        el.classList.remove("active", "done");
+        if (i < active) el.classList.add("done");
+        if (i === active) el.classList.add("active");
+      });
+      document.getElementById("gateLogin").classList.toggle("show", phase === "login");
+      document.getElementById("gateScan").classList.toggle("show", phase === "scan");
+      document.getElementById("workspace").classList.toggle("show", phase === "clean");
+    }
+
+    function saveProtected() {
+      localStorage.setItem("zx_protected_users", JSON.stringify([...protectedSet]));
+      setIfChanged("statProtected", String(protectedSet.size));
     }
 
     let audioCtx = null;
+    function toggleSound() {
+      soundEnabled = !soundEnabled;
+      localStorage.setItem("zx_sound_enabled", soundEnabled);
+      document.getElementById("btnSound").classList.toggle("on", soundEnabled);
+      showToast(soundEnabled ? t("toastSoundOn") : t("toastSoundOff"));
+      if (soundEnabled) playChime("click");
+    }
     function playChime(type = "success") {
       if (!soundEnabled) return;
-      setTimeout(() => {
-        try {
-          const AudioCtx = window.AudioContext || window.webkitAudioContext;
-          if (!AudioCtx) return;
-          if (!audioCtx) audioCtx = new AudioCtx();
-          if (audioCtx.state === "suspended") audioCtx.resume().catch(() => {});
-
-          const now = audioCtx.currentTime;
-          if (type === "scan_complete") {
-            // Double acoustic ping: 587Hz (D5) -> 880Hz (A5)
-            const osc1 = audioCtx.createOscillator();
-            const osc2 = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc1.connect(gain);
-            osc2.connect(gain);
-            gain.connect(audioCtx.destination);
-
-            osc1.frequency.setValueAtTime(587.33, now);
-            osc2.frequency.setValueAtTime(880, now + 0.08);
-
-            gain.gain.setValueAtTime(0.08, now);
-            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
-
-            osc1.start(now);
-            osc1.stop(now + 0.15);
-            osc2.start(now + 0.08);
-            osc2.stop(now + 0.35);
-          } else if (type === "success") {
-            // Soft harmonic arpeggio: 523Hz -> 659Hz -> 783Hz
-            [523.25, 659.25, 783.99].forEach((freq, i) => {
-              const osc = audioCtx.createOscillator();
-              const g = audioCtx.createGain();
-              osc.connect(g);
-              g.connect(audioCtx.destination);
-              osc.frequency.setValueAtTime(freq, now + i * 0.07);
-              g.gain.setValueAtTime(0.06, now + i * 0.07);
-              g.gain.exponentialRampToValueAtTime(0.001, now + i * 0.07 + 0.25);
-              osc.start(now + i * 0.07);
-              osc.stop(now + i * 0.07 + 0.25);
-            });
-          } else if (type === "click") {
-            const osc = audioCtx.createOscillator();
-            const g = audioCtx.createGain();
-            osc.connect(g);
-            g.connect(audioCtx.destination);
-            osc.frequency.setValueAtTime(700, now);
-            g.gain.setValueAtTime(0.04, now);
-            g.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
-            osc.start(now);
-            osc.stop(now + 0.08);
-          } else if (type === "error") {
-            // Low sawtooth warning pulse: 240Hz -> 140Hz
-            const osc = audioCtx.createOscillator();
-            const g = audioCtx.createGain();
-            osc.type = "sawtooth";
-            osc.connect(g);
-            g.connect(audioCtx.destination);
-            osc.frequency.setValueAtTime(240, now);
-            osc.frequency.exponentialRampToValueAtTime(140, now + 0.35);
-            g.gain.setValueAtTime(0.08, now);
-            g.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
-            osc.start(now);
-            osc.stop(now + 0.35);
-          }
-        } catch (e) {}
-      }, 0);
+      try {
+        const Ctx = window.AudioContext || window.webkitAudioContext;
+        if (!Ctx) return;
+        if (!audioCtx) audioCtx = new Ctx();
+        if (audioCtx.state === "suspended") audioCtx.resume().catch(() => {});
+        const now = audioCtx.currentTime;
+        const beep = (freq, start, dur, gain = 0.06) => {
+          const o = audioCtx.createOscillator();
+          const g = audioCtx.createGain();
+          o.connect(g); g.connect(audioCtx.destination);
+          o.frequency.setValueAtTime(freq, now + start);
+          g.gain.setValueAtTime(gain, now + start);
+          g.gain.exponentialRampToValueAtTime(0.001, now + start + dur);
+          o.start(now + start); o.stop(now + start + dur);
+        };
+        if (type === "scan_complete") { beep(587, 0, 0.15); beep(880, 0.08, 0.25); }
+        else if (type === "success") { beep(523, 0, 0.2); beep(659, 0.07, 0.2); beep(784, 0.14, 0.22); }
+        else if (type === "click") beep(700, 0, 0.08, 0.04);
+        else if (type === "error") {
+          const o = audioCtx.createOscillator();
+          const g = audioCtx.createGain();
+          o.type = "sawtooth"; o.connect(g); g.connect(audioCtx.destination);
+          o.frequency.setValueAtTime(240, now);
+          o.frequency.exponentialRampToValueAtTime(140, now + 0.3);
+          g.gain.setValueAtTime(0.07, now);
+          g.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+          o.start(now); o.stop(now + 0.3);
+        }
+      } catch (e) {}
     }
 
-    // -------------------------------------------------------------
-    // ALWAYS-ON-TOP TOGGLE
-    // -------------------------------------------------------------
+    function showToast(msg, kind = "info") {
+      const wrap = document.getElementById("toastWrap");
+      const el = document.createElement("div");
+      el.className = "toast" + (kind === "success" || kind === "ok" ? " ok" : kind === "error" || kind === "err" ? " err" : "");
+      el.textContent = msg;
+      wrap.appendChild(el);
+      requestAnimationFrame(() => el.classList.add("show"));
+      setTimeout(() => {
+        el.classList.remove("show");
+        setTimeout(() => el.remove(), 200);
+      }, 2800);
+    }
+
+    function showModal({ title, subtitle = "", htmlContent = "", confirmText, confirmClass = "btn-primary", isAlert = false }) {
+      document.getElementById("modalTitle").innerText = title || "";
+      document.getElementById("modalSub").innerText = subtitle || "";
+      document.getElementById("modalBody").innerHTML = htmlContent || "";
+      const confirmBtn = document.getElementById("modalConfirmBtn");
+      const cancelBtn = document.getElementById("modalCancelBtn");
+      confirmBtn.className = "btn btn-sm " + (confirmClass.includes("rose") || confirmClass.includes("danger") ? "btn-danger" : confirmClass.includes("ghost") || confirmClass.includes("soft") ? "btn-soft" : "btn-primary");
+      confirmBtn.innerText = confirmText || t("modalConfirm");
+      cancelBtn.style.display = isAlert ? "none" : "inline-flex";
+      const ico = document.getElementById("modalIconWrap");
+      ico.className = "ico" + (confirmClass.includes("rose") || confirmClass.includes("danger") ? " danger" : isAlert ? " ok" : "");
+      ico.innerText = confirmClass.includes("rose") || confirmClass.includes("danger") ? "!" : isAlert ? "✓" : "?";
+      document.getElementById("customModal").classList.add("open");
+      return new Promise(resolve => { modalResolver = resolve; });
+    }
+    function closeModal(ok) {
+      document.getElementById("customModal").classList.remove("open");
+      if (modalResolver) { modalResolver(!!ok); modalResolver = null; }
+    }
+
+    function toggleMenu() {
+      document.getElementById("moreMenu").classList.toggle("open");
+    }
+    function closeMenu() { document.getElementById("moreMenu").classList.remove("open"); }
+    document.addEventListener("click", (e) => {
+      const menu = document.getElementById("moreMenu");
+      const btn = document.getElementById("btnMore");
+      if (!menu.contains(e.target) && e.target !== btn && !btn.contains(e.target)) closeMenu();
+    });
+
     async function togglePinWindow() {
       try {
         const res = await window.pywebview.api.toggle_always_on_top();
         isPinned = !!(res && res.on_top);
-        const pinBtn = document.getElementById("btnPinWindow");
-        if (isPinned) {
-          pinBtn.classList.add("pinned");
-          showToast(t("toastPinOn"), "success");
-        } else {
-          pinBtn.classList.remove("pinned");
-          showToast(t("toastPinOff"));
-        }
+        document.getElementById("btnPin").classList.toggle("on", isPinned);
+        showToast(isPinned ? t("toastPinOn") : t("toastPinOff"), "success");
         playChime("click");
-      } catch (e) {
-        showToast("Error toggling pin", "error");
-      }
+      } catch (e) { showToast("Pin error", "error"); }
     }
 
-    // -------------------------------------------------------------
-    // AUDIT HISTORY LOG DRAWER
-    // -------------------------------------------------------------
     async function openHistoryModal() {
-      try {
-        cachedHistory = (await window.pywebview.api.get_history()) || [];
-      } catch (e) {
-        cachedHistory = [];
-      }
-      setIfChanged("historyCount", cachedHistory.length);
+      try { cachedHistory = (await window.pywebview.api.get_history()) || []; }
+      catch (e) { cachedHistory = []; }
+      setIfChanged("historyCount", String(cachedHistory.length));
       renderHistoryList();
       document.getElementById("historyModal").classList.add("open");
-      playChime("click");
     }
-
-    function closeHistoryModal() {
-      document.getElementById("historyModal").classList.remove("open");
-    }
-
+    function closeHistoryModal() { document.getElementById("historyModal").classList.remove("open"); }
     function renderHistoryList() {
       const q = (document.getElementById("historySearchInput").value || "").toLowerCase().trim();
       const container = document.getElementById("historyListContainer");
-      const filtered = cachedHistory.filter(h => !q || (h.username && h.username.toLowerCase().includes(q)));
-
-      if (!filtered || filtered.length === 0) {
-        container.innerHTML = `
-          <div class="empty-state" style="padding: 24px 10px;">
-            <div style="font-size: 0.72rem; color: var(--text-muted);">ไม่มีรายการประวัติ</div>
-          </div>`;
+      const filtered = cachedHistory.filter(h => !q || (h.username || "").toLowerCase().includes(q));
+      if (!filtered.length) {
+        container.innerHTML = `<div class="empty" style="min-height:120px">${t("historyEmpty")}</div>`;
         return;
       }
-
       container.innerHTML = filtered.map(h => `
-        <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 10px; border-bottom: 1px solid rgba(255,255,255,0.03); font-size: 0.72rem;">
-          <div style="display: flex; align-items: center; gap: 6px;">
-            <a href="https://www.instagram.com/${h.username}/" target="_blank" style="font-weight: 600; color: #fff; text-decoration: none;">@${h.username}</a>
-            <span class="badge-pill badge-verified" style="font-size: 0.58rem; background: var(--emerald-subtle); color: #34d399; border-color: var(--emerald-border);">เลิกติดตามแล้ว</span>
-          </div>
-          <div style="font-size: 0.65rem; color: var(--text-muted); font-variant-numeric: tabular-nums;">
-            ${h.timestamp || '-'}
-          </div>
-        </div>
-      `).join("");
+        <div class="hist-row">
+          <div class="u">@${h.username || "-"}</div>
+          <div class="t">${h.timestamp || "-"} · ${h.status || ""}</div>
+        </div>`).join("");
     }
-
-    document.getElementById("historySearchInput").addEventListener("input", () => {
-      renderHistoryList();
-    });
+    document.getElementById("historySearchInput").addEventListener("input", renderHistoryList);
 
     async function clearHistoryLog() {
-      const confirmed = await showModal({
+      const ok = await showModal({
         title: t("historyClear"),
-        subtitle: currentLang === 'th' ? "การกระทำนี้ไม่สามารถย้อนกลับได้" : "This action cannot be undone",
         htmlContent: t("confirmClearHistory"),
         confirmText: t("historyClear"),
-        confirmClass: "btn-rose"
+        confirmClass: "btn-danger"
       });
-      if (!confirmed) return;
-
+      if (!ok) return;
       await window.pywebview.api.clear_history();
       cachedHistory = [];
-      setIfChanged("historyCount", 0);
+      setIfChanged("historyCount", "0");
       renderHistoryList();
       showToast(t("toastHistoryCleared"), "success");
     }
-
     async function exportHistoryCSV() {
-      if (!cachedHistory || cachedHistory.length === 0) {
-        showToast("ไม่มีประวัติให้ส่งออก", "info");
-        return;
-      }
+      if (!cachedHistory.length) return showToast(t("historyEmpty"), "info");
       const res = await window.pywebview.api.export_data(cachedHistory, "csv", "history");
-      if (res && res.success) {
-        showToast("ส่งออกประวัติเป็น CSV บน Desktop แล้ว", "success");
-        playChime("success");
-      } else {
-        showToast("ไม่สามารถส่งออกได้: " + (res?.error || ""), "error");
-      }
+      if (res && res.success) showToast(t("toastExportSuccess", { path: res.filepath }), "success");
     }
 
+    async function openChromeBrowser() {
+      await window.pywebview.api.open_browser_window();
+      showToast(t("toastChromeOpened"), "success");
+      playChime("click");
+    }
     async function openLogFolder() {
       try {
-        const res = await window.pywebview.api.open_log_folder();
-        if (res && res.success) {
-          showToast("เปิดโฟลเดอร์ Logs แล้ว", "success");
-        } else {
-          showToast("ไม่สามารถเปิดโฟลเดอร์ Logs ได้: " + (res?.error || ""), "error");
-        }
+        await window.pywebview.api.open_log_folder();
       } catch (e) {
-        showToast("Error opening logs", "error");
+        showToast(String(e && e.message ? e.message : e), "error");
       }
     }
 
-    // -------------------------------------------------------------
-    // MODAL PROMISE (Minimal & Accessible)
-    // -------------------------------------------------------------
-    function showModal({ title, subtitle, htmlContent, confirmText = "ยืนยัน", confirmClass = "btn-rose", isAlert = false }) {
-      return new Promise((resolve) => {
-        modalResolver = resolve;
-        document.getElementById("modalTitle").innerText = title;
-        document.getElementById("modalSub").innerText = subtitle || "";
-        document.getElementById("modalBody").innerHTML = htmlContent;
-        
-        const confirmBtn = document.getElementById("modalConfirmBtn");
-        confirmBtn.className = `btn ${confirmClass}`;
-        confirmBtn.innerText = confirmText;
+    let manualModeActive = false;
 
-        const cancelBtn = document.getElementById("modalCancelBtn");
-        cancelBtn.style.display = isAlert ? "none" : "inline-flex";
-
-        const iconWrap = document.getElementById("modalIconWrap");
-        if (confirmClass.includes("btn-emerald") || confirmClass.includes("btn-primary") || confirmClass.includes("btn-auto")) {
-          iconWrap.className = "modal-icon-badge success";
-          iconWrap.innerHTML = `<svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`;
-        } else {
-          iconWrap.className = "modal-icon-badge";
-          iconWrap.innerHTML = `<svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>`;
-        }
-
-        document.getElementById("customModal").classList.add("open");
-      });
-    }
-
-    function closeModal(result) {
-      document.getElementById("customModal").classList.remove("open");
-      if (modalResolver) {
-        modalResolver(result);
-        modalResolver = null;
+    function enterWorkspaceManual() {
+      manualModeActive = true;
+      setPhase("clean");
+      if (!allNonFollowers.length) {
+        window.pywebview.api.get_queue_list().then(q => {
+          if (q && q.length) {
+            allNonFollowers = q.map(it => ({
+              id: it.id,
+              username: it.username,
+              full_name: it.full_name || '',
+              profile_pic_url: it.avatar_url || '',
+              is_verified: !!it.is_verified,
+              is_private: false
+            }));
+            renderCurrentList(true);
+            showToast(`โหลดรายชื่อที่ค้างไว้ ${allNonFollowers.length} คน`, "info");
+          }
+        });
       }
     }
 
-    // Keyboard support for Modals
-    window.addEventListener("keydown", (e) => {
-      const modal = document.getElementById("customModal");
-      const hModal = document.getElementById("historyModal");
-      if (modal.classList.contains("open")) {
-        if (e.key === "Escape") closeModal(false);
-        else if (e.key === "Enter") closeModal(true);
-      } else if (hModal.classList.contains("open")) {
-        if (e.key === "Escape") closeHistoryModal();
+    function openProfileInChrome(username) {
+      if (window.pywebview && window.pywebview.api) {
+        window.pywebview.api.open_profile_in_browser(username);
+        showToast(`กำลังเปิดโปรไฟล์ @${username} ใน Chrome...`, "info");
+        playChime("click");
       }
-    });
+    }
 
-    // Toast utility (optimized)
-    function showToast(msg, type = "info") {
-      const c = document.getElementById("toastContainer");
-      const t = document.createElement("div");
-      t.className = `toast-pill ${type}`;
-      t.innerText = msg;
-      c.appendChild(t);
+    function openManualAddModal() {
+      document.getElementById("manualAddModal").classList.add("open");
       setTimeout(() => {
-        t.style.opacity = "0";
-        t.style.transition = "opacity 0.15s ease";
-        setTimeout(() => t.remove(), 160);
-      }, 2800);
+        const inp = document.getElementById("manualUsernamesInput");
+        if (inp) inp.focus();
+      }, 50);
     }
 
-    // Protection storage
-    function saveProtected() {
-      localStorage.setItem("zx_protected_users", JSON.stringify(Array.from(protectedSet)));
-      setIfChanged("statProtected", protectedSet.size);
+    function closeManualAddModal() {
+      document.getElementById("manualAddModal").classList.remove("open");
+    }
+
+    function openManualProfileDirect() {
+      const val = (document.getElementById("manualUsernamesInput").value || "").trim();
+      const first = val.split(/[\n,]+/)[0].trim().replace(/^@/, '');
+      if (!first) {
+        showToast("กรุณาระบุ Username", "warn");
+        return;
+      }
+      openProfileInChrome(first);
+      closeManualAddModal();
+    }
+
+    async function submitManualAdd() {
+      const val = (document.getElementById("manualUsernamesInput").value || "").trim();
+      if (!val) {
+        showToast("กรุณาระบุ Username", "warn");
+        return;
+      }
+      setLoading(true, "กำลังดึงข้อมูลโปรไฟล์...");
+      try {
+        await window.pywebview.api.manual_add_targets(val);
+        closeManualAddModal();
+        document.getElementById("manualUsernamesInput").value = "";
+        manualModeActive = true;
+        setPhase("clean");
+        showToast("กำลังตรวจสอบและนำเข้ารายชื่อ...", "info");
+      } catch (err) {
+        showToast(String(err && err.message ? err.message : err), "error");
+        setLoading(false);
+      }
+    }
+
+    async function triggerScan() {
+      if (isBusy) return;
+      scanDataLoaded = false;
+      autoScanTriggered = true;
+      lastShownScanError = null;
+      const spinner = document.getElementById("gateScanSpinner");
+      if (spinner) spinner.style.display = "block";
+      const errBox = document.getElementById("gateScanErrorBox");
+      if (errBox) errBox.style.display = "none";
+      const retryBtn = document.getElementById("btnScanRetry");
+      if (retryBtn) retryBtn.style.display = "none";
+      setPhase("scan");
+      setLoading(true, t("statusScanning"));
+      showToast(t("toastScanStart"));
+      playChime("click");
+      try { await window.pywebview.api.request_scan(); }
+      catch (e) { showToast(String(e), "error"); setLoading(false); }
+    }
+
+    function setLoading(on) {
+      isBusy = on;
+      document.getElementById("btnScan").disabled = on;
+      document.getElementById("btnAutoClean").disabled = on;
+    }
+
+    function setExecutingState(executing) {
+      isBusy = executing;
+      document.getElementById("btnAutoClean").disabled = executing;
+      document.getElementById("btnScan").disabled = executing;
+      document.getElementById("btnUnfollowSelected").style.display = executing ? "none" : "inline-flex";
+      document.getElementById("btnStop").style.display = executing ? "inline-flex" : "none";
+      document.getElementById("progressSection").classList.toggle("show", executing);
+    }
+
+    function updateStats(res) {
+      setIfChanged("statFollowing", String(res.following_count || 0));
+      setIfChanged("statFollowers", String(res.followers_count || 0));
+      setIfChanged("statMutual", String((res.mutual || []).length));
+      setIfChanged("statNonFollowers", String((res.non_followers || []).length));
+      setIfChanged("heroSub", t("heroSubReady"));
+    }
+
+    function getFilteredUsers() {
+      const q = (document.getElementById("searchInput").value || "").toLowerCase().trim();
+      let list = currentFilter === "lost" ? allLostFollowers.slice() : allNonFollowers.slice();
+      if (currentFilter === "protected") list = list.filter(u => protectedSet.has(u.username));
+      else if (currentFilter === "verified") list = list.filter(u => !!u.is_verified);
+      else if (currentFilter === "private") list = list.filter(u => !!u.is_private);
+      if (q) {
+        list = list.filter(u =>
+          (u.username || "").toLowerCase().includes(q) ||
+          (u.full_name || "").toLowerCase().includes(q)
+        );
+      }
+      return list;
+    }
+
+    function setFilter(f) {
+      currentFilter = f;
+      document.querySelectorAll(".tab").forEach(el => el.classList.toggle("active", el.dataset.filter === f));
+      renderCurrentList(true);
+    }
+
+    function renderCurrentList(reset) {
+      if (reset) renderedLimit = 80;
+      const list = getFilteredUsers();
+      const box = document.getElementById("userList");
+      if (!list.length) {
+        box.replaceChildren();
+        const empty = document.createElement("div");
+        empty.className = "empty";
+        const title = document.createElement("strong");
+        title.textContent = t("emptyClean");
+        const sub = document.createElement("div");
+        sub.textContent = t("emptyCleanSub");
+        empty.append(title, sub);
+        box.appendChild(empty);
+        return;
+      }
+      const slice = list.slice(0, renderedLimit);
+      box.innerHTML = slice.map(u => {
+        const prot = protectedSet.has(u.username);
+        const checked = selectedSet.has(u.username) ? "checked" : "";
+        const chips = [];
+        if (prot) chips.push(`<span class="chip ok">${t("chipProtected")}</span>`);
+        if (u.is_verified) chips.push(`<span class="chip ver">Verified</span>`);
+        if (u.is_private) chips.push(`<span class="chip priv">Private</span>`);
+        const avInner = u.profile_pic_url
+          ? `<img class="avatar" src="${u.profile_pic_url}" alt="" onerror="this.outerHTML='<div class=\\'avatar ph\\'>${(u.username||'?')[0].toUpperCase()}</div>'">`
+          : `<div class="avatar ph">${(u.username || "?")[0].toUpperCase()}</div>`;
+        const av = `<div class="avatar-wrap">${avInner}</div>`;
+        return `<div class="row ${prot ? "protected" : ""}" id="row-${u.username}">
+          <div><input type="checkbox" class="check user-check" data-uname="${u.username}" ${checked} ${prot ? "disabled" : ""} onchange="toggleSelect('${u.username}', this.checked)"></div>
+          <div class="user">${av}<div class="user-meta"><div class="name" style="cursor:pointer" onclick="openProfileInChrome('${u.username}')" title="คลิกเพื่อเปิดโปรไฟล์ใน Chrome">@${u.username} <span style="font-size:11px;opacity:0.6">↗</span></div><div class="full">${u.full_name || ""}</div></div></div>
+          <div class="chips">${chips.join("") || '<span class="chip">—</span>'}</div>
+          <div class="row-actions">
+            <button class="btn btn-soft btn-sm" onclick="openProfileInChrome('${u.username}')" title="เปิดหน้าโปรไฟล์ในเบราว์เซอร์เพื่อกดยกเลิกเอง">🌐 ดูโปรไฟล์</button>
+            <button class="btn btn-soft btn-sm" onclick="toggleProtect('${u.username}')">${prot ? t("btnUnprotect") : t("btnProtect")}</button>
+            <button class="btn btn-danger btn-sm" ${prot ? "disabled" : ""} onclick="unfollowSingle('${u.id}', '${u.username}', '${(u.full_name || "").replace(/'/g, "\\'")}')">${t("btnUnfollowRow")}</button>
+          </div>
+        </div>`;
+      }).join("");
+      updateSelectedUI();
+    }
+
+    function loadMoreUsers() {
+      renderedLimit += 80;
+      renderCurrentList(false);
+    }
+
+    function toggleSelect(uname, on) {
+      if (on) selectedSet.add(uname); else selectedSet.delete(uname);
+      updateSelectedUI();
+    }
+    function toggleSelectAll(el) {
+      const list = getFilteredUsers().filter(u => !protectedSet.has(u.username));
+      if (el.checked) list.forEach(u => selectedSet.add(u.username));
+      else list.forEach(u => selectedSet.delete(u.username));
+      renderCurrentList(false);
+    }
+    function updateSelectedUI() {
+      const count = selectedSet.size;
+      setIfChanged("selectedCount", String(count));
+      const unfollowBtn = document.getElementById("btnUnfollowSelected");
+      if (unfollowBtn) unfollowBtn.disabled = count === 0 || isBusy || currentDailyCount >= 50;
+      const btnClean = document.getElementById("btnAutoClean");
+      if (btnClean) btnClean.disabled = isBusy || currentDailyCount >= 50 || allNonFollowers.length === 0;
+      setIfChanged("statProtected", String(protectedSet.size));
     }
 
     function toggleProtect(uname) {
@@ -1695,364 +1807,8 @@
         showToast(t("toastProtectAdded", { username: uname }), "success");
       }
       saveProtected();
-      updateSelectedUI();
-      renderCurrentList();
-    }
-
-    // Filter Logic
-    function setFilter(filt) {
-      currentFilter = filt;
-      document.querySelectorAll(".filter-tab").forEach(tab => {
-        tab.classList.toggle("active", tab.dataset.filter === filt);
-      });
-      document.querySelectorAll(".metric-chip").forEach(chip => {
-        chip.classList.remove("active");
-      });
-      if (filt === "non_followers") {
-        document.getElementById("cardNonFollowers")?.classList.add("active");
-      }
-      renderCurrentList(true);
-    }
-
-    function getFilteredUsers() {
-      const q = (document.getElementById("searchInput").value || "").toLowerCase().trim();
-      return allNonFollowers.filter(u => {
-        const matchesQuery = !q || u.username.toLowerCase().includes(q) || (u.full_name && u.full_name.toLowerCase().includes(q));
-        if (!matchesQuery) return false;
-
-        if (currentFilter === "verified") return u.is_verified;
-        if (currentFilter === "private") return u.is_private;
-        if (currentFilter === "protected") return protectedSet.has(u.username);
-        return true;
-      });
-    }
-
-    function renderCurrentList(reset = false) {
-      if (reset) renderedLimit = 80;
-      const filtered = getFilteredUsers();
-      renderUsers(filtered);
-    }
-
-    function loadMoreUsers() {
-      renderedLimit += 80;
-      const filtered = getFilteredUsers();
-      renderUsers(filtered);
-    }
-
-    // Render Compact Table Rows with High-Speed String Batching
-    function renderUsers(list) {
-      const container = document.getElementById("userList");
-      if (!list || list.length === 0) {
-        container.innerHTML = `
-          <div class="empty-state">
-            <svg width="28" height="28" fill="none" stroke="#10b981" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            <div style="font-weight:600; color:#fff;">${t("emptyClean")}</div>
-            <div style="font-size:0.70rem;">${t("emptyCleanSub")}</div>
-          </div>`;
-        return;
-      }
-
-      const displayList = list.slice(0, renderedLimit);
-      const rowsHtml = displayList.map(u => {
-        const initial = (u.username || "U")[0].toUpperCase();
-        const isProtected = protectedSet.has(u.username);
-        const isChecked = selectedSet.has(u.username) ? "checked" : "";
-
-        let tags = [];
-        if (u.is_verified) tags.push(`<span class="badge-pill badge-verified">✓ Verified</span>`);
-        if (u.is_private) tags.push(`<span class="badge-pill badge-private">🔒 Private</span>`);
-        if (isProtected) tags.push(`<span class="badge-pill badge-protected">🛡️ ${t("badgeProtected") || "Protected"}</span>`);
-
-        const avatarImg = u.profile_pic_url 
-          ? `<img class="avatar" src="${u.profile_pic_url}" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.outerHTML='<div class=\\'avatar\\'>${initial}</div>'">`
-          : `<div class="avatar">${initial}</div>`;
-
-        return `
-          <div class="user-row ${isProtected ? 'protected' : ''}" id="row-${u.username}">
-            <div>
-              <input type="checkbox" class="checkbox user-check" data-uname="${u.username}" value="${u.username}" ${isChecked} ${isProtected ? 'disabled' : ''} onchange="toggleSelect('${u.username}', this)">
-            </div>
-            <div class="user-cell">
-              ${avatarImg}
-              <div class="user-meta">
-                <a class="user-handle" href="https://www.instagram.com/${u.username}/" target="_blank" title="Instagram">@${u.username}</a>
-                <span class="user-fullname">${u.full_name || '-'}</span>
-              </div>
-            </div>
-            <div>${tags.join(" ") || '<span style="color:var(--text-dim);font-size:0.70rem;">-</span>'}</div>
-            <div class="row-actions">
-              <button class="btn-shield ${isProtected ? 'active' : ''}" title="${isProtected ? t('btnUnprotect') : t('btnProtect')}" onclick="toggleProtect('${u.username}')">
-                🛡️
-              </button>
-              <button class="btn-unfollow-row" ${isProtected ? 'disabled' : ''} onclick="unfollowSingle('${u.id}', '${u.username}', '${u.full_name || ''}')">
-                ${t("btnUnfollowRow")}
-              </button>
-            </div>
-          </div>
-        `;
-      }).join("");
-
-      let footerHtml = "";
-      if (list.length > renderedLimit) {
-        const remaining = list.length - renderedLimit;
-        footerHtml = `
-          <div style="text-align:center; padding:8px;">
-            <button class="btn btn-ghost" onclick="loadMoreUsers()" style="margin:0 auto; font-size:0.70rem;">
-              ${t("showMoreBtn", { next: Math.min(80, remaining), remaining: remaining })}
-            </button>
-          </div>`;
-      }
-
-      container.innerHTML = rowsHtml + footerHtml;
-    }
-
-    // Instant toggle selection WITHOUT re-rendering the full DOM (0ms latency!)
-    function toggleSelect(uname, checkboxEl) {
-      if (protectedSet.has(uname)) return;
-      if (selectedSet.has(uname)) selectedSet.delete(uname);
-      else selectedSet.add(uname);
-      if (checkboxEl) checkboxEl.checked = selectedSet.has(uname);
-      updateSelectedUI();
-    }
-
-    // Instant Select All without re-rendering the whole page
-    function toggleSelectAll(master) {
-      const isChecked = master.checked;
-      const current = getFilteredUsers();
-      if (isChecked) {
-        current.forEach(u => {
-          if (!protectedSet.has(u.username)) selectedSet.add(u.username);
-        });
-      } else {
-        current.forEach(u => selectedSet.delete(u.username));
-      }
-      
-      const checkboxes = document.querySelectorAll(".user-check");
-      checkboxes.forEach(cb => {
-        if (!cb.disabled) cb.checked = isChecked;
-      });
-      updateSelectedUI();
-    }
-
-    function updateSelectedUI() {
-      const count = selectedSet.size;
-      setIfChanged("selectedCount", count);
-      const unfollowBtn = document.getElementById("btnUnfollowSelected");
-      if (unfollowBtn) unfollowBtn.disabled = count === 0 || isBusy;
-    }
-
-    // Backend Bridge Calls
-    async function triggerScan() {
-      if (isBusy) return;
-      scanDataLoaded = false;
-      setLoading(true, "กำลังสแกนบัญชี Instagram...", 0);
-      setIfChanged("statusText", "กำลังเริ่มต้นการสแกน (0%)...");
-      const progDock = document.getElementById("progressSection");
-      if (progDock) {
-        progDock.style.display = "flex";
-        document.getElementById("progressBarFill").style.width = "0%";
-        setIfChanged("progressText", "กำลังเริ่มต้นการสแกน... (0%)");
-        setIfChanged("progressStats", "0%");
-      }
-      
-      try {
-        await window.pywebview.api.request_scan(200);
-      } catch (err) {
-        setLoading(false);
-        if (progDock) progDock.style.display = "none";
-        showToast("ข้อผิดพลาดในการสแกน: " + err, "error");
-      }
-    }
-
-    function updateStats(data) {
-      setIfChanged("statFollowing", data.following_count || 0);
-      setIfChanged("statFollowers", data.followers_count || 0);
-      setIfChanged("statMutual", (data.mutual || []).length);
-      setIfChanged("statNonFollowers", (data.non_followers || []).length);
-      setIfChanged("statProtected", protectedSet.size);
-    }
-
-    async function openChromeBrowser() {
-      await window.pywebview.api.open_browser_window();
-      showToast(t("toastChromeOpened"));
-    }
-
-    // 1-Click Auto Clean Hero Function
-    async function startOneClickAutoClean() {
-      if (isBusy) return;
-      if (!allNonFollowers || allNonFollowers.length === 0) {
-        showToast(currentLang === 'th' ? "ยังไม่มีข้อมูลรายชื่อ กรุณารอสแกนสักครู่" : "No scan data yet. Please run a scan.", "info");
-        return;
-      }
-
-      selectedSet.clear();
-      const targets = [];
-      for (const u of allNonFollowers) {
-        if (!protectedSet.has(u.username)) {
-          selectedSet.add(u.username);
-          targets.push({ id: u.id, username: u.username });
-        }
-      }
-
-      // Sync checkbox state in current view
-      document.querySelectorAll(".user-check").forEach(cb => {
-        const u = cb.dataset.uname;
-        if (u && !protectedSet.has(u)) cb.checked = true;
-      });
-      updateSelectedUI();
-
-      if (targets.length === 0) {
-        showToast(currentLang === 'th' ? "ไม่มีบัญชีที่ต้องเลิกติดตาม หรือทั้งหมดอยู่ในรายการคุ้มครอง" : "No accounts to unfollow or all are protected.", "success");
-        return;
-      }
-
-      if (currentDailyCount >= 50) {
-        showToast("ครบโควตาความปลอดภัย 50 คนในรอบ 24 ชั่วโมงแล้ว เพื่อป้องกันบัญชีโดนแบนเด็ดขาด", "error");
-        return;
-      }
-
-      const speed = document.getElementById("speedMode").value;
-      const speedLabels = {
-        ultimate_safe: "🛡️ Ultimate Safe (35-65s)",
-        stealth_balanced: "⚖️ Stealth Balanced (25-45s)",
-        stealth: "🛡️ Ultimate Safe (35-65s)",
-        safe: "🛡️ Ultimate Safe (35-65s)",
-        balanced: "⚖️ Stealth Balanced (25-45s)"
-      };
-
-      // Hard safety guard: maximum 15 targets per batch session (or remaining daily quota)
-      const MAX_ONE_CLICK_BATCH = Math.min(15, Math.max(1, 50 - currentDailyCount));
-      let finalTargets = targets;
-      let isCapped = false;
-      if (targets.length > MAX_ONE_CLICK_BATCH) {
-        finalTargets = targets.slice(0, MAX_ONE_CLICK_BATCH);
-        isCapped = true;
-      }
-
-      const confirmed = await showModal({
-        title: t("confirmAutoCleanTitle", { count: finalTargets.length }),
-        subtitle: `${t("speedLabel")} ${speedLabels[speed] || speed}`,
-        htmlContent: `
-          <div>${t("confirmAutoCleanBody", { count: finalTargets.length })}</div>
-          ${isCapped ? `
-          <div style="margin-top:6px; font-size:0.71rem; color:#f59e0b; background:rgba(245,158,11,0.1); border:1px solid rgba(245,158,11,0.25); border-radius:5px; padding:6px 8px; line-height:1.4;">
-            🛡️ <strong>ระบบพรางตัวเหมือนมนุษย์ 100%:</strong> เพื่อไม่ให้ Instagram ตรวจจับว่าเป็นบอท ระบบจำกัดการทำรายการไม่เกินรอบละ <strong>${MAX_ONE_CLICK_BATCH} คน</strong> (โควตารายวัน: ${currentDailyCount}/50)
-          </div>` : ''}
-          <div style="margin-top:6px; font-size:0.70rem; color:#a5b4fc;">
-            ${t("protectedSafetyNotice", { count: protectedSet.size })}
-          </div>
-        `,
-        confirmText: t("btnAutoClean"),
-        confirmClass: "btn-emerald"
-      });
-
-      if (!confirmed) return;
-
-      handledUsers.clear();
-      setExecutingState(true);
-      document.getElementById("progressSection").style.display = "flex";
-      document.getElementById("progressBarFill").style.width = "0%";
-      setIfChanged("progressStats", `0 / ${finalTargets.length}`);
-
-      await window.pywebview.api.request_unfollow_batch(finalTargets, speed);
-    }
-
-    // Unfollow Operations with Custom Modal
-    async function unfollowSingle(userId, uname, fullName) {
-      if (isBusy) return;
-      if (protectedSet.has(uname)) {
-        showToast(t("toastProtectAdded", { username: uname }), "error");
-        return;
-      }
-
-      const confirmed = await showModal({
-        title: t("confirmUnfollowSingleTitle"),
-        subtitle: `@${uname}`,
-        htmlContent: `
-          <div>${t("confirmUnfollowSingleBody", { username: uname, fullName: fullName || '-' })}</div>
-        `,
-        confirmText: t("btnUnfollowRow"),
-        confirmClass: "btn-rose"
-      });
-
-      if (!confirmed) return;
-
-      const speed = document.getElementById("speedMode").value;
-      const targets = [{ id: userId, username: uname }];
-
-      handledUsers.clear();
-      setExecutingState(true);
-      document.getElementById("progressSection").style.display = "flex";
-      setIfChanged("progressText", `(${targets.length}) @${uname}...`);
-
-      await window.pywebview.api.request_unfollow_batch(targets, speed);
-    }
-
-    async function unfollowSelected() {
-      if (isBusy || selectedSet.size === 0) return;
-      const selectedUsernames = Array.from(selectedSet);
-
-      if (currentDailyCount >= 50) {
-        showToast("ครบโควตาความปลอดภัย 50 คนในรอบ 24 ชั่วโมงแล้ว เพื่อป้องกันบัญชีโดนแบนเด็ดขาด", "error");
-        return;
-      }
-
-      const speed = document.getElementById("speedMode").value;
-      const speedLabels = {
-        ultimate_safe: "🛡️ Ultimate Safe (35-65s)",
-        stealth_balanced: "⚖️ Stealth Balanced (25-45s)",
-        stealth: "🛡️ Ultimate Safe (35-65s)",
-        safe: "🛡️ Ultimate Safe (35-65s)",
-        balanced: "⚖️ Stealth Balanced (25-45s)"
-      };
-
-      // Hard safety guard: maximum 15 targets per batch
-      const MAX_SELECTED_BATCH = Math.min(15, Math.max(1, 50 - currentDailyCount));
-      let finalUsernames = selectedUsernames;
-      let isCapped = false;
-      if (selectedUsernames.length > MAX_SELECTED_BATCH) {
-        finalUsernames = selectedUsernames.slice(0, MAX_SELECTED_BATCH);
-        isCapped = true;
-      }
-
-      const confirmed = await showModal({
-        title: t("confirmUnfollowSelectedTitle", { count: finalUsernames.length }),
-        subtitle: `${t("speedLabel")} ${speedLabels[speed] || speed}`,
-        htmlContent: `
-          <div>${t("confirmUnfollowSelectedBody", { count: finalUsernames.length })}</div>
-          ${isCapped ? `
-          <div style="margin-top:6px; font-size:0.71rem; color:#f59e0b; background:rgba(245,158,11,0.1); border:1px solid rgba(245,158,11,0.25); border-radius:5px; padding:6px 8px; line-height:1.4;">
-            🛡️ <strong>ระบบพรางตัวเหมือนมนุษย์ 100%:</strong> จำกัดการทำรายการรอบละไม่เกิน <strong>${MAX_SELECTED_BATCH} คน</strong> (โควตารายวัน: ${currentDailyCount}/50)
-          </div>` : ''}
-          <div style="margin-top:5px; font-size:0.70rem; color:#a5b4fc;">
-            ${t("protectedSafetyNotice", { count: protectedSet.size })}
-          </div>
-        `,
-        confirmText: t("btnUnfollowSelected"),
-        confirmClass: "btn-rose"
-      });
-
-      if (!confirmed) return;
-
-      const targetList = [];
-      for (const uname of finalUsernames) {
-        const found = allNonFollowers.find(u => u.username === uname);
-        if (found) targetList.push({ id: found.id, username: uname });
-      }
-
-      handledUsers.clear();
-      setExecutingState(true);
-      document.getElementById("progressSection").style.display = "flex";
-      document.getElementById("progressBarFill").style.width = "0%";
-      setIfChanged("progressStats", `0 / ${targetList.length}`);
-
-      await window.pywebview.api.request_unfollow_batch(targetList, speed);
-    }
-
-    async function stopUnfollow() {
-      await window.pywebview.api.stop_unfollow();
-      setIfChanged("progressText", "กำลังหยุดการทำงาน...");
-      showToast("ส่งคำสั่งหยุดแล้ว", "info");
+      renderCurrentList(false);
+      playChime("click");
     }
 
     function removeUserFromData(uname) {
@@ -2060,163 +1816,167 @@
       selectedSet.delete(uname);
       const row = document.getElementById(`row-${uname}`);
       if (row) {
-        row.classList.add("unfollowed");
-        setTimeout(() => row.remove(), 250);
+        row.classList.add("gone");
+        setTimeout(() => row.remove(), 280);
       }
-      setIfChanged("statNonFollowers", allNonFollowers.length);
+      setIfChanged("statNonFollowers", String(allNonFollowers.length));
       updateSelectedUI();
     }
 
-    function setExecutingState(executing) {
-      isBusy = executing;
-      document.getElementById("btnAutoClean").disabled = executing;
-      document.getElementById("btnScan").disabled = executing;
-      document.getElementById("btnUnfollowSelected").style.display = executing ? "none" : "inline-flex";
-      document.getElementById("btnStop").style.display = executing ? "inline-flex" : "none";
+    async function startOneClickAutoClean() {
+      if (isBusy || !allNonFollowers.length) return;
+      const targets = [];
+      for (const u of allNonFollowers) {
+        if (!protectedSet.has(u.username)) targets.push({ id: u.id, username: u.username });
+      }
+      if (!targets.length) return showToast(t("emptyClean"), "info");
+      if (currentDailyCount >= 50) return showToast(t("quotaNote"), "error");
+      const cap = getBatchCap();
+      const finalTargets = targets.slice(0, cap);
+      const ok = await showModal({
+        title: t("confirmAutoCleanTitle", { count: finalTargets.length }),
+        subtitle: estimateEta(finalTargets.length),
+        htmlContent: `${t("confirmAutoCleanBody", { count: finalTargets.length, eta: estimateEta(finalTargets.length) })}<div style="margin-top:8px;font-size:12px;color:var(--text-3)">${t("protectedSafetyNotice", { count: protectedSet.size })}</div>`,
+        confirmText: t("btnAutoClean"),
+        confirmClass: "btn-primary"
+      });
+      if (!ok) return;
+      handledUsers.clear();
+      setExecutingState(true);
+      setIfChanged("progressStats", `0 / ${finalTargets.length}`);
+      await window.pywebview.api.request_unfollow_batch(finalTargets, document.getElementById("speedMode").value);
     }
 
-    function setLoading(isLoading, text, pct = 0) {
-      isBusy = isLoading;
-      const container = document.getElementById("userList");
-      if (isLoading) {
-        container.innerHTML = `
-          <div class="empty-state">
-            <div class="spinner"></div>
-            <div style="font-weight:600; color:#fff; display:flex; align-items:center; gap:6px;">
-              <span>${text || 'กำลังดำเนินการ...'}</span>
-              <span id="scanPercentBadge" style="color:var(--emerald); font-variant-numeric: tabular-nums;">${pct}%</span>
-            </div>
-            <div id="scanSubText" style="font-size:0.70rem; color:var(--text-muted);">ระบบทำงานผ่าน In-Session Worker อัตโนมัติ</div>
-          </div>`;
+    async function unfollowSingle(userId, uname, fullName) {
+      if (isBusy || protectedSet.has(uname)) return;
+      const ok = await showModal({
+        title: t("confirmUnfollowSingleTitle"),
+        subtitle: `@${uname}`,
+        htmlContent: t("confirmUnfollowSingleBody", { username: uname, fullName: fullName || "-" }),
+        confirmText: t("btnUnfollowRow"),
+        confirmClass: "btn-danger"
+      });
+      if (!ok) return;
+      handledUsers.clear();
+      setExecutingState(true);
+      await window.pywebview.api.request_unfollow_batch([{ id: userId, username: uname }], document.getElementById("speedMode").value);
+    }
+
+    async function unfollowSelected() {
+      if (isBusy || !selectedSet.size) return;
+      if (currentDailyCount >= 50) return showToast(t("quotaNote"), "error");
+      const cap = getBatchCap();
+      const names = Array.from(selectedSet).slice(0, cap);
+      const targetList = [];
+      for (const uname of names) {
+        const found = allNonFollowers.find(u => u.username === uname);
+        if (found && !protectedSet.has(uname)) targetList.push({ id: found.id, username: uname });
       }
+      if (!targetList.length) return;
+      const ok = await showModal({
+        title: t("confirmUnfollowSelectedTitle", { count: targetList.length }),
+        subtitle: estimateEta(targetList.length),
+        htmlContent: `${t("confirmUnfollowSelectedBody", { count: targetList.length, eta: estimateEta(targetList.length) })}<div style="margin-top:8px;font-size:12px;color:var(--text-3)">${t("protectedSafetyNotice", { count: protectedSet.size })}</div>`,
+        confirmText: t("btnUnfollowSelected"),
+        confirmClass: "btn-danger"
+      });
+      if (!ok) return;
+      handledUsers.clear();
+      setExecutingState(true);
+      await window.pywebview.api.request_unfollow_batch(targetList, document.getElementById("speedMode").value);
+    }
+
+    async function stopUnfollow() {
+      await window.pywebview.api.stop_unfollow();
+      setIfChanged("progressText", t("btnStop") + "...");
     }
 
     async function exportData(fmt) {
-      const res = await window.pywebview.api.export_data(allNonFollowers, fmt, "non_followers");
-      if (res && res.success) {
-        await showModal({
-          title: "บันทึกข้อมูลเรียบร้อย",
-          subtitle: `ไฟล์ ${fmt.toUpperCase()} บันทึกแล้ว`,
-          htmlContent: `
-            <div>บันทึกไฟล์ไว้ที่:</div>
-            <div style="margin-top:5px; word-break:break-all; font-family:monospace; background:rgba(0,0,0,0.4); padding:5px 7px; border-radius:5px; font-size:0.68rem; color:#38bdf8;">
-              ${res.filepath}
-            </div>
-          `,
-          confirmText: "ตกลง",
-          confirmClass: "btn-ghost",
-          isAlert: true
-        });
-      } else {
-        showToast("ไม่สามารถส่งออกได้: " + (res?.error || ""), "error");
-      }
+      if (!allNonFollowers.length) return showToast(t("emptyClean"), "info");
+      const res = await window.pywebview.api.export_data(allNonFollowers, fmt || "csv", "non_followers");
+      if (res && res.success) showToast(t("toastExportSuccess", { path: res.filepath }), "success");
+      else showToast(res?.error || "export failed", "error");
     }
 
-    // Debounced Search Input (70ms buffer for buttery smooth typing)
     const searchInput = document.getElementById("searchInput");
     const clearBtn = document.getElementById("searchClearBtn");
-    let searchDebounceTimer = null;
-
+    let searchDebounce = null;
     searchInput.addEventListener("input", () => {
-      clearBtn.style.display = searchInput.value ? "block" : "none";
-      clearTimeout(searchDebounceTimer);
-      searchDebounceTimer = setTimeout(() => {
-        renderCurrentList(true);
-      }, 70);
+      clearBtn.classList.toggle("show", !!searchInput.value);
+      clearTimeout(searchDebounce);
+      searchDebounce = setTimeout(() => renderCurrentList(true), 70);
     });
-
     function clearSearch() {
       searchInput.value = "";
-      clearBtn.style.display = "none";
+      clearBtn.classList.remove("show");
       renderCurrentList(true);
       searchInput.focus();
     }
 
-    // Auto load on scroll
     const userListScrollEl = document.getElementById("userList");
-    if (userListScrollEl) {
-      let isScrolling = false;
-      userListScrollEl.addEventListener("scroll", () => {
-        if (!isScrolling) {
-          window.requestAnimationFrame(() => {
-            if (userListScrollEl.scrollTop + userListScrollEl.clientHeight >= userListScrollEl.scrollHeight - 60) {
-              if (renderedLimit < getFilteredUsers().length) {
-                loadMoreUsers();
-              }
-            }
-            isScrolling = false;
-          });
-          isScrolling = true;
-        }
-      });
-    }
+    userListScrollEl.addEventListener("scroll", () => {
+      if (userListScrollEl.scrollTop + userListScrollEl.clientHeight >= userListScrollEl.scrollHeight - 60) {
+        if (renderedLimit < getFilteredUsers().length) loadMoreUsers();
+      }
+    });
 
-    // Pure State Polling Loop (0% Deadlock, 100% Reliable)
     async function pollState() {
       if (isPolling) return;
       isPolling = true;
-
       try {
         const st = await window.pywebview.api.get_app_state();
         if (!st) return;
 
-        // 1. Connection / Login Status
-        const statusBadge = document.getElementById("appStatus");
-
+        const dot = document.getElementById("liveDot");
         if (st.logged_in) {
-          statusBadge.classList.remove("connecting", "error");
           if (st.is_scanning) {
+            setPhase("scan");
             const pct = st.scan_percent || 0;
-            const progMsg = st.scan_progress || `${t("statusScanning")} (${pct}%)`;
-            setIfChanged("statusText", progMsg);
-
-            // Live progress dock during scan
-            const progDock = document.getElementById("progressSection");
-            if (progDock) {
-              progDock.style.display = "flex";
-              document.getElementById("progressBarFill").style.width = `${pct}%`;
-              setIfChanged("progressText", progMsg);
-              const statsStr = st.scan_total > 0 ? `${st.scan_current}/${st.scan_total} (${pct}%)` : `${pct}%`;
-              setIfChanged("progressStats", statsStr);
-            }
-
-            // Live percent inside empty-state spinner if active
-            const badge = document.getElementById("scanPercentBadge");
-            if (badge) badge.innerText = `${pct}%`;
-            const sub = document.getElementById("scanSubText");
-            if (sub && st.scan_progress) sub.innerText = st.scan_progress;
+            const msg = st.scan_progress || `${t("statusScanning")} ${pct}%`;
+            setIfChanged("statusLabel", t("statusScanning"));
+            setIfChanged("statusMsg", msg);
+            setIfChanged("gateScanMsg", msg);
+            document.getElementById("progressSection").classList.add("show");
+            document.getElementById("progressBarFill").style.width = pct + "%";
+            setIfChanged("progressText", msg);
+            setIfChanged("progressStats", st.scan_total > 0 ? `${st.scan_current}/${st.scan_total} (${pct}%)` : `${pct}%`);
+            dot.className = "live-dot";
           } else if (st.is_unfollowing) {
-            setIfChanged("statusText", t("statusUnfollowing"));
+            setPhase("clean");
+            setIfChanged("statusLabel", t("statusUnfollowing"));
+            setIfChanged("statusMsg", st.scan_progress || t("statusUnfollowing"));
+            dot.className = "live-dot";
           } else {
-            setIfChanged("statusText", t("statusReady"));
-          }
-
-          // Auto-trigger scan once logged in
-          if (!autoScanTriggered && !st.scan_has_data && !st.is_scanning) {
-            autoScanTriggered = true;
-            triggerScan();
+            setIfChanged("statusLabel", t("statusReady"));
+            setIfChanged("statusMsg", t("statusReady"));
+            dot.className = "live-dot ok";
+            if (st.scan_has_data || manualModeActive) setPhase("clean");
+            else if (!autoScanTriggered && !st.scan_error) {
+              autoScanTriggered = true;
+              triggerScan();
+            } else if (!scanDataLoaded && !st.scan_error) setPhase("scan");
           }
         } else {
-          statusBadge.classList.add("connecting");
-          setIfChanged("statusText", t("statusWaitingLogin"));
+          setPhase("login");
+          setIfChanged("statusLabel", t("statusWaitingLogin"));
+          setIfChanged("statusMsg", t("gateLoginBody"));
+          dot.className = "live-dot";
         }
 
-        // 2. Scan Results Retrieval via Bridge
         if (st.scan_has_data && !scanDataLoaded && !st.is_scanning) {
           scanDataLoaded = true;
           setLoading(false);
-          const progDock = document.getElementById("progressSection");
-          if (progDock && !st.is_unfollowing) {
+          if (!st.is_unfollowing) {
             document.getElementById("progressBarFill").style.width = "100%";
-            setTimeout(() => {
-              if (!isBusy) progDock.style.display = "none";
-            }, 400);
+            setTimeout(() => { if (!isBusy) document.getElementById("progressSection").classList.remove("show"); }, 400);
           }
           const res = await window.pywebview.api.get_scan_results();
           if (res && !res.error) {
             updateStats(res);
             allNonFollowers = res.non_followers || [];
+            allLostFollowers = res.lost_followers || [];
             selectedSet.clear();
+            setPhase("clean");
             renderCurrentList(true);
             updateSelectedUI();
             playChime("scan_complete");
@@ -2224,125 +1984,118 @@
           }
         }
 
-        // 3. Scan Error Handling
         if (st.scan_error) {
           setLoading(false);
-          const progDock = document.getElementById("progressSection");
-          if (progDock && !st.is_unfollowing) progDock.style.display = "none";
-          showToast(t("toastScanError", { error: st.scan_error }), "error");
+          const retryBtn = document.getElementById("btnScanRetry");
+          if (retryBtn) retryBtn.style.display = "inline-flex";
+          const manualAlt = document.getElementById("btnScanManualAlt");
+          if (manualAlt) manualAlt.style.display = "inline-flex";
+          const spinner = document.getElementById("gateScanSpinner");
+          if (spinner) spinner.style.display = "none";
+          const errBox = document.getElementById("gateScanErrorBox");
+          if (errBox) {
+            errBox.style.display = "block";
+            document.getElementById("gateScanErrorText").innerText = st.scan_error;
+          }
+          if (st.scan_error !== lastShownScanError) {
+            lastShownScanError = st.scan_error;
+            showToast("สแกนไม่สำเร็จ: มีข้อจำกัดจาก Instagram", "error");
+          }
+        } else if (st.is_scanning) {
+          const spinner = document.getElementById("gateScanSpinner");
+          if (spinner) spinner.style.display = "block";
+          const errBox = document.getElementById("gateScanErrorBox");
+          if (errBox) errBox.style.display = "none";
+          const retryBtn = document.getElementById("btnScanRetry");
+          if (retryBtn) retryBtn.style.display = "none";
         }
 
-        // Global / Security Error Modal Interceptor
         if (st.error && st.error !== lastShownError) {
           lastShownError = st.error;
           setExecutingState(false);
           setLoading(false);
-          const progDock = document.getElementById("progressSection");
-          if (progDock) progDock.style.display = "none";
+          document.getElementById("progressSection").classList.remove("show");
+          dot.className = "live-dot bad";
           playChime("error");
           await showModal({
-            title: "🚨 แจ้งเตือนความปลอดภัย (Security Alert)",
-            subtitle: "ระบบตัดการทำงานฉุกเฉิน",
-            htmlContent: `
-              <div style="color:#fb7185; line-height:1.45; font-size:0.75rem;">
-                <strong>${st.error}</strong>
-              </div>
-              <div style="margin-top:8px; font-size:0.70rem; color:var(--text-secondary); line-height:1.4;">
-                🛡️ ตรวจพบความเสี่ยงจาก Instagram ระบบจึงหยุดส่งคำขอทั้งหมดทันที เพื่อรักษาความปลอดภัยของบัญชีและรหัสผ่านของคุณ กรุณาพักการใช้งานระบบอัตโนมัติอย่างน้อย 24–48 ชั่วโมง
-              </div>
-            `,
+            title: currentLang === "th" ? "หยุดเพื่อความปลอดภัย" : "Safety stop",
+            subtitle: currentLang === "th" ? "ระบบตัดคำขอทั้งหมดแล้ว" : "All requests halted",
+            htmlContent: `<div style="color:#ffb4a8">${st.error}</div><div style="margin-top:8px;color:var(--text-3);font-size:12px">${currentLang === "th" ? "พักอย่างน้อย 1–2 ชั่วโมงก่อนลองใหม่" : "Wait 1–2 hours before retrying"}</div>`,
             confirmText: t("modalOk"),
-            confirmClass: "btn-rose",
+            confirmClass: "btn-danger",
             isAlert: true
           });
         }
 
-        // Daily Safety Quota Telemetry
         if (typeof st.daily_count === "number") {
           currentDailyCount = st.daily_count;
           const maxQ = st.daily_max || 50;
           setIfChanged("statDailyQuota", `${st.daily_count} / ${maxQ}`);
-          const quotaChip = document.getElementById("cardDailyQuota");
-          const isMax = st.daily_count >= maxQ;
-          if (quotaChip) {
-            quotaChip.style.borderColor = isMax ? "var(--rose-border)" : "";
-            const valEl = document.getElementById("statDailyQuota");
-            if (valEl) valEl.style.color = isMax ? "#fb7185" : "#38bdf8";
-          }
-          const btnClean = document.getElementById("btnAutoClean");
-          const btnUnf = document.getElementById("btnUnfollowSelected");
-          if (btnClean && isMax && !isBusy) btnClean.disabled = true;
-          if (btnUnf && isMax && !isBusy) btnUnf.disabled = true;
+          const pct = Math.min(100, (st.daily_count / maxQ) * 100);
+          const fill = document.getElementById("quotaFill");
+          fill.style.width = pct + "%";
+          fill.classList.toggle("hot", st.daily_count >= maxQ * 0.8);
+          updateSelectedUI();
         }
 
-        // 4. Unfollowing Progress
         if (st.is_unfollowing && st.unfollow_progress) {
           const info = st.unfollow_progress;
           const pct = Math.round((info.index / info.total) * 100);
-          document.getElementById("progressBarFill").style.width = `${pct}%`;
-          setIfChanged("progressStats", `${info.index} / ${info.total} (${t("statSuccess")}: ${info.success_count} | ${t("statFailed")}: ${info.failed_count})`);
-          setIfChanged("progressText", `(${info.index}/${info.total}) @${info.username}...`);
-
+          document.getElementById("progressSection").classList.add("show");
+          document.getElementById("progressBarFill").style.width = pct + "%";
+          const etaLeft = info.eta_seconds != null ? ` · ~${Math.max(1, Math.round(info.eta_seconds / 60))}m` : "";
+          setIfChanged("progressStats", `${info.index} / ${info.total} · ${t("statSuccess")} ${info.success_count} · ${t("statFailed")} ${info.failed_count}${etaLeft}`);
+          setIfChanged("progressText", `@${info.username}`);
+          setIfChanged("statusMsg", `@${info.username} (${info.index}/${info.total})`);
           if (info.success && !handledUsers.has(info.username)) {
             handledUsers.add(info.username);
             removeUserFromData(info.username);
           }
         }
 
-        // 5. Unfollow Finished Handling
         if (st.unfollow_finished) {
           const summary = st.unfollow_finished;
           await window.pywebview.api.ack_unfollow_finished();
           setExecutingState(false);
-          document.getElementById("progressSection").style.display = "none";
+          document.getElementById("progressSection").classList.remove("show");
           playChime("success");
-
-          const isAbort = summary.aborted;
           await showModal({
-            title: isAbort ? t("abortedTitle") : t("finishedTitle"),
-            subtitle: isAbort ? t("abortedSub") : t("finishedSub"),
-            htmlContent: `
-              <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-top:2px;">
-                <div style="background:var(--emerald-subtle); border:1px solid var(--emerald-border); border-radius:6px; padding:6px; text-align:center;">
-                  <div style="color:var(--text-secondary); font-size:0.68rem;">${t("statSuccess")}</div>
-                  <div style="color:#34d399; font-size:1.1rem; font-weight:700;">${summary.success}</div>
-                </div>
-                <div style="background:var(--rose-subtle); border:1px solid var(--rose-border); border-radius:6px; padding:6px; text-align:center;">
-                  <div style="color:var(--text-secondary); font-size:0.68rem;">${t("statFailed")}</div>
-                  <div style="color:#fb7185; font-size:1.1rem; font-weight:700;">${summary.failed}</div>
-                </div>
+            title: summary.aborted ? t("abortedTitle") : t("finishedTitle"),
+            subtitle: summary.aborted ? t("abortedSub") : t("finishedSub"),
+            htmlContent: `<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+              <div style="background:var(--sage-soft);border:1px solid var(--sage-line);border-radius:10px;padding:10px;text-align:center">
+                <div style="font-size:11px;color:var(--text-3)">${t("statSuccess")}</div>
+                <div style="font-size:22px;font-weight:700;color:var(--sage)">${summary.success}</div>
               </div>
-            `,
+              <div style="background:var(--coral-soft);border:1px solid var(--coral-line);border-radius:10px;padding:10px;text-align:center">
+                <div style="font-size:11px;color:var(--text-3)">${t("statFailed")}</div>
+                <div style="font-size:22px;font-weight:700;color:var(--coral)">${summary.failed}</div>
+              </div>
+            </div>`,
             confirmText: t("modalOk"),
-            confirmClass: "btn-ghost",
+            confirmClass: "btn-soft",
             isAlert: true
           });
         }
-
       } catch (e) {
-        // Suppress transient poll errors
       } finally {
         isPolling = false;
       }
     }
 
-    // Fully Automatic Initializer
-    window.addEventListener('pywebviewready', async () => {
+    window.addEventListener("pywebviewready", async () => {
       saveProtected();
       setLanguage(currentLang);
-      document.getElementById("soundIcon").innerText = soundEnabled ? "🔊" : "🔇";
+      document.getElementById("btnSound").classList.toggle("on", soundEnabled);
+      setPhase("login");
       try {
-        if (window.pywebview && window.pywebview.api && window.pywebview.api.get_version_info) {
-          const info = await window.pywebview.api.get_version_info();
-          if (info && info.version) {
-            document.title = info.title || `UnfollowX PRO v${info.version}`;
-            const badge = document.querySelector('.brand-badge');
-            if (badge) badge.textContent = `PRO v${info.version}`;
-          }
+        const info = await window.pywebview.api.get_version_info();
+        if (info && info.version) {
+          document.title = info.title || `UnfollowX PRO v${info.version}`;
+          setIfChanged("verBadge", "v" + info.version);
+          setIfChanged("footLeft", `UnfollowX v${info.version} · By ${info.author || "ZXD44"}`);
         }
-      } catch (e) {
-        console.warn('Could not fetch version info', e);
-      }
+      } catch (e) {}
       setInterval(pollState, 350);
     });
   </script>
