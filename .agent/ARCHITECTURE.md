@@ -198,3 +198,15 @@ Maintains an immutable record of all unfollow operations.
   }
 ]
 ```
+
+---
+
+## 5. Scripts & Automation Directory (`scripts/`)
+
+| Script | Purpose |
+|---|---|
+| `scripts/watch_cooldown.py` | Standalone background watcher probing Instagram friendship cooldown every 90s. When clear, auto-diffs Following vs Followers, writes `NON_FOLLOWERS_FOUND.txt` to Desktop/Workspace, and triggers Windows Toast Notification. |
+| `scripts/instant_diff.py` | Instant diff tool for Instagram Data Export ZIP/JSON (`following.json` vs `followers_1.json`). Bypasses all web/API rate limits in 0.01s. |
+| `scripts/check_candidates.py` | Direct profile verification checker testing if candidates are followed and follow back. |
+| `scripts/set_version.py` | Single Source of Truth version bump & PyInstaller build orchestrator. |
+

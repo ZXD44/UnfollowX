@@ -105,17 +105,17 @@ python source_code/python_engine/gui_app.py
 
 ## ⚡ ระบบจัดการเวอร์ชัน (Version Manager CLI)
 
-โปรเจกต์นี้มาพร้อมเครื่องมือ Single Source of Truth `set_version.py` ที่ช่วยซิงค์เวอร์ชันทุกจุด (โค้ด, UI, Metadata, เอกสาร) พร้อมคอมไพล์ EXE ใหม่ในคำสั่งเดียว:
+โปรเจกต์นี้มาพร้อมเครื่องมือ Single Source of Truth `scripts/set_version.py` ที่ช่วยซิงค์เวอร์ชันทุกจุด (โค้ด, UI, Metadata, เอกสาร) พร้อมคอมไพล์ EXE ใหม่ในคำสั่งเดียว:
 
 ```powershell
 # ตรวจสอบเวอร์ชันปัจจุบัน
-python set_version.py
+python scripts/set_version.py
 
 # อัปเดตเวอร์ชันใหม่ทุกไฟล์อัตโนมัติ
-python set_version.py 0.0.2
+python scripts/set_version.py 0.0.9
 
 # อัปเดตเวอร์ชันพร้อมคอมไพล์เป็น UnfollowX.exe ใหม่ทันที
-python set_version.py 0.0.2 --build
+python scripts/set_version.py 0.0.9 --build
 ```
 
 ---
@@ -136,9 +136,15 @@ UnfollowX/
 ├── LICENSE                            # 📜 สัญญาอนุญาต MIT License สากล
 ├── README.md                          # 📖 เอกสารแนะนำโปรเจกต์หลัก (ไทย & อังกฤษ รวมในไฟล์เดียว)
 ├── HOW_TO_USE.txt                     # 📖 คู่มือการใช้งานสำหรับผู้ใช้ทั่วไป
-├── set_version.py                     # ⚡ เครื่องมือจัดการเวอร์ชันและคอมไพล์อัตโนมัติ
-├── watch_cooldown.py                  # 🛰️ สคริปต์ตรวจจับ Cooldown เบื้องหลังอัตโนมัติ
+├── UnfollowX.exe                      # 🚀 ไบนารีแอปพลิเคชัน GUI พร้อมใช้งานทันที
 ├── .gitignore                         # กำหนดไฟล์ที่ไม่ต้อง push ขึ้น Git
+├── scripts/                           # 🛠️ โฟลเดอร์สคริปต์เสริมและเครื่องมืออัตโนมัติ
+│   ├── README.md                      # คำอธิบายสคริปต์ในโฟลเดอร์
+│   ├── watch_cooldown.py              # 🛰️ สคริปต์เฝ้าระวัง Cooldown อัตโนมัติ (ทุก 90s)
+│   ├── instant_diff.py                # ⚡ สคริปต์เทียบไฟล์ Instagram Data Export ใน 0.01s
+│   ├── check_candidates.py            # ตรวจสอบสถานะการฟอลโลว์ของบัญชีเป้าหมาย
+│   ├── set_version.py                 # เครื่องมือจัดการเวอร์ชันและคอมไพล์
+│   └── ...                            # เครื่องมือทดสอบ GraphQL และ Database
 ├── .agent/                            # 🤖 กฎเกณฑ์เชิงลึกสำหรับ AI Agent & Developers
 │   ├── README.md                      # สารบัญคู่มือ
 │   ├── RULES.md                       # กฎเหล็กความปลอดภัย JS Bridge, Win32, Rate Limits

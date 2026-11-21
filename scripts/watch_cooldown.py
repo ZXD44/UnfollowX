@@ -17,7 +17,8 @@ import random
 from datetime import datetime
 from playwright.sync_api import sync_playwright
 
-ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+ROOT_DIR = os.path.dirname(SCRIPT_DIR) if os.path.basename(SCRIPT_DIR) == "scripts" else SCRIPT_DIR
 ENGINE_DIR = os.path.join(ROOT_DIR, "source_code", "python_engine")
 sys.path.insert(0, ENGINE_DIR)
 
@@ -35,7 +36,7 @@ OUTPUT_FILE_WORKSPACE = os.path.join(ROOT_DIR, "NON_FOLLOWERS_FOUND.txt")
 DESKTOP_DIR = os.path.join(os.path.expanduser("~"), "Desktop")
 OUTPUT_FILE_DESKTOP = os.path.join(DESKTOP_DIR, "NON_FOLLOWERS_FOUND.txt")
 
-CHECK_INTERVAL_SECONDS = 600  # Check every 10 minutes
+CHECK_INTERVAL_SECONDS = 90  # Check every 1.5 minutes (accelerated)
 
 
 def check_and_scan():
@@ -95,7 +96,7 @@ def check_and_scan():
         print(f"[{timestamp}] Probe result: status={check_res.get('status')}, redirected={check_res.get('redirected')}, is_json={check_res.get('is_json')}")
 
         if not check_res.get("is_json"):
-            print(f"[{timestamp}] ⏳ Cooldown still active from Instagram. Next check in {CHECK_INTERVAL_SECONDS // 60} minutes.")
+            print(f"[{timestamp}] ⏳ Cooldown still active from Instagram. Next check in {CHECK_INTERVAL_SECONDS} seconds.")
             browser.close()
             return False
 

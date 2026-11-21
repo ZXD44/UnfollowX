@@ -3,7 +3,9 @@ import os
 import sys
 import subprocess
 
-target = os.path.join(os.path.dirname(os.path.abspath(__file__)), "source_code", "python_engine", "set_version.py")
+base = os.path.dirname(os.path.abspath(__file__))
+root = os.path.dirname(base) if os.path.basename(base) == "scripts" else base
+target = os.path.join(root, "source_code", "python_engine", "set_version.py")
 if os.path.exists(target):
     cmd = [sys.executable, target] + sys.argv[1:]
     res = subprocess.run(cmd)
