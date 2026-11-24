@@ -2,12 +2,8 @@ import os
 from playwright.sync_api import sync_playwright
 
 candidates = [
-    'ben0zt',
-    'qaereuoy',
-    'thidarat.mmn',
-    'melrisse_',
-    '__.cfour',
-    'qailqary'
+    '_vintaaaaaa.07',
+    'lamberthdutiful'
 ]
 
 profile_dir = os.path.expandvars(r'%LOCALAPPDATA%\ZXD44-IG-Cleaner\browser_profile')

@@ -28,6 +28,7 @@ class StorageManager:
     def _init_db(self):
         with self._connection() as conn:
             cursor = conn.cursor()
+            cursor.execute("PRAGMA journal_mode=WAL;")
             
             # 1. Unfollow Persistent Queue
             cursor.execute("""
@@ -83,6 +84,18 @@ class StorageManager:
                     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                 )
             """)
+
+            # 5. Persistent Whitelist
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS whitelist (
+                    user_id TEXT PRIMARY KEY,
+                    username TEXT NOT NULL,
+                    full_name TEXT,
+                    avatar_url TEXT,
+                    added_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                )
+            """)
+            cursor.execute("CREATE INDEX IF NOT EXISTS idx_whitelist_username ON whitelist(username)")
 
             conn.commit()
 
@@ -156,11 +169,79 @@ class StorageManager:
             cursor.execute("DELETE FROM unfollow_queue WHERE status IN ('completed', 'skipped')")
             conn.commit()
 
+    def retry_failed_queue(self):
+        """Reset all failed queue items back to pending for retry."""
+        with self._connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("""
+                UPDATE unfollow_queue
+                SET status = 'pending', last_error = NULL, updated_at = CURRENT_TIMESTAMP
+                WHERE status = 'failed'
+            """)
+            count = cursor.rowcount
+            conn.commit()
+            return count
+
     def clear_all_queue(self):
         with self._connection() as conn:
             cursor = conn.cursor()
             cursor.execute("DELETE FROM unfollow_queue")
             conn.commit()
+
+    # --- Whitelist Operations ---
+    def get_whitelist(self):
+        with self._connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT user_id as id, username, full_name, avatar_url, added_at FROM whitelist ORDER BY added_at DESC")
+            return [dict(row) for row in cursor.fetchall()]
+
+    def add_to_whitelist(self, user_id, username, full_name="", avatar_url=""):
+        u_id = str(user_id or "").strip()
+        u_name = str(username or "").strip()
+        if not u_id or not u_name:
+            return False
+        with self._connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("""
+                INSERT INTO whitelist (user_id, username, full_name, avatar_url, added_at)
+                VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP)
+                ON CONFLICT(user_id) DO UPDATE SET
+                    username = excluded.username,
+                    full_name = CASE WHEN excluded.full_name != '' THEN excluded.full_name ELSE whitelist.full_name END,
+                    avatar_url = CASE WHEN excluded.avatar_url != '' THEN excluded.avatar_url ELSE whitelist.avatar_url END
+            """, (u_id, u_name, full_name or "", avatar_url or ""))
+            cursor.execute("DELETE FROM unfollow_queue WHERE id = ? AND status = 'pending'", (u_id,))
+            conn.commit()
+        return True
+
+    def remove_from_whitelist(self, user_id):
+        with self._connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("DELETE FROM whitelist WHERE user_id = ?", (str(user_id),))
+            conn.commit()
+            return cursor.rowcount > 0
+
+    def sync_whitelist(self, items):
+        """Bulk import whitelist entries (e.g. migrating from localStorage)."""
+        rows = [
+            (
+                str(it.get("id") or it.get("user_id") or "").strip(),
+                str(it.get("username") or "").strip(),
+                it.get("full_name", ""),
+                it.get("avatar_url", "")
+            )
+            for it in (items or [])
+            if str(it.get("id") or it.get("user_id") or "").strip() and str(it.get("username") or "").strip()
+        ]
+        with self._connection() as conn:
+            cursor = conn.cursor()
+            if rows:
+                cursor.executemany("""
+                    INSERT OR IGNORE INTO whitelist (user_id, username, full_name, avatar_url)
+                    VALUES (?, ?, ?, ?)
+                """, rows)
+            conn.commit()
+        return len(rows)
 
     # --- Smart Skip & History Operations ---
     def record_history(self, user_id, username, status, method=None, reason=None):
@@ -217,23 +298,52 @@ class StorageManager:
             """, (limit,))
             return [dict(row) for row in cursor.fetchall()]
 
-    # --- Diff Scan & Snapshots ---
-    def save_scan_snapshot(self, snapshot_type, users):
+    # --- Safety Metrics Operations ---
+    def get_metric(self, key, default_num=None, default_text=None):
         with self._connection() as conn:
             cursor = conn.cursor()
-            # Clear previous snapshot of same type
+            cursor.execute("SELECT val_num, val_text FROM safety_metrics WHERE key = ?", (str(key),))
+            row = cursor.fetchone()
+            if not row:
+                return {"val_num": default_num, "val_text": default_text}
+            return {
+                "val_num": row["val_num"] if row["val_num"] is not None else default_num,
+                "val_text": row["val_text"] if row["val_text"] is not None else default_text
+            }
+
+    def set_metric(self, key, val_num=None, val_text=None):
+        with self._connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("""
+                INSERT INTO safety_metrics (key, val_num, val_text, updated_at)
+                VALUES (?, ?, ?, CURRENT_TIMESTAMP)
+                ON CONFLICT(key) DO UPDATE SET
+                    val_num = excluded.val_num,
+                    val_text = excluded.val_text,
+                    updated_at = CURRENT_TIMESTAMP
+            """, (str(key), val_num, val_text))
+            conn.commit()
+
+    # --- Diff Scan & Snapshots ---
+    def save_scan_snapshot(self, snapshot_type, users):
+        rows = [
+            (
+                snapshot_type,
+                str(u.get("id") or ""),
+                str(u.get("username") or ""),
+                u.get("full_name", ""),
+                u.get("avatar_url", "")
+            )
+            for u in users
+        ]
+        with self._connection() as conn:
+            cursor = conn.cursor()
             cursor.execute("DELETE FROM scan_snapshots WHERE snapshot_type = ?", (snapshot_type,))
-            for u in users:
-                cursor.execute("""
+            if rows:
+                cursor.executemany("""
                     INSERT INTO scan_snapshots (snapshot_type, user_id, username, full_name, avatar_url)
                     VALUES (?, ?, ?, ?, ?)
-                """, (
-                    snapshot_type,
-                    str(u.get("id") or ""),
-                    str(u.get("username") or ""),
-                    u.get("full_name", ""),
-                    u.get("avatar_url", "")
-                ))
+                """, rows)
             conn.commit()
 
     def compute_diff(self, current_followers):

@@ -9,12 +9,36 @@ import random
 from datetime import datetime, timedelta
 
 class SafetyEngine:
-    def __init__(self, storage_manager):
-        self.storage = storage_manager
+    def __init__(self, storage_manager=None, storage=None):
+        self.storage = storage_manager if storage_manager is not None else storage
         self.trust_score = 100 # Default baseline trust score
         self.consecutive_fails = 0
         self.last_action_time = 0
         self.cooldown_until = 0
+        self._load_state()
+
+    def _load_state(self):
+        if not self.storage or not hasattr(self.storage, "get_metric"):
+            return
+        try:
+            ts = self.storage.get_metric("trust_score", default_num=100)["val_num"]
+            cf = self.storage.get_metric("consecutive_fails", default_num=0)["val_num"]
+            cd = self.storage.get_metric("cooldown_until", default_num=0)["val_num"]
+            self.trust_score = max(0, min(100, int(ts)))
+            self.consecutive_fails = max(0, int(cf))
+            self.cooldown_until = max(0.0, float(cd))
+        except Exception:
+            pass
+
+    def _persist_state(self):
+        if not self.storage or not hasattr(self.storage, "set_metric"):
+            return
+        try:
+            self.storage.set_metric("trust_score", val_num=float(self.trust_score))
+            self.storage.set_metric("consecutive_fails", val_num=float(self.consecutive_fails))
+            self.storage.set_metric("cooldown_until", val_num=float(self.cooldown_until))
+        except Exception:
+            pass
 
     def evaluate_threat(self, status_code, response_text):
         """
@@ -54,6 +78,8 @@ class SafetyEngine:
             self.consecutive_fails = 0
         else:
             self.consecutive_fails += 1
+
+        self._persist_state()
 
         return {
             "threat_level": threat_level,

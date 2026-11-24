@@ -265,7 +265,66 @@ class API:
         }
         self._cached_scan_data = None
         self._window = None
+        self._load_cached_snapshot_on_startup()
         self._worker = BrowserWorker(self)
+
+    def _load_cached_snapshot_on_startup(self):
+        """Load latest saved following/followers snapshot from SQLite on startup for instant search."""
+        try:
+            following = self.storage.get_last_scan_snapshot("following") or []
+            followers = self.storage.get_last_scan_snapshot("followers") or []
+            if not following:
+                return
+            f_set = {str(u.get("id")) for u in followers}
+            non_followers = []
+            mutual = []
+            for u in following:
+                uid = str(u.get("id"))
+                entry = {
+                    "id": uid,
+                    "username": u.get("username", ""),
+                    "full_name": u.get("full_name", ""),
+                    "profile_pic_url": u.get("avatar_url", ""),
+                    "is_verified": False,
+                    "is_private": False,
+                }
+                if uid in f_set:
+                    mutual.append(entry)
+                else:
+                    non_followers.append(entry)
+            followers_fmt = [
+                {
+                    "id": str(u.get("id")),
+                    "username": u.get("username", ""),
+                    "full_name": u.get("full_name", ""),
+                    "profile_pic_url": u.get("avatar_url", ""),
+                    "is_verified": False,
+                    "is_private": False,
+                }
+                for u in followers
+            ]
+            following_fmt = mutual + non_followers
+            self._cached_scan_data = {
+                "following_count": len(following_fmt),
+                "followers_count": len(followers_fmt),
+                "following": following_fmt,
+                "followers": followers_fmt,
+                "mutual": mutual,
+                "non_followers": non_followers,
+                "lost_followers": [],
+                "is_cached": True,
+            }
+            self._state["scan_has_data"] = True
+            self._state["scan_summary"] = {
+                "following_count": len(following_fmt),
+                "followers_count": len(followers_fmt),
+                "mutual_count": len(mutual),
+                "non_followers_count": len(non_followers),
+                "lost_followers_count": 0,
+            }
+            logger.info("Loaded cached SQLite snapshot on startup: %d non-followers", len(non_followers))
+        except Exception as e:
+            logger.warning("Failed to load startup snapshot: %s", e)
 
     def set_window(self, win):
         self._window = win
@@ -368,6 +427,31 @@ class API:
             self.storage.clear_all_queue()
         return {"status": "cleared"}
 
+    def retry_failed_queue(self):
+        """Reset failed queue items back to pending in SQLite."""
+        count = self.storage.retry_failed_queue()
+        return {"status": "ok", "count": count}
+
+    def get_whitelist(self):
+        """Return persistent whitelist entries from SQLite."""
+        try:
+            return self.storage.get_whitelist()
+        except Exception:
+            return []
+
+    def add_to_whitelist(self, user_id, username, full_name="", avatar_url=""):
+        ok = self.storage.add_to_whitelist(user_id, username, full_name=full_name, avatar_url=avatar_url)
+        return {"status": "ok" if ok else "error"}
+
+    def remove_from_whitelist(self, user_id, username=""):
+        ok = self.storage.remove_from_whitelist(user_id)
+        return {"status": "ok" if ok else "error"}
+
+    def sync_whitelist(self, items):
+        """Migrate legacy localStorage whitelist entries into SQLite."""
+        count = self.storage.sync_whitelist(items)
+        return {"status": "ok", "count": count}
+
     def resume_pending_queue(self, speed_mode="turbo_fast"):
         """Resume any unfinished unfollow queue items directly from persistent SQLite storage."""
         pending = self.storage.get_pending_queue(50)
@@ -380,6 +464,47 @@ class API:
         with self._lock:
             self._state["is_warmup"] = bool(enabled)
         return {"is_warmup": self._state["is_warmup"]}
+
+    def _remove_unfollowed_from_cache(self, unfollowed_ids, unfollowed_usernames):
+        """Remove successfully unfollowed accounts from in-memory scan cache and refresh summary counts."""
+        id_set = {str(x).strip() for x in (unfollowed_ids or []) if str(x).strip()}
+        uname_set = {str(x).strip().lower() for x in (unfollowed_usernames or []) if str(x).strip()}
+        if not id_set and not uname_set:
+            return
+
+        def _keep(user):
+            uid = str(user.get("id") or "").strip()
+            uname = str(user.get("username") or "").strip().lower()
+            if uid and uid in id_set:
+                return False
+            if uname and uname in uname_set:
+                return False
+            return True
+
+        with self._lock:
+            if not self._cached_scan_data:
+                return
+            for key in ("non_followers", "following", "mutual", "lost_followers"):
+                if isinstance(self._cached_scan_data.get(key), list):
+                    self._cached_scan_data[key] = [u for u in self._cached_scan_data[key] if _keep(u)]
+
+            following_cnt = len(self._cached_scan_data.get("following", []))
+            followers_cnt = len(self._cached_scan_data.get("followers", []))
+            mutual_cnt = len(self._cached_scan_data.get("mutual", []))
+            non_followers_cnt = len(self._cached_scan_data.get("non_followers", []))
+            lost_cnt = len(self._cached_scan_data.get("lost_followers", []))
+
+            self._cached_scan_data["following_count"] = following_cnt
+            self._cached_scan_data["followers_count"] = followers_cnt
+
+            self._state["scan_summary"] = {
+                "following_count": following_cnt,
+                "followers_count": followers_cnt,
+                "mutual_count": mutual_cnt,
+                "non_followers_count": non_followers_cnt,
+                "lost_followers_count": lost_cnt,
+            }
+            self._state["lost_followers_count"] = lost_cnt
 
     def get_scan_results(self):
         """Returns the full parsed scan data directly via PyWebView's native JSON serialization without eval()."""
@@ -976,6 +1101,8 @@ class API:
             success_count = 0
             failed_count = 0
             consecutive_fail = 0
+            succeeded_ids = []
+            succeeded_usernames = []
             total = len(targets)
             break_every = random.randint(3, 5) if is_warmup else random.randint(4, 6)
 
@@ -1039,6 +1166,9 @@ class API:
                     if ok:
                         success_count += 1
                         consecutive_fail = 0
+                        succeeded_ids.append(u_id)
+                        succeeded_usernames.append(u_name)
+                        self._remove_unfollowed_from_cache([u_id], [u_name])
                         self.storage.update_queue_item(u_id, "completed")
                         self._save_history_item({
                             "username": u_name,
@@ -1105,11 +1235,13 @@ class API:
                         break
 
             finally:
+                self._remove_unfollowed_from_cache(succeeded_ids, succeeded_usernames)
                 summary = {
                     "total": len(targets),
                     "success": success_count,
                     "failed": failed_count,
                     "aborted": worker.abort_flag,
+                    "succeeded_usernames": succeeded_usernames,
                 }
                 self.update_state(is_unfollowing=False, unfollow_finished=summary)
                 show_desktop_notification(
